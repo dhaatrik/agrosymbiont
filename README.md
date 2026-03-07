@@ -55,7 +55,7 @@ To run this project in a local development environment, you would typically foll
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-repo/rainbow-agri.git
+    git clone https://github.com/DhaatuTheGamer/rainbow_nanoverdant
     cd rainbow-agri
     ```
 
