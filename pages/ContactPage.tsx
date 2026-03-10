@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { Check, AlertCircle, ChevronDown, Loader2, MapPin, Phone, Mail } from 'lucide-react';
 
@@ -14,6 +14,8 @@ const ContactPage: React.FC = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const errorValues = useMemo(() => Object.values(errors), [errors]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -112,7 +114,7 @@ const ContactPage: React.FC = () => {
                                         <div>
                                             <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">Please correct the following errors:</h4>
                                             <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
-                                                {Object.values(errors).map((error, index) => (
+                                                {errorValues.map((error, index) => (
                                                     <li key={index}>{error}</li>
                                                 ))}
                                             </ul>
