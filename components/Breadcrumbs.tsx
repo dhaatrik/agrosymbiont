@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ChevronRight } from 'lucide-react';
 
@@ -18,7 +18,7 @@ const routeNameMap: { [key: string]: string } = {
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
-  const pathnames = location.pathname.split('/').filter((x) => x);
+  const pathnames = useMemo(() => location.pathname.split('/').filter((x) => x), [location.pathname]);
 
   // Don't show breadcrumbs on the home page
   if (pathnames.length === 0) {
