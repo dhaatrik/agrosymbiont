@@ -118,7 +118,6 @@ const CareersPage: React.FC = () => {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
         
-        console.log('Application submitted:', formData);
         setIsSubmitting(false);
         setIsSubmitted(true);
     };
