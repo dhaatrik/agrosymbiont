@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import { blogs, BlogPost } from '../data/blogs';
 import Markdown from 'react-markdown';

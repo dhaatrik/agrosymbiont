@@ -79,7 +79,6 @@ const ContactPage: React.FC = () => {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
         
-        console.log('Form data submitted:', formData);
         setIsSubmitting(false);
         setIsSubmitted(true);
     };

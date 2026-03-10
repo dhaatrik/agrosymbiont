@@ -39,7 +39,6 @@ const ProductsPage: React.FC = () => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    console.log('Email submitted for products:', email);
     setIsSubmitting(false);
     setIsSubmitted(true);
   };

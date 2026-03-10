@@ -2,6 +2,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 
+interface ProjectedParticle {
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+  color: string;
+}
+
 const ThreeDBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -169,7 +177,7 @@ const ThreeDBackground: React.FC = () => {
       });
 
       // --- Render Connected Sphere ---
-      const projectedParticles: any[] = [];
+      const projectedParticles: ProjectedParticle[] = [];
 
       sphereParticles.forEach((p) => {
         // Individual particle oscillation (organic feel)
