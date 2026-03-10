@@ -1,7 +1,19 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { Check, AlertCircle, ChevronDown, Loader2, MapPin, Phone, Mail } from 'lucide-react';
+
+const validateField = (name: string, value: string): string => {
+    if (name === 'name' && !value.trim()) return 'Full Name is required.';
+    if (name === 'email') {
+        if (!value.trim()) return 'Email Address is required.';
+        if (!/\S+@\S+\.\S+/.test(value)) return 'Please enter a valid email address.';
+    }
+    if (name === 'phone' && !value.trim()) return 'Phone Number is required.';
+    if (name === 'inquiryType' && !value) return 'Please select an inquiry type.';
+    if (name === 'message' && !value.trim()) return 'Message is required.';
+    return '';
+};
 
 const ContactPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -15,7 +27,7 @@ const ContactPage: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         let newValue = value;
         if (name === 'phone') {
@@ -34,21 +46,9 @@ const ContactPage: React.FC = () => {
             }
             return newErrors;
         });
-    };
+    }, []);
 
-    const validateField = (name: string, value: string): string => {
-        if (name === 'name' && !value.trim()) return 'Full Name is required.';
-        if (name === 'email') {
-            if (!value.trim()) return 'Email Address is required.';
-            if (!/\S+@\S+\.\S+/.test(value)) return 'Please enter a valid email address.';
-        }
-        if (name === 'phone' && !value.trim()) return 'Phone Number is required.';
-        if (name === 'inquiryType' && !value) return 'Please select an inquiry type.';
-        if (name === 'message' && !value.trim()) return 'Message is required.';
-        return '';
-    };
-
-    const validateForm = (): { [key: string]: string } => {
+    const validateForm = useCallback((): { [key: string]: string } => {
         const newErrors: { [key: string]: string } = {};
         const nameError = validateField('name', formData.name);
         if (nameError) newErrors.name = nameError;
@@ -61,9 +61,9 @@ const ContactPage: React.FC = () => {
         const messageError = validateField('message', formData.message);
         if (messageError) newErrors.message = messageError;
         return newErrors;
-    };
+    }, [formData]);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formErrors = validateForm();
         if (Object.keys(formErrors).length > 0) {
@@ -80,7 +80,7 @@ const ContactPage: React.FC = () => {
         console.log('Form data submitted:', formData);
         setIsSubmitting(false);
         setIsSubmitted(true);
-    };
+    }, [formData, validateForm]);
 
     const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-800 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-white";
     const errorClass = "ring-red-500 focus:ring-red-500 bg-red-50/30 dark:bg-red-900/20";
