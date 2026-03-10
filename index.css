@@ -1,38 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer utilities {
   .preserve-3d {
     transform-style: preserve-3d;
   }
+
   .transform-style-3d {
     transform-style: preserve-3d;
   }
+
   .translate-z-0 {
     transform: translateZ(0px);
   }
+
   .translate-z-2 {
     transform: translateZ(8px);
   }
+
   .translate-z-4 {
     transform: translateZ(16px);
   }
+
   .translate-z-10 {
     transform: translateZ(40px);
   }
+
   .translate-z-20 {
     transform: translateZ(80px);
   }
+
   .-translate-z-10 {
     transform: translateZ(-40px);
   }
+
   .perspective-1000 {
     perspective: 1000px;
   }
+
   .perspective-text {
     perspective: 800px;
   }
+
   .backface-hidden {
     backface-visibility: hidden;
   }
@@ -40,13 +46,15 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #FFFFF0; /* ivory */
+  background-color: #FFFFF0;
+  /* ivory */
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark body {
-  background-color: #1a1a1a; /* dark background */
+  background-color: #1a1a1a;
+  /* dark background */
   color: #f3f4f6;
 }
 
@@ -54,33 +62,40 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 .dark ::-webkit-scrollbar-track {
   background: #2d2d2d;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }
+
 .dark ::-webkit-scrollbar-thumb {
   background: #666;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #888;
 }
 
 /* Hide scrollbar utility */
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
+
 .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Markdown Content Spacing */
@@ -102,9 +117,9 @@ body {
   color: #e5e7eb;
 }
 
-.markdown-body h1, 
-.markdown-body h2, 
-.markdown-body h3, 
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
 .markdown-body h4 {
   margin-top: 3rem;
   margin-bottom: 1.5rem;
@@ -112,9 +127,9 @@ body {
   color: #000000;
 }
 
-.dark .markdown-body h1, 
-.dark .markdown-body h2, 
-.dark .markdown-body h3, 
+.dark .markdown-body h1,
+.dark .markdown-body h2,
+.dark .markdown-body h3,
 .dark .markdown-body h4 {
   color: #ffffff;
 }
@@ -134,7 +149,7 @@ body {
   line-height: 1.4;
 }
 
-.markdown-body ul, 
+.markdown-body ul,
 .markdown-body ol {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
