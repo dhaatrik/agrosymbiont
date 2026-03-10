@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -102,9 +102,11 @@ const BlogPage: React.FC = () => {
 
   const categories = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
 
-  const filteredPosts = selectedCategory === 'All' 
-    ? blogs 
-    : blogs.filter(post => post.category === selectedCategory);
+  const filteredPosts = useMemo(() => {
+    return selectedCategory === 'All'
+      ? blogs
+      : blogs.filter(post => post.category === selectedCategory);
+  }, [selectedCategory, blogs]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
