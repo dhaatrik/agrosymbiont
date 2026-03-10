@@ -1,102 +1,189 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
+import ThreeDBackground from '../components/ThreeDBackground';
+import TiltCard from '../components/TiltCard';
+import { ArrowRight, TrendingUp, Sparkles, Coins, CheckCircle, Zap } from 'lucide-react';
+
+import { motion } from 'framer-motion';
 
 const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
-    <div className="bg-white/60 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center h-full">
-        <div className="text-burnt-orange mb-4">{icon}</div>
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
-        <p className="text-stone-gray">{description}</p>
-    </div>
+    <TiltCard className="h-full">
+        <div className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden">
+            {/* Depth layer */}
+            <div className="absolute inset-0 translate-z-10 pointer-events-none bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent"></div>
+            
+            <div className="text-burnt-orange dark:text-orange-400 mb-6 p-5 bg-white dark:bg-stone-800 rounded-2xl shadow-inner transform transition-transform duration-500 group-hover:translate-z-10 group-hover:scale-110 ring-1 ring-stone-100 dark:ring-stone-700">
+              {icon}
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 transform transition-all group-hover:translate-z-4">{title}</h3>
+            <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-sm transform transition-all group-hover:translate-z-2">{description}</p>
+        </div>
+    </TiltCard>
 );
 
 
 const HomePage: React.FC = () => {
   return (
-    <div className="text-gray-800">
-      {/* Hero Section */}
-      <section className="h-[80vh] flex items-center justify-center text-center bg-transparent px-4 relative overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute z-0 w-auto min-w-full min-h-full max-w-none left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover"
-          src="https://cdn.pixabay.com/video/2024/05/29/211333_large.mp4"
-        ></video>
-        <div className="absolute inset-0 bg-cerulean-blue/40 z-10"></div>
-        <AnimatedSection className="max-w-4xl z-20">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
-            Rainbow: <span className="text-mustard-yellow">Science Meets Sustainability</span> in Agriculture
-          </h1>
-          <p className="mt-6 text-lg md:text-xl text-ivory max-w-3xl mx-auto">
-            Harnessing nanotechnology and organic innovation to boost yields, improve soil health, and create profitable, eco-friendly farming systems.
-          </p>
-          <div className="mt-10">
-            <Link
-              to="/contact"
-              className="bg-burnt-orange text-white font-bold py-3 px-8 rounded-full hover:bg-mustard-yellow hover:text-cerulean-blue transition duration-300 transform hover:scale-105 shadow-lg"
-            >
-              Start Growing with Us
-            </Link>
-          </div>
-        </AnimatedSection>
-      </section>
+    <div className="text-gray-800 dark:text-gray-200 -mt-24 relative">
+      {/* 3D Background Layer */}
+      <ThreeDBackground />
+      
+      {/* Gradient Overlay for text readability */}
+      <div className="fixed inset-0 bg-gradient-to-b from-ivory/30 via-ivory/10 to-ivory/80 dark:from-stone-900/80 dark:via-stone-900/50 dark:to-stone-900/90 pointer-events-none z-0"></div>
 
-      {/* Intro & Impact Section */}
-      <section className="py-20 bg-ivory/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center">
-            <p className="text-lg text-stone-gray max-w-4xl mx-auto mb-12">
-                Welcome to Rainbow, a global leader in sustainable agriculture solutions. We combine nanotechnology, certified organic inputs, and expert agronomy to help farmers and agri-businesses achieve higher productivity, healthier soils, and lasting profitability. Our mission is to build a future where agriculture is innovative, profitable, and environmentally responsible.
+      {/* Hero Section */}
+      <section className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full mt-48 md:mt-24">
+          <AnimatedSection className="max-w-3xl">
+            <motion.h1 
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.2,
+                  },
+                },
+              }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white tracking-tighter leading-[0.9] mb-6 md:mb-8 drop-shadow-2xl perspective-text"
+            >
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">Science</motion.span>{" "}
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">Meets</motion.span> <br/>
+              <motion.span 
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-cerulean-blue via-blue-600 to-indigo-600 dark:from-blue-400 dark:via-blue-500 dark:to-indigo-400 relative inline-block hover:scale-105 transition-transform duration-500 origin-left pb-4"
+              >
+                Sustainability
+              </motion.span>
+            </motion.h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-10 md:mb-12 leading-relaxed max-w-2xl font-medium drop-shadow-sm">
+              Harnessing <span className="text-cerulean-blue dark:text-blue-400 font-bold">nanotechnology</span> and organic innovation to create profitable, eco-friendly farming systems.
             </p>
-            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-lg shadow-md">
-                <h3 className="text-3xl font-bold text-cerulean-blue mb-4">Our Impact</h3>
-                <p className="text-stone-gray font-medium max-w-4xl mx-auto">
-                    With farmers across India and global markets, Rainbow is redefining agriculture. From nano-powered crop care to sustainable soil solutions, we deliver measurable improvements that support resilient farming systems worldwide.
-                </p>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-16 md:mb-0">
+              <Link
+                to="/contact"
+                className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_6px_0_#994000] hover:shadow-[0_8px_0_#ccb046] active:shadow-[0_0px_0_#994000] flex items-center gap-2 relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Start Growing with Us
+                  <ArrowRight className="w-5 h-5" strokeWidth={2} />
+                </span>
+                <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              </Link>
+              <Link
+                to="/about"
+                className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-[0_6px_0_rgba(42,82,190,0.2)] dark:shadow-[0_6px_0_rgba(96,165,250,0.2)] hover:shadow-[0_8px_0_rgba(42,82,190,0.3)] dark:hover:shadow-[0_8px_0_rgba(96,165,250,0.3)] active:translate-y-1 active:shadow-[0_0px_0_rgba(42,82,190,0.2)] transform hover:-translate-y-1"
+              >
+                Learn More
+              </Link>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-       {/* Key Highlights Section */}
-      <section className="py-20 bg-white/30">
+      {/* Intro & Impact Section */}
+      <section className="py-20 md:py-32 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <AnimatedSection className="text-center">
-                <h2 className="text-4xl font-bold text-gray-800">Key Highlights</h2>
+          <AnimatedSection className="text-center mb-24">
+             <h2 className="text-sm font-bold text-burnt-orange dark:text-orange-400 uppercase tracking-[0.2em] mb-4">Who We Are</h2>
+            <p className="text-3xl md:text-5xl font-medium text-gray-800 dark:text-gray-200 max-w-5xl mx-auto leading-tight">
+                We combine <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">nanotechnology</span>, <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">certified organic inputs</span>, and <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">expert agronomy</span>.
+            </p>
+          </AnimatedSection>
+
+           <AnimatedSection>
+            <TiltCard>
+                <div className="bg-gradient-to-br from-cerulean-blue to-blue-900 dark:from-blue-900 dark:to-stone-900 rounded-[3rem] p-10 md:p-20 shadow-2xl text-white relative overflow-hidden isolate transform-style-preserve-3d">
+                    {/* Decorative glowing orbs */}
+                    <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] rounded-full bg-blue-400/30 dark:bg-blue-500/20 blur-[100px] -z-10 animate-pulse"></div>
+                    <div className="absolute bottom-0 left-0 -ml-40 -mb-40 w-[500px] h-[500px] rounded-full bg-mustard-yellow/20 dark:bg-mustard-yellow/10 blur-[100px] -z-10"></div>
+                    
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div className="translate-z-4">
+                            <h3 className="text-3xl md:text-5xl font-bold mb-8 leading-tight drop-shadow-lg">Real Impact,<br/>Measured in Growth.</h3>
+                             <p className="text-blue-100 dark:text-blue-200 text-lg leading-relaxed mb-10 font-light">
+                                With farmers across India and global markets, AgroSymbiont is redefining agriculture. From nano-powered crop care to sustainable soil solutions, we deliver measurable improvements that support resilient farming systems worldwide.
+                            </p>
+                             <div className="grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
+                                <div>
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">10K+</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Farmers Empowered</div>
+                                </div>
+                                <div>
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">25%</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Avg Yield Increase</div>
+                                </div>
+                                <div>
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">100%</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Eco-Friendly</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform transition-transform hover:scale-105">
+                             {/* 3D Floating Element */}
+                             <div className="relative w-64 h-64 preserve-3d animate-float">
+                                <div className="absolute inset-0 bg-mustard-yellow/20 dark:bg-mustard-yellow/10 rounded-full blur-xl animate-pulse"></div>
+                                <div className="absolute inset-4 bg-gradient-to-br from-white/20 to-transparent dark:from-white/10 rounded-full backdrop-blur-xl flex items-center justify-center border border-white/40 dark:border-white/20 shadow-inner">
+                                    <Zap className="h-24 w-24 text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transform translate-z-10" strokeWidth={1} />
+                                </div>
+                                {/* Orbital rings */}
+                                <div className="absolute inset-[-20px] border border-white/10 dark:border-white/5 rounded-full rotate-45"></div>
+                                <div className="absolute inset-[-40px] border border-white/5 dark:border-white/5 rounded-full -rotate-12"></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </TiltCard>
            </AnimatedSection>
-            <AnimatedSection className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        </div>
+      </section>
+
+       {/* Key Highlights Section */}
+      <section className="py-24 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <AnimatedSection className="text-center mb-20">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Key Highlights</h2>
+                <div className="w-24 h-1.5 bg-gradient-to-r from-mustard-yellow to-burnt-orange mx-auto rounded-full shadow-lg"></div>
+           </AnimatedSection>
+             <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 perspective-1000">
                  <FeatureCard 
                     title="Boost Productivity"
-                    description="Our advanced nanotech and bio-stimulants are designed to dramatically increase crop yields."
-                    icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>}
+                    description="Advanced nanotech and bio-stimulants designed to dramatically increase crop yields."
+                    icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
                     title="Restore Soil Health"
-                    description="We use carbon enhancers and beneficial microbes to build long-term fertility for resilient, living soil."
-                    icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.553L16.5 21.75l-.398-1.197a3.375 3.375 0 00-2.456-2.456L12.5 17.25l1.197-.398a3.375 3.375 0 002.456-2.456L16.5 13.5l.398 1.197a3.375 3.375 0 002.456 2.456l1.197.398-1.197.398a3.375 3.375 0 00-2.456 2.456z" /></svg>}
+                    description="Carbon enhancers and beneficial microbes build long-term fertility for resilient soil."
+                    icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
                     title="Cut Farming Costs"
-                    description="Our precision organic solutions are engineered to lower input expenses, boosting your bottom line."
-                    icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" /></svg>}
+                    description="Precision organic solutions engineered to lower input expenses and boost bottom lines."
+                    icon={<Coins className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
                     title="Global Quality"
-                    description="Our solutions are certified and trusted by Tea, Spice, and Coffee Boards to help farmers meet global standards."
-                    icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                    description="Certified and trusted by Tea, Spice, and Coffee Boards to meet global standards."
+                    icon={<CheckCircle className="w-8 h-8" strokeWidth={1.5} />}
                  />
             </AnimatedSection>
         </div>
       </section>
 
        {/* CTA Section */}
-      <section className="py-20 bg-ivory/50">
-          <AnimatedSection className="text-center max-w-4xl mx-auto px-4">
-              <h2 className="text-3xl font-bold text-gray-800">Discover how Rainbow can help you grow more, sustainably.</h2>
-              <div className="mt-8">
-                  <Link to="/services" className="bg-burnt-orange text-white font-bold py-3 px-8 rounded-full hover:bg-mustard-yellow hover:text-cerulean-blue transition duration-300 transform hover:scale-105 shadow-lg">
+      <section className="py-24 relative overflow-hidden z-10">
+           <div className="absolute inset-0 bg-cerulean-blue/5 dark:bg-blue-900/10 z-0"></div>
+           <div className="absolute -left-20 -bottom-20 w-96 h-96 bg-mustard-yellow/10 dark:bg-mustard-yellow/5 rounded-full blur-3xl"></div>
+           <div className="absolute -right-20 -top-20 w-96 h-96 bg-burnt-orange/10 dark:bg-burnt-orange/5 rounded-full blur-3xl"></div>
+           
+          <AnimatedSection className="text-center max-w-4xl mx-auto px-4 relative z-10">
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200 mb-10 leading-tight drop-shadow-sm">Discover how AgroSymbiont can help you <br/><span className="text-cerulean-blue dark:text-blue-400">grow more, sustainably.</span></h2>
+              <div>
+                  <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-[0_8px_0_#1e3a8a] hover:shadow-[0_10px_0_#1e3a8a] hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-[0_0px_0_#1e3a8a]">
                       Explore Our Solutions
                   </Link>
               </div>

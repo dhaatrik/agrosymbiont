@@ -1,51 +1,34 @@
 
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }
 
-const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className = '' }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className = '', delay = 0 }) => {
+  const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if(sectionRef.current) {
-            observer.unobserve(sectionRef.current);
-          }
-        }
-      },
-      {
-        threshold: 0.1,
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
-    <div
-      ref={sectionRef}
-      className={`transition-all duration-700 ease-out ${className} ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-      }`}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.21, 0.47, 0.32, 0.98], // Custom ease-out cubic
+        delay: delay 
+      }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
