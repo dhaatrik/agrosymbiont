@@ -73,7 +73,7 @@ To set up the project locally on your machine, follow these steps:
    ```
 
 4. **Open your browser:**
-   Navigate to the URL provided by Vite (usually `http://localhost:5173`).
+   Navigate to the URL provided by Vite (usually `http://localhost:3000`).
 
 ## 🚀 Usage Instructions
 

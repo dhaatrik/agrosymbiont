@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import { Check, Sparkles, TrendingUp, Shield, FlaskConical, FileText } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ServiceSkeletonCard: React.FC = () => (
     <div className="bg-white dark:bg-stone-800 p-10 rounded-[2rem] shadow-lg flex flex-col h-full border border-stone-100 dark:border-stone-700 animate-pulse">
@@ -45,6 +46,7 @@ const WhyChooseItem: React.FC<{children: React.ReactNode}> = ({children}) => (
 );
 
 const ServicesPage: React.FC = () => {
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -58,12 +60,12 @@ const ServicesPage: React.FC = () => {
         <div className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <AnimatedSection className="text-center mb-20">
-                    <span className="text-cerulean-blue dark:text-blue-400 font-bold tracking-widest uppercase text-xs mb-3 block bg-blue-50 dark:bg-blue-900/30 inline-block px-4 py-1 rounded-full">Our Expertise</span>
+                    <span className="text-cerulean-blue dark:text-blue-400 font-bold tracking-widest uppercase text-xs mb-3 block bg-blue-50 dark:bg-blue-900/30 inline-block px-4 py-1 rounded-full">{t('tech_expertise')}</span>
                     <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight">
-                        A Spectrum of <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600 dark:from-green-400 dark:to-teal-400">Nature-Based Solutions</span>
+                        {t('tech_title_1')} <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600 dark:from-green-400 dark:to-teal-400">{t('tech_title_2')}</span>
                     </h1>
                     <p className="mt-6 text-xl text-stone-gray dark:text-stone-400 max-w-3xl mx-auto leading-relaxed font-light">
-                        AgroSymbiont integrates modern agronomy, nanotechnology, and certified organic products to deliver smarter, greener, and more profitable farming solutions.
+                        {t('tech_subtitle')}
                     </p>
                 </AnimatedSection>
 
@@ -80,30 +82,30 @@ const ServicesPage: React.FC = () => {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <ServiceIconCard 
-                                title="Soil Health Management"
-                                description="Enrich soil fertility and microbial balance with bio-macro and micro-inputs, soil carbon enhancers, and bio-humic solutions."
+                                title={t('tech_service_1_title')}
+                                description={t('tech_service_1_desc')}
                                 icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
                             />
                              <ServiceIconCard 
-                                title="Crop Productivity"
-                                description="Boost yields with bio-stimulants, growth promoters, and eco-friendly nutrients tailored to your crop needs."
+                                title={t('tech_service_2_title')}
+                                description={t('tech_service_2_desc')}
                                 icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
                             />
                              <ServiceIconCard 
-                                title="Eco-Friendly Protection"
-                                description="Defend plants naturally with bio-pesticides and beneficial microorganisms, reducing chemical dependency and safeguarding ecosystems."
+                                title={t('tech_service_3_title')}
+                                description={t('tech_service_3_desc')}
                                 icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
                             />
                              <ServiceIconCard 
-                                title="Life Science Innovations"
-                                description="Harness the power of beneficial bacteria and fungi to create healthier soils and resilient crops."
+                                title={t('tech_service_4_title')}
+                                description={t('tech_service_4_desc')}
                                 icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
                             />
                              <div className="md:col-span-2 flex justify-center">
                                 <div className="max-w-xl w-full">
                                     <ServiceIconCard 
-                                        title="Expert Agronomy Support"
-                                        description="Our specialists work with you at every step, ensuring optimal application, cost efficiency, and measurable results."
+                                        title={t('tech_service_5_title')}
+                                        description={t('tech_service_5_desc')}
                                         icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
                                     />
                                 </div>
@@ -119,14 +121,14 @@ const ServicesPage: React.FC = () => {
                          <div className="absolute -left-20 -bottom-20 w-96 h-96 bg-cerulean-blue/10 dark:bg-blue-900/10 rounded-full blur-3xl"></div>
                          
                         <div className="relative z-10">
-                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">Why Choose AgroSymbiont?</h2>
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">{t('tech_why_title')}</h2>
                             <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <WhyChooseItem>Nanotech Yield Growth</WhyChooseItem>
-                                <WhyChooseItem>Certified Organic</WhyChooseItem>
-                                <WhyChooseItem>Farmer-Centric Support</WhyChooseItem>
-                                <WhyChooseItem>Trusted Globally</WhyChooseItem>
-                                <WhyChooseItem>Eco-System Restoration</WhyChooseItem>
-                                <WhyChooseItem>Cost-Effective Solutions</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_1')}</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_2')}</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_3')}</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_4')}</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_5')}</WhyChooseItem>
+                                <WhyChooseItem>{t('tech_why_6')}</WhyChooseItem>
                             </ul>
                         </div>
                     </div>
@@ -135,11 +137,11 @@ const ServicesPage: React.FC = () => {
                  {/* CTA Section */}
                 <AnimatedSection className="mt-32 text-center">
                     <p className="text-2xl font-light text-gray-800 dark:text-gray-200 max-w-3xl mx-auto mb-10">
-                        Experience the future of farming with AgroSymbiont’s integrated services.
+                        {t('tech_cta_text')}
                     </p>
                     <div>
                         <Link to="/contact" className="inline-block bg-burnt-orange text-white font-bold py-5 px-12 rounded-full hover:bg-orange-700 transition duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_8px_0_#994000] hover:shadow-[0_10px_0_#994000] active:shadow-[0_0px_0_#994000] text-lg">
-                            Book a Free Consultation
+                            {t('tech_cta_btn')}
                         </Link>
                     </div>
                 </AnimatedSection>

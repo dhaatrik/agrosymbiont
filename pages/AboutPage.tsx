@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import { ChevronLeft, ChevronRight, Lightbulb, Leaf, ShieldCheck, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const TeamMemberCard: React.FC<{ name: string, title: string, imageUrl: string }> = ({ name, title, imageUrl }) => (
     <TiltCard className="h-96 w-full">
@@ -53,6 +54,7 @@ const ValueCard: React.FC<{ title: string, description: string, icon: React.Reac
 
 
 const AboutPage: React.FC = () => {
+    const { t } = useTranslation();
     return (
         <div className="pb-20">
             {/* Hero Banner */}
@@ -62,9 +64,9 @@ const AboutPage: React.FC = () => {
                  <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-mustard-yellow/10 dark:bg-yellow-900/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
                  
                  <AnimatedSection className="relative z-10 max-w-5xl mx-auto px-4">
-                    <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight">Rooted in Science, <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-mustard-yellow to-orange-300 dark:from-yellow-400 dark:to-orange-400">Growing a Verdant Future</span></h1>
+                    <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight">{t('about_hero_title_1')}<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-mustard-yellow to-orange-300 dark:from-yellow-400 dark:to-orange-400">{t('about_hero_title_2')}</span></h1>
                     <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed font-light">
-                        We are shaping the future of eco-friendly, technology-driven agriculture.
+                        {t('about_hero_subtitle')}
                     </p>
                 </AnimatedSection>
             </div>
@@ -75,14 +77,14 @@ const AboutPage: React.FC = () => {
                     <div className="bg-white dark:bg-stone-800 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-xl border border-stone-50 dark:border-stone-700 hover:shadow-2xl transition-shadow relative overflow-hidden group">
                         <div className="absolute top-0 left-0 w-2 h-full bg-cerulean-blue dark:bg-blue-600"></div>
                          <div className="absolute top-0 right-0 w-32 h-32 bg-cerulean-blue/5 dark:bg-blue-900/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6 relative z-10">Our Mission</h2>
-                        <p className="text-stone-gray dark:text-stone-300 text-base md:text-lg leading-relaxed relative z-10">To revolutionize farming through nanotechnology-powered organic solutions that balance productivity, profitability, and sustainability.</p>
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6 relative z-10">{t('about_mission_title')}</h2>
+                        <p className="text-stone-gray dark:text-stone-300 text-base md:text-lg leading-relaxed relative z-10">{t('about_mission_desc')}</p>
                     </div>
                      <div className="bg-white dark:bg-stone-800 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-xl border border-stone-50 dark:border-stone-700 hover:shadow-2xl transition-shadow relative overflow-hidden group">
                          <div className="absolute top-0 left-0 w-2 h-full bg-mustard-yellow dark:bg-yellow-600"></div>
                           <div className="absolute top-0 right-0 w-32 h-32 bg-mustard-yellow/5 dark:bg-yellow-900/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6 relative z-10">Our Vision</h2>
-                        <p className="text-stone-gray dark:text-stone-300 text-base md:text-lg leading-relaxed relative z-10">To be the world’s most trusted name in sustainable agriculture, where innovation drives verdant growth for every farmer.</p>
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6 relative z-10">{t('about_vision_title')}</h2>
+                        <p className="text-stone-gray dark:text-stone-300 text-base md:text-lg leading-relaxed relative z-10">{t('about_vision_desc')}</p>
                     </div>
                 </AnimatedSection>
             </div>
@@ -102,16 +104,14 @@ const AboutPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="md:w-2/3 relative z-10 text-center md:text-left">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">A Personal Mission</h2>
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">{t('about_founder_title')}</h2>
                         <blockquote className="text-xl md:text-2xl font-light leading-relaxed text-stone-300 italic mb-8 relative">
-                            <span className="absolute -left-8 -top-4 text-4xl text-stone-700 font-serif">"</span>
-                            My lifelong fascination with physics and artificial intelligence always felt disconnected from the natural world—until I realized that the future of farming relies precisely on those disciplines. AgroSymbiont was born from a desire to merge cutting-edge technology with ecological stewardship, solving the most pressing agricultural challenges of our time.
-                            <span className="absolute -right-8 bottom-0 text-4xl text-stone-700 font-serif rotate-180">"</span>
+                            {t('about_founder_quote')}
                         </blockquote>
                         <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4">
                             <div>
-                                <h4 className="font-bold text-xl text-white">Dhaatrik Chowdhury</h4>
-                                <p className="text-mustard-yellow font-medium uppercase tracking-wider text-sm">Founder & CEO</p>
+                                <h4 className="font-bold text-xl text-white">{t('about_founder_name')}</h4>
+                                <p className="text-mustard-yellow font-medium uppercase tracking-wider text-sm">{t('about_founder_role')}</p>
                             </div>
                         </div>
                     </div>
@@ -121,23 +121,23 @@ const AboutPage: React.FC = () => {
             {/* Values Section */}
              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
                  <AnimatedSection className="text-center mb-20">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Our Values</h2>
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">{t('about_values_title')}</h2>
                     <div className="w-20 h-1.5 bg-gradient-to-r from-cerulean-blue to-blue-400 mx-auto mt-6 rounded-full"></div>
                 </AnimatedSection>
                 <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <ValueCard title="Innovation" description="Leading in nanotechnology and organic inputs." icon={<Lightbulb className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title="Sustainability" description="Improving soil health while protecting ecosystems." icon={<Leaf className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title="Integrity" description="Ethical practices farmers can trust." icon={<ShieldCheck className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title="Community" description="Farmer-first, solution-driven approach." icon={<Users className="w-full h-full" strokeWidth={1.5} />} />
+                    <ValueCard title={t('about_value_1_title')} description={t('about_value_1_desc')} icon={<Lightbulb className="w-full h-full" strokeWidth={1.5} />} />
+                    <ValueCard title={t('about_value_2_title')} description={t('about_value_2_desc')} icon={<Leaf className="w-full h-full" strokeWidth={1.5} />} />
+                    <ValueCard title={t('about_value_3_title')} description={t('about_value_3_desc')} icon={<ShieldCheck className="w-full h-full" strokeWidth={1.5} />} />
+                    <ValueCard title={t('about_value_4_title')} description={t('about_value_4_desc')} icon={<Users className="w-full h-full" strokeWidth={1.5} />} />
                 </AnimatedSection>
              </div>
 
             {/* Innovation Lab Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
                  <AnimatedSection className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">The Innovation Lab</h2>
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t('about_lab_title')}</h2>
                     <p className="text-lg text-stone-gray dark:text-stone-400 max-w-3xl mx-auto">
-                        We don't just follow the science; we create it. Our dedicated R&D facilities are constantly pushing the boundaries of what's possible in sustainable agriculture, from engineered aeroponics to real-time AI sensor integration.
+                        {t('about_lab_desc')}
                     </p>
                 </AnimatedSection>
 
@@ -147,13 +147,13 @@ const AboutPage: React.FC = () => {
                             <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
                                 <img src="https://picsum.photos/600/400?random=11" alt="Prototype Testing" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
                                 <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-green-600 dark:text-green-400 translate-z-4 shadow-sm border border-green-100 dark:border-green-900/50">
-                                    Active Prototype
+                                    {t('about_lab_1_tag')}
                                 </div>
                             </div>
                             <div className="p-8 flex flex-col flex-grow text-center md:text-left translate-z-4 bg-white dark:bg-stone-800 relative z-10">
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">DIY Aeroponic Towers</h3>
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{t('about_lab_1_title')}</h3>
                                 <p className="text-stone-gray dark:text-stone-400 flex-grow leading-relaxed">
-                                    Our engineers are currently refining modular aeroponic systems designed for low-cost, high-yield urban farming. By precisely controlling the nutrient mist using our proprietary nanotech solutions, we're seeing up to 40% faster growth cycles.
+                                    {t('about_lab_1_desc')}
                                 </p>
                             </div>
                         </div>
@@ -164,13 +164,13 @@ const AboutPage: React.FC = () => {
                             <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
                                 <img src="https://picsum.photos/600/400?random=12" alt="Sensor Integration" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
                                 <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-cerulean-blue dark:text-blue-400 translate-z-4 shadow-sm border border-blue-100 dark:border-blue-900/50">
-                                    Data Collection
+                                    {t('about_lab_2_tag')}
                                 </div>
                             </div>
                             <div className="p-8 flex flex-col flex-grow text-center md:text-left translate-z-4 bg-white dark:bg-stone-800 relative z-10">
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">AI Sensor Integration</h3>
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{t('about_lab_2_title')}</h3>
                                 <p className="text-stone-gray dark:text-stone-400 flex-grow leading-relaxed">
-                                    We are testing real-time soil microbiome sensors linked to predictive AI models. This allows farmers to monitor soil health dynamically and receive precise recommendations on when to apply our organic enhancers, eliminating waste.
+                                    {t('about_lab_2_desc')}
                                 </p>
                             </div>
                         </div>
@@ -183,30 +183,29 @@ const AboutPage: React.FC = () => {
                  {/* Background subtle wash */}
                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-stone-50 dark:via-stone-900/50 to-transparent pointer-events-none -z-10"></div>
                 <AnimatedSection className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Our Journey</h2>
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">{t('about_journey_title')}</h2>
                 </AnimatedSection>
                 <div className="max-w-5xl mx-auto px-4 relative">
-                    {/* Mobile Timeline (Swipeable Carousel) */}
-                    <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide -mx-4 px-4">
+                    {/* Mobile Timeline (Swipeable Carousel) *                     <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide -mx-4 px-4">
                          <AnimatedSection className="relative flex-shrink-0 w-[85%] snap-center bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-lg border border-stone-100 dark:border-stone-700">
-                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">2010</span>
-                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">Established</h3>
-                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">AgroSymbiont was established with a mission to transform farming practices for the better.</p>
+                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">{t('about_journey_1_year')}</span>
+                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">{t('about_journey_1_title')}</h3>
+                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">{t('about_journey_1_desc')}</p>
                          </AnimatedSection>
                          <AnimatedSection className="relative flex-shrink-0 w-[85%] snap-center bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-lg border border-stone-100 dark:border-stone-700">
-                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">2015</span>
-                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">Organic Expansion</h3>
-                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">Expanded into certified organic product lines, cementing our commitment to sustainable agriculture.</p>
+                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">{t('about_journey_2_year')}</span>
+                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">{t('about_journey_2_title')}</h3>
+                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">{t('about_journey_2_desc')}</p>
                          </AnimatedSection>
                          <AnimatedSection className="relative flex-shrink-0 w-[85%] snap-center bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-lg border border-stone-100 dark:border-stone-700">
-                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">2020</span>
-                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">Scientific Partnerships</h3>
-                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">Partnered with leading scientists and research labs to accelerate innovation in nanotechnology for agriculture.</p>
+                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">{t('about_journey_3_year')}</span>
+                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">{t('about_journey_3_title')}</h3>
+                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">{t('about_journey_3_desc')}</p>
                          </AnimatedSection>
                          <AnimatedSection className="relative flex-shrink-0 w-[85%] snap-center bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-lg border border-stone-100 dark:border-stone-700">
-                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">Today</span>
-                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">Global Impact</h3>
-                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">Serving clients across India and expanding into global markets, driving a worldwide shift to sustainable farming.</p>
+                            <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">{t('about_journey_4_year')}</span>
+                            <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">{t('about_journey_4_title')}</h3>
+                            <p className="text-stone-gray dark:text-stone-400 text-base leading-relaxed">{t('about_journey_4_desc')}</p>
                          </AnimatedSection>
                     </div>
 
@@ -214,33 +213,33 @@ const AboutPage: React.FC = () => {
                     <div className="hidden md:block">
                         <AnimatedSection>
                             <TimelineItem 
-                                year="2010"
-                                title="Established"
-                                description="AgroSymbiont was established with a mission to transform farming practices for the better."
+                                year={t('about_journey_1_year')}
+                                title={t('about_journey_1_title')}
+                                description={t('about_journey_1_desc')}
                                 align="left"
                             />
                         </AnimatedSection>
                          <AnimatedSection>
                             <TimelineItem 
-                                year="2015"
-                                title="Organic Expansion"
-                                description="Expanded into certified organic product lines, cementing our commitment to sustainable agriculture."
+                                year={t('about_journey_2_year')}
+                                title={t('about_journey_2_title')}
+                                description={t('about_journey_2_desc')}
                                 align="right"
                             />
                         </AnimatedSection>
                          <AnimatedSection>
                             <TimelineItem 
-                                year="2020"
-                                title="Scientific Partnerships"
-                                description="Partnered with leading scientists and research labs to accelerate innovation in nanotechnology for agriculture."
+                                year={t('about_journey_3_year')}
+                                title={t('about_journey_3_title')}
+                                description={t('about_journey_3_desc')}
                                 align="left"
                             />
                         </AnimatedSection>
                          <AnimatedSection>
                             <TimelineItem 
-                                year="Today"
-                                title="Global Impact"
-                                description="Serving clients across India and expanding into global markets, driving a worldwide shift to sustainable farming."
+                                year={t('about_journey_4_year')}
+                                title={t('about_journey_4_title')}
+                                description={t('about_journey_4_desc')}
                                 align="right"
                             />
                         </AnimatedSection>
@@ -249,11 +248,11 @@ const AboutPage: React.FC = () => {
             </div>
             
             {/* Team Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                  <AnimatedSection className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">Meet Our Leaders</h2>
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">{t('about_leaders_title')}</h2>
                     <p className="mt-4 text-lg text-stone-gray dark:text-stone-400 max-w-3xl mx-auto">
-                        Driven by a shared purpose, our leadership team combines deep scientific expertise with a commitment to farmer success.
+                        {t('about_leaders_desc')}
                     </p>
                 </AnimatedSection>
                 <AnimatedSection>

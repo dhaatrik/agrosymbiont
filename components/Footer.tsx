@@ -2,8 +2,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-slate-950 text-gray-300 pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
       {/* Subtle noise overlay for texture */}
@@ -19,32 +21,32 @@ const Footer: React.FC = () => {
                 </span>
             </NavLink>
             <p className="text-sm leading-7 text-gray-400 font-light">
-                Transforming Agriculture, Sustainably. Blending nanotechnology with nature for a greener future.
+                {t('hero_subtitle_1')}{t('hero_subtitle_highlight')}{t('hero_subtitle_2')}
             </p>
           </div>
           
           <div className="md:pl-8">
-            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">Company</h3>
+            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">{t('footer_company')}</h3>
             <ul className="space-y-4 text-sm">
-                <li><NavLink to="/about" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">About Us</NavLink></li>
-                <li><NavLink to="/careers" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Careers</NavLink></li>
-                <li><NavLink to="/investors" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Investors/Partners</NavLink></li>
-                <li><NavLink to="/contact" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Contact</NavLink></li>
+                <li><NavLink to="/about" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_about')}</NavLink></li>
+                <li><NavLink to="/careers" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_careers')}</NavLink></li>
+                <li><NavLink to="/investors" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_investors')}</NavLink></li>
+                <li><NavLink to="/contact" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_contact')}</NavLink></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">Resources</h3>
+            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">{t('footer_resources')}</h3>
             <ul className="space-y-4 text-sm">
-                <li><NavLink to="/blog" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Blog & Insights</NavLink></li>
-                <li><NavLink to="/stories" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Success Stories</NavLink></li>
-                <li><NavLink to="/technology" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">Our Technology</NavLink></li>
-                <li><NavLink to="/faq" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">FAQ</NavLink></li>
+                <li><NavLink to="/blog" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_insights')}</NavLink></li>
+                <li><NavLink to="/stories" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_stories')}</NavLink></li>
+                <li><NavLink to="/technology" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_technology')}</NavLink></li>
+                <li><NavLink to="/faq" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_faq')}</NavLink></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">Contact</h3>
+            <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">{t('nav_contact')}</h3>
             <ul className="space-y-4 text-sm text-gray-400 font-light">
                 <li className="flex items-start"><MapPin className="mr-3 w-5 h-5 opacity-50 flex-shrink-0" /> 123 AgriTech Ave, Kolkata, India</li>
                 <li className="flex items-center"><Phone className="mr-3 w-5 h-5 opacity-50 flex-shrink-0" /> +91 11122 33344</li>
@@ -67,10 +69,10 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-100 font-medium">
-            <p className="text-gray-100">© {new Date().getFullYear()} AgroSymbiont Agricultural Solutions. All rights reserved.</p>
+            <p className="text-gray-100">© {new Date().getFullYear()} AgroSymbiont Agricultural Solutions. {t('footer_rights')}</p>
             <div className="flex space-x-8 mt-4 md:mt-0">
-                <NavLink to="/privacy-policy" className="text-gray-100 hover:text-mustard-yellow transition-colors">Privacy Policy</NavLink>
-                <NavLink to="/terms-of-service" className="text-gray-100 hover:text-mustard-yellow transition-colors">Terms of Service</NavLink>
+                <NavLink to="/privacy-policy" className="text-gray-100 hover:text-mustard-yellow transition-colors">{t('footer_privacy')}</NavLink>
+                <NavLink to="/terms-of-service" className="text-gray-100 hover:text-mustard-yellow transition-colors">{t('footer_terms')}</NavLink>
             </div>
         </div>
       </div>

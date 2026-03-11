@@ -6,21 +6,23 @@ import { Menu, X, Mail, Phone, Sun, Moon, Globe, Zap, ZapOff } from 'lucide-reac
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
-const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/products', label: 'Products' },
-  { path: '/technology', label: 'Technology' },
-  { path: '/stories', label: 'Stories' },
-  { path: '/blog', label: 'Insights' },
-  { path: '/careers', label: 'Careers' },
-  { path: '/faq', label: 'FAQ' },
-  { path: '/contact', label: 'Contact' },
+const getNavLinks = (t: any) => [
+  { path: '/', label: t('nav_home') },
+  { path: '/about', label: t('nav_about') },
+  { path: '/products', label: t('nav_products') },
+  { path: '/technology', label: t('nav_technology') },
+  { path: '/stories', label: t('nav_stories') },
+  { path: '/blog', label: t('nav_insights') },
+  { path: '/careers', label: t('nav_careers') },
+  { path: '/faq', label: t('nav_faq') },
+  { path: '/contact', label: t('nav_contact') },
 ];
 
-const NavLinks = React.memo(({ mobile }: { mobile?: boolean }) => (
+const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: any }) => {
+  const links = getNavLinks(t);
+  return (
   <>
-    {navLinks.map((link) => (
+    {links.map((link) => (
       <NavLink
         key={link.path}
         to={link.path}
@@ -45,7 +47,8 @@ const NavLinks = React.memo(({ mobile }: { mobile?: boolean }) => (
       </NavLink>
     ))}
   </>
-));
+  );
+});
 NavLinks.displayName = 'NavLinks';
 
 const Header: React.FC = () => {
@@ -55,7 +58,7 @@ const Header: React.FC = () => {
   const location = useLocation();
   const { theme, toggleTheme, dataSaver, toggleDataSaver } = useTheme();
   const { scrollY } = useScroll();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -96,7 +99,7 @@ const Header: React.FC = () => {
             </NavLink>
           </div>
           <div className="hidden lg:flex items-center space-x-1">
-            <NavLinks />
+            <NavLinks t={t} />
             <div className="flex items-center border-l border-stone-300 dark:border-stone-700 ml-4 pl-4 space-x-4">
               <div className="flex items-center gap-1 text-stone-600 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400">
                 <Globe className="w-4 h-4" />
@@ -168,7 +171,7 @@ const Header: React.FC = () => {
             className="lg:hidden fixed inset-0 z-40 bg-white/95 dark:bg-stone-900/95 backdrop-blur-2xl flex flex-col pt-24 px-6 pb-8"
           >
             <div className="flex-grow flex flex-col space-y-2 overflow-y-auto">
-              <NavLinks mobile />
+              <NavLinks mobile t={t} />
             </div>
             <div className="mt-auto pt-8 border-t border-stone-200 dark:border-stone-700">
               <div className="flex items-center justify-center space-x-8">
