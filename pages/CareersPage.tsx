@@ -83,6 +83,7 @@ const CareersPage: React.FC = () => {
     const validateField = (name: string, value: string | File | null): string => {
         if (name === 'name' && (typeof value !== 'string' || !value.trim())) return 'Full Name is required.';
         if (name === 'email') {
+            if (typeof value !== 'string') return 'Email Address is required.';
             const trimmedValue = value.trim();
             if (!trimmedValue) return 'Email Address is required.';
             const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;

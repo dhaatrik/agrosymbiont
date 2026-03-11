@@ -25,6 +25,31 @@ const LocationDisplay = () => {
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
+// Mock Framer Motion
+vi.mock('framer-motion', async () => {
+  const actual = await vi.importActual('framer-motion') as any;
+  let scrollYVal = 0;
+  return {
+    ...actual,
+    useScroll: () => ({
+      scrollY: {
+        get: () => scrollYVal,
+        getPrevious: () => Math.max(0, scrollYVal - 10),
+      }
+    }),
+    useMotionValueEvent: (_, eventName, callback) => {
+      React.useEffect(() => {
+        const handleScroll = () => {
+           scrollYVal = window.scrollY;
+           callback(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+    }
+  };
+});
+
 describe('Header Component', () => {
   beforeEach(() => {
     // Reset window.scrollY

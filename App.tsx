@@ -12,6 +12,8 @@ const ResourcesPage = lazy(() => import('./pages/ResourcesPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+// Dynamic multi-step lead capture flow
+const OnboardingPage = lazy(() => import('./pages/OnboardingPage'));
 const CareersPage = lazy(() => import('./pages/CareersPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
@@ -27,11 +29,9 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
-const LoadingFallback = () => (
-  <div className="min-h-screen flex items-center justify-center bg-ivory dark:bg-stone-900">
-    <div className="w-16 h-16 border-4 border-cerulean-blue border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
+import SeedLoader from './components/SeedLoader';
+
+const LoadingFallback = () => <SeedLoader />;
 
 const App: React.FC = () => {
   return (
@@ -49,6 +49,7 @@ const App: React.FC = () => {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />

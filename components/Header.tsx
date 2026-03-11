@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Mail, Phone, Sun, Moon } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Menu, X, Mail, Phone, Sun, Moon, Globe } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useTranslation } from 'react-i18next';
 
 const navLinks = [
   { path: '/', label: 'Home' },
@@ -50,16 +51,21 @@ NavLinks.displayName = 'NavLinks';
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const { scrollY } = useScroll();
+  const { i18n } = useTranslation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+    setScrolled(latest > 20);
+  });
 
   useEffect(() => {
     setIsOpen(false);
@@ -71,7 +77,7 @@ const Header: React.FC = () => {
         scrolled || isOpen
           ? 'py-2' 
           : 'py-6'
-      }`}
+      } ${hidden && !isOpen ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div 
@@ -93,13 +99,27 @@ const Header: React.FC = () => {
           </div>
           <div className="hidden lg:flex items-center space-x-1">
             <NavLinks />
-            <button
-              onClick={toggleTheme}
-              className="ml-4 p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-              aria-label="Toggle Dark Mode"
-            >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-            </button>
+            <div className="flex items-center border-l border-stone-300 dark:border-stone-700 ml-4 pl-4 space-x-4">
+              <div className="flex items-center gap-1 text-stone-600 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400">
+                <Globe className="w-4 h-4" />
+                <select 
+                  className="bg-transparent text-sm font-bold uppercase focus:outline-none cursor-pointer appearance-none"
+                  value={i18n.language?.split('-')[0] || 'en'}
+                  onChange={(e) => i18n.changeLanguage(e.target.value)}
+                  aria-label="Select Language"
+                >
+                  <option value="en" className="text-gray-900 bg-white">EN</option>
+                  <option value="hi" className="text-gray-900 bg-white">HI</option>
+                </select>
+              </div>
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                aria-label="Toggle Dark Mode"
+              >
+                {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
           <div className="lg:hidden flex items-center gap-2">
             <button

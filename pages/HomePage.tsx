@@ -10,7 +10,12 @@ import { motion } from 'framer-motion';
 
 const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
     <TiltCard className="h-full">
-        <div className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden">
+        <div 
+          className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden" 
+          tabIndex={0} 
+          aria-label={`${title}. ${description}`}
+          role="region"
+        >
             {/* Depth layer */}
             <div className="absolute inset-0 translate-z-10 pointer-events-none bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent"></div>
             
@@ -65,7 +70,7 @@ const HomePage: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-16 md:mb-0">
               <Link
-                to="/contact"
+                to="/onboarding"
                 className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_6px_0_#994000] hover:shadow-[0_8px_0_#ccb046] active:shadow-[0_0px_0_#994000] flex items-center gap-2 relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -125,8 +130,8 @@ const HomePage: React.FC = () => {
                         </div>
                         <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform transition-transform hover:scale-105">
                              {/* 3D Floating Element */}
-                             <div className="relative w-64 h-64 preserve-3d animate-float">
-                                <div className="absolute inset-0 bg-mustard-yellow/20 dark:bg-mustard-yellow/10 rounded-full blur-xl animate-pulse"></div>
+                             <div className="relative w-64 h-64 preserve-3d animate-float" role="img" aria-label="3D Floating Energy Bolt Graphic">
+                                <div className="absolute inset-0 bg-yellow-500/20 dark:bg-yellow-500/10 rounded-full blur-xl animate-pulse"></div>
                                 <div className="absolute inset-4 bg-gradient-to-br from-white/20 to-transparent dark:from-white/10 rounded-full backdrop-blur-xl flex items-center justify-center border border-white/40 dark:border-white/20 shadow-inner">
                                     <Zap className="h-24 w-24 text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transform translate-z-10" strokeWidth={1} />
                                 </div>
