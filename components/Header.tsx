@@ -17,6 +17,36 @@ const navLinks = [
   { path: '/contact', label: 'Contact' },
 ];
 
+const NavLinks = React.memo(({ mobile }: { mobile?: boolean }) => (
+  <>
+    {navLinks.map((link) => (
+      <NavLink
+        key={link.path}
+        to={link.path}
+        className={({ isActive }) => `
+          relative group transition-all duration-300 font-medium
+          ${mobile
+            ? 'block py-4 px-4 text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-2xl text-2xl font-bold text-center'
+            : 'py-2 px-4 text-sm tracking-wide text-stone-700 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400'}
+          ${isActive && !mobile ? 'text-cerulean-blue dark:text-blue-400' : ''}
+        `}
+      >
+        {({ isActive }) => (
+          <>
+            {link.label}
+            {!mobile && (
+              <span
+                className={`absolute left-1/2 -bottom-1 w-1 h-1 bg-mustard-yellow dark:bg-yellow-500 rounded-full transform transition-all duration-300 -translate-x-1/2 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100'}`}
+              />
+            )}
+          </>
+        )}
+      </NavLink>
+    ))}
+  </>
+));
+NavLinks.displayName = 'NavLinks';
+
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -34,35 +64,6 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
-
-  const NavLinks: React.FC<{ mobile?: boolean }> = ({ mobile }) => (
-    <>
-      {navLinks.map((link) => (
-        <NavLink
-          key={link.path}
-          to={link.path}
-          className={({ isActive }) => `
-            relative group transition-all duration-300 font-medium
-            ${mobile 
-              ? 'block py-4 px-4 text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-2xl text-2xl font-bold text-center' 
-              : 'py-2 px-4 text-sm tracking-wide text-stone-700 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400'}
-            ${isActive && !mobile ? 'text-cerulean-blue dark:text-blue-400' : ''}
-          `}
-        >
-          {({ isActive }) => (
-            <>
-              {link.label}
-              {!mobile && (
-                <span 
-                  className={`absolute left-1/2 -bottom-1 w-1 h-1 bg-mustard-yellow dark:bg-yellow-500 rounded-full transform transition-all duration-300 -translate-x-1/2 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100'}`}
-                />
-              )}
-            </>
-          )}
-        </NavLink>
-      ))}
-    </>
-  );
 
   return (
     <header 

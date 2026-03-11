@@ -83,8 +83,10 @@ const CareersPage: React.FC = () => {
     const validateField = (name: string, value: string | File | null): string => {
         if (name === 'name' && (typeof value !== 'string' || !value.trim())) return 'Full Name is required.';
         if (name === 'email') {
-            if (typeof value !== 'string' || !value.trim()) return 'Email Address is required.';
-            if (!/\S+@\S+\.\S+/.test(value)) return 'Please enter a valid email address.';
+            const trimmedValue = value.trim();
+            if (!trimmedValue) return 'Email Address is required.';
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+            if (!emailRegex.test(trimmedValue)) return 'Please enter a valid email address.';
         }
         if (name === 'linkedin' && (typeof value !== 'string' || !value.trim())) return 'LinkedIn profile link is required.';
         if (name === 'resume' && !value) return 'Please upload your Resume/CV.';
@@ -118,7 +120,6 @@ const CareersPage: React.FC = () => {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
         
-        console.log('Application submitted:', formData);
         setIsSubmitting(false);
         setIsSubmitted(true);
     };

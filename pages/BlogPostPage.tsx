@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import { blogs, BlogPost } from '../data/blogs';
 import Markdown from 'react-markdown';
@@ -11,7 +11,13 @@ const BlogPostPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+
+  const relatedPosts = useMemo(() => {
+    if (!post) return [];
+    return blogs
+      .filter(b => b.category === post.category && b.id !== post.id)
+      .slice(0, 3);
+  }, [post]);
 
   useEffect(() => {
     const foundPost = blogs.find(b => b.id === id);
@@ -29,12 +35,6 @@ const BlogPostPage: React.FC = () => {
         meta.content = foundPost.metaDescription || foundPost.excerpt;
         document.head.appendChild(meta);
       }
-
-      // Find related posts
-      const related = blogs
-        .filter(b => b.category === foundPost.category && b.id !== foundPost.id)
-        .slice(0, 3);
-      setRelatedPosts(related);
     } else {
       navigate('/blog');
     }

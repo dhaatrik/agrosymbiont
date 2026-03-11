@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import { ChevronLeft, ChevronRight, Lightbulb, Leaf, ShieldCheck, Users } from 'lucide-react';
@@ -263,12 +262,14 @@ const TeamCarousel: React.FC = () => {
             
             <button 
                 onClick={prevSlide}
+                aria-label="Previous slide"
                 className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10"
             >
                 <ChevronLeft size={24} />
             </button>
             <button 
                 onClick={nextSlide}
+                aria-label="Next slide"
                 className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10"
             >
                 <ChevronRight size={24} />
