@@ -46,7 +46,7 @@ const ContactPage: React.FC = () => {
             }
             return newErrors;
         });
-    };
+    }, []);
 
     const validateField = (name: string, value: string): string => {
         if (name === 'name' && !value.trim()) return 'Full Name is required.';
