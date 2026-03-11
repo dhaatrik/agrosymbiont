@@ -13,9 +13,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="md:col-span-1 pr-8">
             <NavLink to="/" className="flex items-center gap-3 mb-8 group">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-white/10">
-                    <span className="text-slate-950 font-extrabold text-2xl">A</span>
-                </div>
+                <img src="/favicon.png" alt="AgroSymbiont Logo" className="w-14 h-14 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500" />
                 <span className="text-white text-2xl font-bold tracking-wider">
                 AgroSymbiont
                 </span>

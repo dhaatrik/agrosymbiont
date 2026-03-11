@@ -89,9 +89,7 @@ const Header: React.FC = () => {
         >
           <div className="flex-shrink-0 flex items-center gap-3">
             <NavLink to="/" className="flex items-center gap-3 group perspective-1000">
-                <div className="w-10 h-10 bg-gradient-to-br from-cerulean-blue to-blue-700 rounded-xl rotate-3 group-hover:rotate-12 transition-transform duration-500 flex items-center justify-center shadow-lg shadow-blue-500/30 transform-style-3d group-hover:translate-z-4">
-                    <span className="text-white font-extrabold text-2xl translate-z-2">A</span>
-                </div>
+                <img src="/favicon.png" alt="AgroSymbiont Logo" className="w-14 h-14 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500" />
                 <span className={`text-2xl font-bold tracking-tight transition-colors drop-shadow-sm ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-100' : 'text-gray-900 dark:text-white'}`}>
                 AgroSymbiont
                 </span>
