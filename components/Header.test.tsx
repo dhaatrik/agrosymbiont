@@ -5,6 +5,19 @@ import Header from './Header';
 import { ThemeProvider } from '../context/ThemeContext';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
+// Mock i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => {
+    return {
+      t: (str: string) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {}),
+        language: 'en'
+      },
+    };
+  },
+}));
+
 // Mock matchMedia for jsdom
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -123,7 +136,7 @@ describe('Header Component', () => {
     expect(closeButton).toBeInTheDocument();
 
     // Click on a mobile link to navigate
-    const aboutLinks = screen.getAllByText('About');
+    const aboutLinks = screen.getAllByText('nav_about');
     const mobileAboutLink = aboutLinks.find(link => link.classList.contains('text-2xl')); // Find the mobile link
 
     act(() => {
