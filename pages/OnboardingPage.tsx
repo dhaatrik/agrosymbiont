@@ -6,6 +6,16 @@ import TiltCard from '../components/TiltCard';
 import { useTranslation } from 'react-i18next';
 
 const TOTAL_STEPS = 6;
+const PARTICLE_COUNT = 8;
+const PARTICLE_COLORS = ['bg-yellow-400', 'bg-green-400', 'bg-blue-400', 'bg-orange-400', 'bg-pink-400', 'bg-purple-400', 'bg-red-400', 'bg-teal-400'];
+const PARTICLE_DATA = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
+  const angle = (Math.PI * 2 * i) / PARTICLE_COUNT;
+  return {
+    color: PARTICLE_COLORS[i % PARTICLE_COLORS.length],
+    x: Math.cos(angle) * 70,
+    y: Math.sin(angle) * 70,
+  };
+});
 
 const soilColors: Record<string, string> = {
   alluvial: 'bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700',
@@ -378,19 +388,15 @@ const OnboardingPage: React.FC = () => {
                       >
                           <Check className="w-12 h-12" strokeWidth={3} />
                       </motion.div>
-                      {[...Array(8)].map((_, i) => {
-                          const angle = (Math.PI * 2 * i) / 8;
-                          const colors = ['bg-yellow-400', 'bg-green-400', 'bg-blue-400', 'bg-orange-400', 'bg-pink-400', 'bg-purple-400', 'bg-red-400', 'bg-teal-400'];
-                          return (
-                              <motion.div
-                                  key={i}
-                                  className={`absolute w-2.5 h-2.5 rounded-full ${colors[i]} top-1/2 left-1/2`}
-                                  initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-                                  animate={{ x: Math.cos(angle) * 70, y: Math.sin(angle) * 70, opacity: 0, scale: 0 }}
-                                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                              />
-                          );
-                      })}
+                      {PARTICLE_DATA.map((particle, i) => (
+                          <motion.div
+                              key={i}
+                              className={`absolute w-2.5 h-2.5 rounded-full ${particle.color} top-1/2 left-1/2`}
+                              initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                              animate={{ x: particle.x, y: particle.y, opacity: 0, scale: 0 }}
+                              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                          />
+                      ))}
                   </div>
                   <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">{t('onb_success_title')}</h2>
                   <p className="text-xl text-stone-500 dark:text-stone-400 mb-10 max-w-xl mx-auto">
