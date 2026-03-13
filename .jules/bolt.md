@@ -8,3 +8,6 @@
 ## 2026-03-12 - [Inline Array Creation in Render Loop]
 **Learning:** Creating arrays inline during a render cycle (especially within `.map()`) can cause unnecessary garbage collection (GC) pressure. This is particularly impactful when the array is static or its length doesn't change based on component state.
 **Action:** Move static data generation outside of the component or use `useMemo` to ensure the data is only created once. This reduces memory allocations and improves performance by preventing the creation of new array instances on every render.
+
+2024-05-24
+Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n })`) inline within a React component's render loop when rendering a static or unchanging number of items. This causes unnecessary allocations on every render cycle, leading to increased Garbage Collection pressure. Pre-allocate such arrays statically outside the component when possible.

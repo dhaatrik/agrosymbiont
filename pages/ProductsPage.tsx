@@ -9,6 +9,10 @@ import { useTranslation } from 'react-i18next';
 import TiltCard from '../components/TiltCard';
 import CropProblemSolver from '../components/CropProblemSolver';
 
+// Performance optimization: Pre-allocate static array outside the render loop
+// to avoid unnecessary object creation/GC pressure on every render.
+const PARTICLES = Array.from({ length: 12 });
+
 const ProductsPage: React.FC = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
@@ -232,7 +236,7 @@ const ProductsPage: React.FC = () => {
                                 {/* Micro-interaction Particles */}
                                 {showParticles && (
                                     <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                        {[...Array(12)].map((_, i) => {
+                                        {PARTICLES.map((_, i) => {
                                             const angle = (Math.PI * 2 * i) / 12;
                                             const v = 80 + Math.random() * 40;
                                             return (
