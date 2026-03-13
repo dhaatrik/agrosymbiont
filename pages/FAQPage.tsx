@@ -31,10 +31,10 @@ const FAQPage: React.FC = () => {
     const { t } = useTranslation();
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-    const faqs = Array.from({ length: 10 }, (_, i) => ({
+    const faqs = React.useMemo(() => Array.from({ length: 10 }, (_, i) => ({
         question: t(`faq_q${i + 1}`),
         answer: t(`faq_a${i + 1}`)
-    }));
+    })), [t]);
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
