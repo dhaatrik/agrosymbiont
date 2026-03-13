@@ -9,6 +9,10 @@ import CropProblemSolver from '../components/CropProblemSolver';
 import ROICalculator from '../components/products/ROICalculator';
 import WaitlistForm from '../components/products/WaitlistForm';
 
+// Performance optimization: Pre-allocate static array outside the render loop
+// to avoid unnecessary object creation/GC pressure on every render.
+const PARTICLES = Array.from({ length: 12 });
+
 const ProductsPage: React.FC = () => {
   const { t } = useTranslation();
 
