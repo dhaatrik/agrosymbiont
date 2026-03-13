@@ -101,7 +101,16 @@ const InteractiveMap: React.FC = () => {
               key={project.id}
               coordinates={project.coordinates}
               onClick={() => setSelectedProject(project)}
-              className="cursor-pointer"
+              onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedProject(project);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
+              aria-label={`View details for ${project.name}`}
             >
               <g
                 fill="none"
