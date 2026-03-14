@@ -11,3 +11,7 @@
 
 2024-05-24
 Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n })`) inline within a React component's render loop when rendering a static or unchanging number of items. This causes unnecessary allocations on every render cycle, leading to increased Garbage Collection pressure. Pre-allocate such arrays statically outside the component when possible.
+
+## 2026-03-14 - [React State Updates on Native Scroll Event]
+**Learning:** Attaching a native `window.addEventListener('scroll', ...)` that triggers a React state update (e.g. `setIsVisible` in `BackToTopButton`) causes synchronous React re-renders on every scroll tick. This blocks the main thread and can cause noticeable scroll jank.
+**Action:** Always prefer off-main-thread or composition-level solutions for scroll interactions. Use Framer Motion's `useScroll` and `useMotionValueEvent` which are optimized, batch read/write operations utilizing `requestAnimationFrame`, and prevent constant component re-renders.

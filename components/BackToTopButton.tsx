@@ -1,17 +1,18 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChevronUp } from 'lucide-react';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 
 const BackToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { scrollY } = useScroll();
 
-  const toggleVisibility = () => {
-    if (window.scrollY > 300) {
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 300) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
-  };
+  });
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -19,14 +20,6 @@ const BackToTopButton: React.FC = () => {
       behavior: 'smooth',
     });
   };
-
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
 
   return (
     <button

@@ -3,6 +3,38 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import BackToTopButton from './BackToTopButton';
 
+// Mock framer-motion useScroll and useMotionValueEvent
+vi.mock('framer-motion', async () => {
+  const actual = await vi.importActual('framer-motion') as any;
+  let scrollYValue = 0;
+  let listeners: ((v: number) => void)[] = [];
+
+  return {
+    ...actual,
+    useScroll: () => ({
+      scrollY: {
+        get: () => scrollYValue,
+        onChange: (listener: (v: number) => void) => {
+          listeners.push(listener);
+          return () => {
+            listeners = listeners.filter(l => l !== listener);
+          };
+        }
+      }
+    }),
+    useMotionValueEvent: (value: any, eventName: string, callback: (v: number) => void) => {
+      if (eventName === 'change') {
+         // In a real environment, useMotionValueEvent would subscribe to the motion value.
+         // For testing, we can expose a global function to trigger the callback manually.
+         (globalThis as any).__triggerFramerScroll = (y: number) => {
+             scrollYValue = y;
+             callback(y);
+         };
+      }
+    }
+  };
+});
+
 describe('BackToTopButton', () => {
   beforeEach(() => {
     // Reset window.scrollY
@@ -10,6 +42,7 @@ describe('BackToTopButton', () => {
     // Mock window.scrollTo
     window.scrollTo = vi.fn();
     vi.clearAllMocks();
+    (globalThis as any).__triggerFramerScroll?.(0);
   });
 
   it('is initially hidden', () => {
@@ -26,8 +59,7 @@ describe('BackToTopButton', () => {
     const button = screen.getByRole('button', { name: /scroll back to top/i });
 
     act(() => {
-      Object.defineProperty(window, 'scrollY', { value: 301, writable: true });
-      window.dispatchEvent(new Event('scroll'));
+      (globalThis as any).__triggerFramerScroll(301);
     });
 
     expect(button).toHaveClass('opacity-100');
@@ -42,8 +74,7 @@ describe('BackToTopButton', () => {
 
     // Scroll down first
     act(() => {
-      Object.defineProperty(window, 'scrollY', { value: 301, writable: true });
-      window.dispatchEvent(new Event('scroll'));
+      (globalThis as any).__triggerFramerScroll(301);
     });
 
     // Verify it is visible
@@ -51,8 +82,7 @@ describe('BackToTopButton', () => {
 
     // Scroll back up
     act(() => {
-      Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
-      window.dispatchEvent(new Event('scroll'));
+      (globalThis as any).__triggerFramerScroll(200);
     });
 
     // Verify it is hidden again
@@ -65,12 +95,9 @@ describe('BackToTopButton', () => {
     render(<BackToTopButton />);
     const button = screen.getByRole('button', { name: /scroll back to top/i });
 
-    // Make it visible so it can be clicked (pointer-events-none might prevent it in real DOM,
-    // but testing-library fireEvent.click still triggers it if we don't check pointer-events,
-    // but let's be thorough and simulate scroll first)
+    // Make it visible
     act(() => {
-      Object.defineProperty(window, 'scrollY', { value: 301, writable: true });
-      window.dispatchEvent(new Event('scroll'));
+      (globalThis as any).__triggerFramerScroll(301);
     });
 
     fireEvent.click(button);
