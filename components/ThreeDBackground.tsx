@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion, useScroll } from 'framer-motion';
 import {
   ProjectedParticle,
   createSphereParticles,
@@ -14,6 +14,7 @@ import {
 const ThreeDBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
 
   useEffect(() => {
     if (shouldReduceMotion) return;
@@ -94,17 +95,12 @@ const ThreeDBackground: React.FC = () => {
         canvas.style.height = `${height}px`;
     };
 
-    let scrollY = 0;
-    const handleScroll = () => {
-        scrollY = window.scrollY;
-    };
 
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseleave', handleMouseUp);
     window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
     let rotationX = 0;
     let rotationY = 0;
@@ -117,6 +113,8 @@ const ThreeDBackground: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
       time += 0.01;
       
+      const currentScrollY = scrollY.get();
+
       // Smooth rotation easing based on mouse position
       rotationY += (mouseX - rotationY) * 0.05;
       rotationX += (mouseY - rotationX) * 0.05;
@@ -129,7 +127,7 @@ const ThreeDBackground: React.FC = () => {
       const finalRotationX = rotationX + dragRotationX;
       
       // --- Render Ambient Dust ---
-      renderDustParticles(ctx, dustParticles, width, height, mouseX, mouseY, scrollY);
+      renderDustParticles(ctx, dustParticles, width, height, mouseX, mouseY, currentScrollY);
 
       // --- Render Connected Sphere ---
       updateAndProjectSphereParticles(
@@ -139,7 +137,7 @@ const ThreeDBackground: React.FC = () => {
         baseRadius,
         finalRotationX,
         finalRotationY,
-        scrollY,
+        currentScrollY,
         width,
         height
       );
@@ -158,7 +156,6 @@ const ThreeDBackground: React.FC = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
