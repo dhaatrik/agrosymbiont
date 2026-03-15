@@ -86,7 +86,7 @@ const CropProblemSolver: React.FC = () => {
                                 setSelectedSymptom(null);
                                 setShowResult(false);
                             }}
-                            className={`flex items-center gap-2 p-3 rounded-xl border transition-all ${selectedCrop === crop.id ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-white dark:hover:bg-stone-800'}`}
+                            className={`flex items-center gap-2 p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedCrop === crop.id ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-white dark:hover:bg-stone-800'}`}
                         >
                             {crop.icon} <span className="font-semibold text-sm">{crop.label}</span>
                         </button>
@@ -110,7 +110,7 @@ const CropProblemSolver: React.FC = () => {
                                         setSelectedSymptom(symptom.id as SymptomType);
                                         setShowResult(false);
                                     }}
-                                    className={`text-left p-3 rounded-xl border transition-all ${selectedSymptom === symptom.id ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
+                                    className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedSymptom === symptom.id ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
                                 >
                                     <span className="font-semibold text-sm">{symptom.label}</span>
                                 </button>
@@ -125,7 +125,7 @@ const CropProblemSolver: React.FC = () => {
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pt-4">
                         <button 
                             onClick={handleDiagnose}
-                            className="w-full bg-cerulean-blue text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
+                            className="w-full bg-cerulean-blue text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
                         >
                             <Search className="w-5 h-5" /> {t('solver_analyze')}
                         </button>
@@ -152,7 +152,7 @@ const CropProblemSolver: React.FC = () => {
                     <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
                     <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
                     <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
-                    <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2">
+                    <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
                         {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
                     </button>
                 </motion.div>
