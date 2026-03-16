@@ -15,3 +15,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2026-03-14 - [React State Updates on Native Scroll Event]
 **Learning:** Attaching a native `window.addEventListener('scroll', ...)` that triggers a React state update (e.g. `setIsVisible` in `BackToTopButton`) causes synchronous React re-renders on every scroll tick. This blocks the main thread and can cause noticeable scroll jank.
 **Action:** Always prefer off-main-thread or composition-level solutions for scroll interactions. Use Framer Motion's `useScroll` and `useMotionValueEvent` which are optimized, batch read/write operations utilizing `requestAnimationFrame`, and prevent constant component re-renders.
+
+## 2024-05-20 - Extracting redundant trig computations in high-frequency loops
+**Learning:** In highly animated canvas components (like `ThreeDBackground`), inline trigonometric calculations (e.g., `Math.sin`, `Math.cos`) inside loops that run every frame via `requestAnimationFrame` cause severe CPU strain. For 500 particles, calculating 4 rotation values inline means 2,000 unnecessary trig operations per frame (120,000 per second at 60fps).
+**Action:** Always precalculate frame-constant values (like rotations) outside the particle loop, and precalculate particle-constant values (like unit vectors) at creation time, storing them on the particle object to eliminate thousands of operations per frame.

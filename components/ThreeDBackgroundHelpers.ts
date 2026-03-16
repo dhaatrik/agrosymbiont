@@ -12,6 +12,9 @@ export interface SphereParticle {
   color: string;
   pulseOffset: number;
   pulseSpeed: number;
+  unitX: number;
+  unitY: number;
+  unitZ: number;
 }
 
 export interface DustParticle {
@@ -34,6 +37,9 @@ export const createSphereParticles = (count: number, colors: string[]): SpherePa
       color: colors[Math.floor(Math.random() * colors.length)],
       pulseOffset: Math.random() * Math.PI * 2,
       pulseSpeed: 0.02 + Math.random() * 0.04,
+      unitX: Math.sin(phi) * Math.cos(theta),
+      unitY: Math.sin(phi) * Math.sin(theta),
+      unitZ: Math.cos(phi),
     };
   });
 };
@@ -103,6 +109,11 @@ export const updateAndProjectSphereParticles = (
 ) => {
   const breathingRadius = Math.sin(time * 0.5) * 15; // Sphere breathes in and out
 
+  const cosFinalRotationY = Math.cos(finalRotationY);
+  const sinFinalRotationY = Math.sin(finalRotationY);
+  const cosFinalRotationX = Math.cos(finalRotationX);
+  const sinFinalRotationX = Math.sin(finalRotationX);
+
   // Optimization: Reuse pre-allocated array and update object properties in place
   // instead of re-creating hundreds of objects per frame to reduce GC pressure.
   if (projectedParticles.length !== sphereParticles.length) {
@@ -118,18 +129,18 @@ export const updateAndProjectSphereParticles = (
     const individualPulse = Math.sin(time * p.pulseSpeed + p.pulseOffset) * 5;
     const currentRadius = baseRadius + breathingRadius + individualPulse;
 
-    // Spherical to Cartesian
-    let x = currentRadius * Math.sin(p.phi) * Math.cos(p.theta);
-    let y = currentRadius * Math.sin(p.phi) * Math.sin(p.theta);
-    let z = currentRadius * Math.cos(p.phi);
+    // Spherical to Cartesian (optimized with precalculated unit vectors)
+    let x = currentRadius * p.unitX;
+    let y = currentRadius * p.unitY;
+    let z = currentRadius * p.unitZ;
 
     // Rotate around Y axis (spin + mouse influence)
-    let x1 = x * Math.cos(finalRotationY) - z * Math.sin(finalRotationY);
-    let z1 = x * Math.sin(finalRotationY) + z * Math.cos(finalRotationY);
+    let x1 = x * cosFinalRotationY - z * sinFinalRotationY;
+    let z1 = x * sinFinalRotationY + z * cosFinalRotationY;
 
     // Rotate around X axis (mouse influence)
-    let y1 = y * Math.cos(finalRotationX) - z1 * Math.sin(finalRotationX);
-    let z2 = y * Math.sin(finalRotationX) + z1 * Math.cos(finalRotationX);
+    let y1 = y * cosFinalRotationX - z1 * sinFinalRotationX;
+    let z2 = y * sinFinalRotationX + z1 * cosFinalRotationX;
 
     // Perspective projection with scroll parallax
     const scale = 800 / (800 + z2);
