@@ -6,7 +6,7 @@ import {
   Marker,
 } from "react-simple-maps";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, TrendingUp, Droplets, Leaf } from "lucide-react";
+import { MapPin, TrendingUp, Droplets, Leaf, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -138,10 +138,10 @@ const ImpactMap: React.FC = () => {
               >
                 <button
                   onClick={() => setActiveTooltip(null)}
-                  className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                  className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition-colors rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800"
                   aria-label="Close details"
                 >
-                  &times;
+                  <X className="w-5 h-5" />
                 </button>
                 <div className="flex items-center gap-2 mb-1">
                   <MapPin className="w-5 h-5 text-mustard-yellow" />

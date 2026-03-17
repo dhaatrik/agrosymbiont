@@ -141,7 +141,7 @@ const InteractiveMap: React.FC = () => {
             <button
               onClick={() => setSelectedProject(null)}
               aria-label="Close project details"
-              className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition-colors"
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition-colors rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
             >
               <X className="w-5 h-5" />
             </button>

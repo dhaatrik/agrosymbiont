@@ -1,0 +1,3 @@
+## 2024-05-17 - Add keyboard focus states to map tooltips
+**Learning:** Map components like \`react-simple-maps\` that dynamically spawn DOM elements (like tooltips or popovers via React state) often do not automatically inherit global focus-visible utility classes. Specifically, close buttons on tooltips need explicit \`focus-visible:ring-*\` definitions because standard accessibility frameworks might miss elements deeply nested within dynamically generated SVG/Canvas map contexts.
+**Action:** Always manually verify and attach explicit focus and outline tailwind utility classes (e.g., \`focus-visible:ring-cerulean-blue\`) to all interactive elements spawned by third-party map libraries.
