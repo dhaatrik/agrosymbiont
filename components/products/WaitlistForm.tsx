@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader2, Sprout, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const PARTICLES = Array.from({ length: 12 });
+
 const WaitlistForm: React.FC = () => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
@@ -138,7 +140,7 @@ const WaitlistForm: React.FC = () => {
                                 {/* Micro-interaction Particles */}
                                 {showParticles && (
                                     <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                        {[...Array(12)].map((_, i) => {
+                                        {PARTICLES.map((_, i) => {
                                             const angle = (Math.PI * 2 * i) / 12;
                                             const v = 80 + Math.random() * 40;
                                             return (
