@@ -25,7 +25,7 @@ const JobCard: React.FC<JobCardProps> = ({ title, location, type, onApply }) => 
                 </div>
                 <button
                     onClick={onApply}
-                    className="bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-3 px-8 rounded-full group-hover:bg-white dark:group-hover:bg-stone-900 group-hover:text-cerulean-blue dark:group-hover:text-blue-400 group-hover:ring-2 group-hover:ring-cerulean-blue dark:group-hover:ring-blue-500 transition-all duration-300 shadow-[0_4px_0_#1e3a8a] dark:shadow-[0_4px_0_#1e40af] hover:shadow-[0_6px_0_#1e3a8a] dark:hover:shadow-[0_6px_0_#1e40af] active:shadow-[0_0px_0_#1e3a8a] dark:active:shadow-[0_0px_0_#1e40af] active:translate-y-1 translate-z-10"
+                    className="bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-3 px-8 rounded-full group-hover:bg-white dark:group-hover:bg-stone-900 group-hover:text-cerulean-blue dark:group-hover:text-blue-400 group-hover:ring-2 group-hover:ring-cerulean-blue dark:group-hover:ring-blue-500 transition-all duration-300 shadow-[0_4px_0_#1e3a8a] dark:shadow-[0_4px_0_#1e40af] hover:shadow-[0_6px_0_#1e3a8a] dark:hover:shadow-[0_6px_0_#1e40af] active:shadow-[0_0px_0_#1e3a8a] dark:active:shadow-[0_0px_0_#1e40af] active:translate-y-1 translate-z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
                     aria-label={`${t('car_apply_now')} ${title}`}
                 >
                     {t('car_apply_now')}
