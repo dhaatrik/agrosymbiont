@@ -65,8 +65,6 @@ export const renderDustParticles = (
   mouseY: number,
   scrollY: number
 ) => {
-  // Performance optimization: Standard for loops outperform Array.prototype.forEach
-  // in high-frequency 60fps render loops by avoiding closure/function call overhead.
   for (let i = 0; i < dustParticles.length; i++) {
     const p = dustParticles[i];
     // Move dust
