@@ -70,7 +70,7 @@ export const StepCrop: React.FC<{ selections: OnboardingSelections, setSelection
                     setSelections({ ...selections, crop: crop.id });
                     setTimeout(handleNext, 300);
                 }}
-                className={`w-full p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-4 text-center h-48 preserve-3d
+                className={`w-full p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-4 text-center h-48 preserve-3d focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
                     ${selections.crop === crop.id
                     ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400'
                     : 'bg-white dark:bg-stone-800 border-stone-100 dark:border-stone-700 hover:border-cerulean-blue/50 hover:bg-stone-50 dark:hover:bg-stone-700/50 text-gray-700 dark:text-gray-300'
@@ -118,7 +118,7 @@ export const StepChallenge: React.FC<{ selections: OnboardingSelections, setSele
                 setSelections({ ...selections, challenge: challenge.id });
                 setTimeout(handleNext, 300);
               }}
-              className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center justify-between text-left
+              className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-burnt-orange dark:focus-visible:ring-offset-stone-900
               ${selections.challenge === challenge.id
                   ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400'
                   : 'bg-white dark:bg-stone-800 border-stone-100 dark:border-stone-700 hover:border-burnt-orange/50 hover:bg-stone-50 dark:hover:bg-stone-700/50 text-gray-700 dark:text-gray-300'
@@ -172,7 +172,7 @@ export const StepFarmSize: React.FC<{ selections: OnboardingSelections, setSelec
                       setSelections({ ...selections, farmSize: size.id });
                       setTimeout(handleNext, 300);
                   }}
-                  className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-3 text-center
+                  className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-3 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 dark:focus-visible:ring-offset-stone-900
                       ${selections.farmSize === size.id
                       ? 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-400 shadow-lg shadow-green-500/10'
                       : 'bg-white dark:bg-stone-800 border-stone-100 dark:border-stone-700 hover:border-green-400/50 hover:bg-stone-50 dark:hover:bg-stone-700/50 text-gray-700 dark:text-gray-300'
@@ -226,7 +226,7 @@ export const StepSoilType: React.FC<{ selections: OnboardingSelections, setSelec
                       setSelections({ ...selections, soilType: soil.id });
                       setTimeout(handleNext, 300);
                   }}
-                  className={`p-5 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-2 text-center
+                  className={`p-5 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-2 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
                       ${selections.soilType === soil.id
                       ? `${soilColors[soil.id]} border-cerulean-blue shadow-lg`
                       : `${soilColors[soil.id]} hover:shadow-md`
@@ -284,7 +284,7 @@ export const StepContact: React.FC<{ selections: OnboardingSelections, setSelect
           <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-cerulean-blue text-white font-bold text-lg py-4 rounded-xl transition duration-300 shadow-lg flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 transform hover:-translate-y-1'}`}
+              className={`w-full bg-cerulean-blue text-white font-bold text-lg py-4 rounded-xl transition duration-300 shadow-lg flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 transform hover:-translate-y-1'}`}
           >
               {isSubmitting ? (
                   <><Loader2 className="animate-spin w-5 h-5" /> {t('onb_submitting')}</>
