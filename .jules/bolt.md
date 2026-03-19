@@ -19,3 +19,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-05-20 - Extracting redundant trig computations in high-frequency loops
 **Learning:** In highly animated canvas components (like `ThreeDBackground`), inline trigonometric calculations (e.g., `Math.sin`, `Math.cos`) inside loops that run every frame via `requestAnimationFrame` cause severe CPU strain. For 500 particles, calculating 4 rotation values inline means 2,000 unnecessary trig operations per frame (120,000 per second at 60fps).
 **Action:** Always precalculate frame-constant values (like rotations) outside the particle loop, and precalculate particle-constant values (like unit vectors) at creation time, storing them on the particle object to eliminate thousands of operations per frame.
+
+## 2024-03-19 - [Array.prototype.forEach Overhead in Render Loops]
+**Learning:** In high-frequency 60fps loops (e.g., canvas rendering using `requestAnimationFrame`), iterating over arrays with `Array.prototype.forEach` introduces unnecessary function call and closure overhead compared to standard indexed `for` loops. This can cause micro-stutters when iterating over hundreds of particles per frame.
+**Action:** Always use standard indexed `for` loops (e.g., `for (let i = 0; i < array.length; i++)`) instead of array iteration methods like `forEach` or `map` within performance-critical animation loops.
