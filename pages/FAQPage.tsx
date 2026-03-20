@@ -7,7 +7,7 @@ const FAQItem: React.FC<{ question: string, answer: string, isOpen: boolean, onC
     return (
         <div className="border border-stone-200 dark:border-stone-700 rounded-2xl mb-4 overflow-hidden bg-white dark:bg-stone-800 shadow-sm hover:shadow-md transition-shadow duration-300">
             <button 
-                className="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                className="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cerulean-blue dark:focus-visible:ring-blue-500"
                 onClick={onClick}
                 aria-expanded={isOpen}
             >

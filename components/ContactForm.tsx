@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useContactForm } from '../hooks/useContactForm';
