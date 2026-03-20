@@ -84,6 +84,18 @@ const ContactForm: React.FC = () => {
         setIsSubmitted(true);
     }, [formData, validateForm]);
 
+    const getButtonText = () => {
+        if (isSubmitting) {
+            return (
+                <>
+                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                    {t('contact_sending')}
+                </>
+            );
+        }
+        return t('contact_send');
+    };
+
     const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-800 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-white";
     const errorClass = "ring-red-500 focus:ring-red-500 bg-red-50/30 dark:bg-red-900/20";
 
@@ -183,14 +195,7 @@ const ContactForm: React.FC = () => {
                     disabled={isSubmitting}
                     className={`w-full bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-5 px-6 rounded-xl transition duration-300 transform shadow-[0_6px_0_#1e3a8a] dark:shadow-[0_6px_0_#1e40af] hover:shadow-[0_8px_0_#1e3a8a] dark:hover:shadow-[0_8px_0_#1e40af] active:shadow-[0_0px_0_#1e3a8a] dark:active:shadow-[0_0px_0_#1e40af] flex items-center justify-center ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 active:translate-y-1'}`}
                 >
-                    {isSubmitting ? (
-                        <>
-                            <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                            {t('contact_sending')}
-                        </>
-                    ) : (
-                        t('contact_send')
-                    )}
+                    {getButtonText()}
                 </button>
             </div>
         </form>
