@@ -274,7 +274,7 @@ export const StepContact: React.FC<{ selections: OnboardingSelections, setSelect
                   required
                   type="email"
                   id="email"
-                  pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
+                  pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                   className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all"
                   placeholder={t('onb_email_placeholder')}
                   value={selections.email}

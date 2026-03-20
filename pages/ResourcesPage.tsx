@@ -16,7 +16,7 @@ const ResourcesPage: React.FC = () => {
       const trimmedValue = value.trim();
       if (!trimmedValue) {
           setEmailError('Email Address is required.');
-      } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedValue)) {
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
           setEmailError('Please enter a valid email address.');
       } else {
           setEmailError('');
@@ -29,7 +29,7 @@ const ResourcesPage: React.FC = () => {
     if (!trimmedEmail) {
         setEmailError('Email Address is required.');
         return;
-    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedEmail)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
         setEmailError('Please enter a valid email address.');
         return;
     }
