@@ -1,6 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import { Check, AlertCircle, ChevronDown, Loader2 } from 'lucide-react';
+import React from 'react';
+import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useContactForm } from '../hooks/useContactForm';
+import FormField from './FormField';
 
 const ContactForm: React.FC = () => {
     const { t } = useTranslation();
@@ -103,7 +105,7 @@ const ContactForm: React.FC = () => {
         <form noValidate onSubmit={handleSubmit} className="bg-white/60 dark:bg-stone-800/60 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-stone-700/50 space-y-8">
             {Object.keys(errors).length > 0 && (
                 <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl flex items-start">
-                    <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" strokeWidth={2} />
+                    <div className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0">⚠️</div>
                     <div>
                         <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('contact_error_header')}</h4>
                         <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
@@ -114,40 +116,22 @@ const ContactForm: React.FC = () => {
                     </div>
                 </div>
             )}
-            <div>
-                <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_name_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+
+            <FormField label={t('contact_name_label')} name="name" id="name" required error={errors.name}>
                 <input type="text" name="name" id="name" required value={formData.name} onChange={handleChange} className={`${inputClass} ${errors.name ? errorClass : ''}`} placeholder={t('contact_name_placeholder')} />
-                {errors.name && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.name}
-                    </p>
-                )}
-            </div>
+            </FormField>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_email_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                <FormField label={t('contact_email_label')} name="email" id="email" required error={errors.email}>
                     <input type="email" name="email" id="email" required value={formData.email} onChange={handleChange} className={`${inputClass} ${errors.email ? errorClass : ''}`} placeholder={t('contact_email_placeholder')} />
-                    {errors.email && (
-                        <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                            <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                            {errors.email}
-                        </p>
-                    )}
-                </div>
-                    <div>
-                    <label htmlFor="phone" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_phone_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                </FormField>
+
+                <FormField label={t('contact_phone_label')} name="phone" id="phone" required error={errors.phone}>
                     <input type="tel" name="phone" id="phone" required value={formData.phone} onChange={handleChange} pattern="[0-9]*" className={`${inputClass} ${errors.phone ? errorClass : ''}`} placeholder={t('contact_phone_placeholder')} />
-                    {errors.phone && (
-                        <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                            <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                            {errors.phone}
-                        </p>
-                    )}
-                </div>
+                </FormField>
             </div>
-            <div>
-                <label htmlFor="inquiryType" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_inquiry_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+
+            <FormField label={t('contact_inquiry_label')} name="inquiryType" id="inquiryType" required error={errors.inquiryType}>
                 <div className="relative">
                     <select id="inquiryType" name="inquiryType" required value={formData.inquiryType} onChange={handleChange} className={`${inputClass} appearance-none ${errors.inquiryType ? errorClass : ''}`}>
                         <option value="">{t('contact_inquiry_placeholder')}</option>
@@ -160,23 +144,12 @@ const ContactForm: React.FC = () => {
                         <ChevronDown className="h-4 w-4" />
                     </div>
                 </div>
-                {errors.inquiryType && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.inquiryType}
-                    </p>
-                )}
-            </div>
-            <div>
-                <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_message_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+            </FormField>
+
+            <FormField label={t('contact_message_label')} name="message" id="message" required error={errors.message}>
                 <textarea id="message" name="message" rows={4} required value={formData.message} onChange={handleChange} className={`${inputClass} ${errors.message ? errorClass : ''}`} placeholder={t('contact_message_placeholder')}></textarea>
-                {errors.message && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.message}
-                    </p>
-                )}
-            </div>
+            </FormField>
+
             <div className="pt-4">
                 <button
                     type="submit"

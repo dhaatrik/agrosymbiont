@@ -8,58 +8,12 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, TrendingUp, Droplets, Leaf, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+import { geoUrl, mapMarkers, MarkerData } from "../data/mapData";
 
 const ImpactMap: React.FC = () => {
   const { t } = useTranslation();
 
-  const markers = [
-    {
-      markerOffset: -30,
-      nameKey: "map_maharashtra",
-      coordinates: [75.7139, 19.7515] as [number, number],
-      stats: {
-        yieldBoost: "+28%",
-        farmers: "4,500+",
-        soilHealthKey: "map_excellent",
-      },
-      cropKey: "map_maharashtra_crop",
-    },
-    {
-      markerOffset: -30,
-      nameKey: "map_punjab",
-      coordinates: [75.3412, 31.1471] as [number, number],
-      stats: {
-        yieldBoost: "+22%",
-        farmers: "2,100+",
-        soilHealthKey: "map_improving",
-      },
-      cropKey: "map_punjab_crop",
-    },
-    {
-      markerOffset: 15,
-      nameKey: "map_kenya",
-      coordinates: [37.9062, -0.0236] as [number, number],
-      stats: { yieldBoost: "+35%", farmers: "850+", soilHealthKey: "map_good" },
-      cropKey: "map_kenya_crop",
-    },
-    {
-      markerOffset: 15,
-      nameKey: "map_vietnam",
-      coordinates: [108.2022, 14.0583] as [number, number],
-      stats: {
-        yieldBoost: "+19%",
-        farmers: "1,200+",
-        soilHealthKey: "map_good",
-      },
-      cropKey: "map_vietnam_crop",
-    },
-  ];
-
-  const [activeTooltip, setActiveTooltip] = useState<
-    (typeof markers)[0] | null
-  >(null);
+  const [activeTooltip, setActiveTooltip] = useState<MarkerData | null>(null);
 
   return (
     <div className="w-full relative">
@@ -95,7 +49,7 @@ const ImpactMap: React.FC = () => {
               }
             </Geographies>
 
-            {markers.map((marker, index) => (
+            {mapMarkers.map((marker, index) => (
               <Marker
                 key={index}
                 coordinates={marker.coordinates}

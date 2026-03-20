@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, UploadCloud, Loader2 } from 'lucide-react';
 
@@ -9,6 +8,91 @@ interface JobApplicationFormProps {
     onSuccess?: () => void;
 }
 
+interface FormFieldProps {
+    label: string;
+    name: string;
+    type: string;
+    id: string;
+    placeholder: string;
+    error?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const FormField: React.FC<FormFieldProps> = ({ label, name, type, id, placeholder, error, onChange }) => {
+    const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-900 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-gray-200";
+
+    return (
+        <div>
+            <label htmlFor={id} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{label}</label>
+            <input
+                type={type}
+                name={name}
+                id={id}
+                required
+                onChange={onChange}
+                className={`${inputClass} ${error ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`}
+                placeholder={placeholder}
+            />
+            {error && (
+                <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
+                    {error}
+                </p>
+            )}
+        </div>
+    );
+};
+
+interface ResumeUploadFieldProps {
+    id: string;
+    label: string;
+    uploadText: string;
+    dragDropText: string;
+    fileTypesText: string;
+    selectedText: string;
+    resume: File | null;
+    error?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
+    id,
+    label,
+    uploadText,
+    dragDropText,
+    fileTypesText,
+    selectedText,
+    resume,
+    error,
+    onChange
+}) => (
+    <div>
+        <label htmlFor={id} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{label}</label>
+        <div className="mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-stone-200 dark:border-stone-700 border-dashed rounded-2xl hover:bg-white/40 dark:hover:bg-stone-800/40 hover:border-cerulean-blue/50 dark:hover:border-blue-500/50 transition-all cursor-pointer bg-white/40 dark:bg-stone-900/40 group">
+            <div className="space-y-2 text-center">
+                <div className="mx-auto h-14 w-14 text-stone-400 dark:text-stone-500 group-hover:text-cerulean-blue dark:group-hover:text-blue-400 transition-colors flex justify-center items-center">
+                    <UploadCloud className="w-12 h-12" strokeWidth={1.5} />
+                </div>
+                <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
+                    <label htmlFor={id} className="relative cursor-pointer rounded-md font-bold text-cerulean-blue dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 focus-within:outline-none">
+                        <span>{uploadText}</span>
+                        <input id={id} name="resume" type="file" className="sr-only" onChange={onChange} required />
+                    </label>
+                    <p className="pl-1">{dragDropText}</p>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-500">{fileTypesText}</p>
+                {resume && <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-2 bg-green-50 dark:bg-green-900/20 py-1 px-3 rounded-full inline-block">{selectedText}{resume.name}</p>}
+            </div>
+        </div>
+        {error && (
+            <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
+                {error}
+            </p>
+        )}
+    </div>
+);
+
 const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle, onSuccess }) => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{ name: string, email: string, linkedin: string, resume: File | null }>({ name: '', email: '', linkedin: '', resume: null });
@@ -16,7 +100,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    const validateField = (name: string, value: string | File | null): string => {
+    const validateField = useCallback((name: string, value: string | File | null): string => {
         if (name === 'name' && (typeof value !== 'string' || !value.trim())) return t('car_form_name_required');
         if (name === 'email') {
             if (typeof value !== 'string') return t('car_form_email_required');
@@ -28,9 +112,9 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
         if (name === 'linkedin' && (typeof value !== 'string' || !value.trim())) return t('car_form_linkedin_required');
         if (name === 'resume' && !value) return t('car_form_resume_required');
         return '';
-    };
+    }, [t]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, files } = e.target;
         let newValue: string | File | null = value;
 
@@ -51,20 +135,19 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
             }
             return newErrors;
         });
-    };
+    }, [validateField]);
 
-    const validateForm = (): { [key: string]: string } => {
+    const validateForm = useCallback((): { [key: string]: string } => {
         const newErrors: { [key: string]: string } = {};
-        const nameError = validateField('name', formData.name);
-        if (nameError) newErrors.name = nameError;
-        const emailError = validateField('email', formData.email);
-        if (emailError) newErrors.email = emailError;
-        const linkedinError = validateField('linkedin', formData.linkedin);
-        if (linkedinError) newErrors.linkedin = linkedinError;
-        const resumeError = validateField('resume', formData.resume);
-        if (resumeError) newErrors.resume = resumeError;
+        const fields: (keyof typeof formData)[] = ['name', 'email', 'linkedin', 'resume'];
+
+        fields.forEach(field => {
+            const error = validateField(field, formData[field]);
+            if (error) newErrors[field] = error;
+        });
+
         return newErrors;
-    };
+    }, [formData, validateField]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -85,7 +168,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
         if (onSuccess) onSuccess();
     };
 
-    const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-900 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-gray-200";
+    const idPrefix = useMemo(() => jobId || 'general', [jobId]);
 
     if (isSubmitted) {
         return (
@@ -95,8 +178,6 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
             </div>
         );
     }
-
-    const idPrefix = jobId || 'general';
 
     return (
         <form noValidate onSubmit={handleSubmit} className="space-y-6">
@@ -113,61 +194,49 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
                     </div>
                 </div>
             )}
-            <div>
-                <label htmlFor={`${idPrefix}-name`} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{t('car_form_name')}</label>
-                <input type="text" name="name" id={`${idPrefix}-name`} required onChange={handleChange} className={`${inputClass} ${errors.name ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`} placeholder={t('car_form_name_placeholder')} />
-                {errors.name && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.name}
-                    </p>
-                )}
-            </div>
-            <div>
-                <label htmlFor={`${idPrefix}-email`} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{t('car_form_email')}</label>
-                <input type="email" name="email" id={`${idPrefix}-email`} required onChange={handleChange} className={`${inputClass} ${errors.email ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`} placeholder={t('car_form_email_placeholder')} />
-                {errors.email && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.email}
-                    </p>
-                )}
-            </div>
-            <div>
-                <label htmlFor={`${idPrefix}-linkedin`} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{t('car_form_linkedin')}</label>
-                <input type="url" name="linkedin" id={`${idPrefix}-linkedin`} required onChange={handleChange} className={`${inputClass} ${errors.linkedin ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`} placeholder={t('car_form_linkedin_placeholder')} />
-                {errors.linkedin && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.linkedin}
-                    </p>
-                )}
-            </div>
-            <div>
-                <label htmlFor={`${idPrefix}-resume`} className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">{t('car_form_resume')}</label>
-                <div className="mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-stone-200 dark:border-stone-700 border-dashed rounded-2xl hover:bg-white/40 dark:hover:bg-stone-800/40 hover:border-cerulean-blue/50 dark:hover:border-blue-500/50 transition-all cursor-pointer bg-white/40 dark:bg-stone-900/40 group">
-                    <div className="space-y-2 text-center">
-                        <div className="mx-auto h-14 w-14 text-stone-400 dark:text-stone-500 group-hover:text-cerulean-blue dark:group-hover:text-blue-400 transition-colors flex justify-center items-center">
-                            <UploadCloud className="w-12 h-12" strokeWidth={1.5} />
-                        </div>
-                        <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
-                            <label htmlFor={`${idPrefix}-resume`} className="relative cursor-pointer rounded-md font-bold text-cerulean-blue dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 focus-within:outline-none">
-                                <span>{t('car_form_upload')}</span>
-                                <input id={`${idPrefix}-resume`} name="resume" type="file" className="sr-only" onChange={handleChange} required />
-                            </label>
-                            <p className="pl-1">{t('car_form_drag_drop')}</p>
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">{t('car_form_file_types')}</p>
-                        {formData.resume && <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-2 bg-green-50 dark:bg-green-900/20 py-1 px-3 rounded-full inline-block">{t('car_form_selected')}{formData.resume.name}</p>}
-                    </div>
-                </div>
-                {errors.resume && (
-                    <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                        {errors.resume}
-                    </p>
-                )}
-            </div>
+
+            <FormField
+                label={t('car_form_name')}
+                name="name"
+                type="text"
+                id={`${idPrefix}-name`}
+                placeholder={t('car_form_name_placeholder')}
+                error={errors.name}
+                onChange={handleChange}
+            />
+
+            <FormField
+                label={t('car_form_email')}
+                name="email"
+                type="email"
+                id={`${idPrefix}-email`}
+                placeholder={t('car_form_email_placeholder')}
+                error={errors.email}
+                onChange={handleChange}
+            />
+
+            <FormField
+                label={t('car_form_linkedin')}
+                name="linkedin"
+                type="url"
+                id={`${idPrefix}-linkedin`}
+                placeholder={t('car_form_linkedin_placeholder')}
+                error={errors.linkedin}
+                onChange={handleChange}
+            />
+
+            <ResumeUploadField
+                id={`${idPrefix}-resume`}
+                label={t('car_form_resume')}
+                uploadText={t('car_form_upload')}
+                dragDropText={t('car_form_drag_drop')}
+                fileTypesText={t('car_form_file_types')}
+                selectedText={t('car_form_selected')}
+                resume={formData.resume}
+                error={errors.resume}
+                onChange={handleChange}
+            />
+
             <div className="pt-4">
                 <button
                     type="submit"
