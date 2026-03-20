@@ -21,7 +21,7 @@ const InvestorsPage: React.FC = () => {
     if (!formData.name.trim()) tempErrors.name = "Name is required";
     if (!formData.email.trim()) {
       tempErrors.email = "Email is required";
-    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(formData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       tempErrors.email = "Invalid email format";
     }
     if (!formData.company.trim()) tempErrors.company = "Company is required";
