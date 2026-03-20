@@ -106,7 +106,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
             if (typeof value !== 'string') return t('car_form_email_required');
             const trimmedValue = value.trim();
             if (!trimmedValue) return t('car_form_email_required');
-            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(trimmedValue)) return t('car_form_email_invalid');
         }
         if (name === 'linkedin' && (typeof value !== 'string' || !value.trim())) return t('car_form_linkedin_required');

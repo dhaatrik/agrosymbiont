@@ -6,7 +6,85 @@ import FormField from './FormField';
 
 const ContactForm: React.FC = () => {
     const { t } = useTranslation();
-    const { formData, errors, isSubmitting, isSubmitted, handleChange, handleSubmit } = useContactForm();
+
+    const validateField = useCallback((name: string, value: string): string => {
+        if (name === 'name' && !value.trim()) return t('contact_name_required');
+        if (name === 'email') {
+            const trimmedValue = value.trim();
+            if (!trimmedValue) return t('contact_email_required');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(trimmedValue)) return t('contact_email_invalid');
+        }
+        if (name === 'phone' && !value.trim()) return t('contact_phone_required');
+        if (name === 'inquiryType' && !value) return t('contact_inquiry_required');
+        if (name === 'message' && !value.trim()) return t('contact_message_required');
+        return '';
+    }, [t]);
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        inquiryType: '',
+        message: '',
+    });
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        let newValue = value;
+        if (name === 'phone') {
+            newValue = value.replace(/\D/g, '');
+        }
+
+        setFormData(prevState => ({ ...prevState, [name]: newValue }));
+
+        const fieldError = validateField(name, newValue);
+        setErrors(prev => {
+            const newErrors = { ...prev };
+            if (fieldError) {
+                newErrors[name] = fieldError;
+            } else {
+                delete newErrors[name];
+            }
+            return newErrors;
+        });
+    }, [validateField]);
+
+    const validateForm = useCallback((): { [key: string]: string } => {
+        const newErrors: { [key: string]: string } = {};
+        const nameError = validateField('name', formData.name);
+        if (nameError) newErrors.name = nameError;
+        const emailError = validateField('email', formData.email);
+        if (emailError) newErrors.email = emailError;
+        const phoneError = validateField('phone', formData.phone);
+        if (phoneError) newErrors.phone = phoneError;
+        const inquiryTypeError = validateField('inquiryType', formData.inquiryType);
+        if (inquiryTypeError) newErrors.inquiryType = inquiryTypeError;
+        const messageError = validateField('message', formData.message);
+        if (messageError) newErrors.message = messageError;
+        return newErrors;
+    }, [formData, validateField]);
+
+    const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formErrors = validateForm();
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return;
+        }
+
+        setErrors({});
+        setIsSubmitting(true);
+
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+    }, [formData, validateForm]);
 
     const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-800 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-white";
     const errorClass = "ring-red-500 focus:ring-red-500 bg-red-50/30 dark:bg-red-900/20";
