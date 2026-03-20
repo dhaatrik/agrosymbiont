@@ -1,86 +1,119 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import JobApplicationForm from './JobApplicationForm';
 
-const enTranslations: { [key: string]: string } = {
+// Simple mock for translations mapping keys to standard English values
+const translations: Record<string, string> = {
   'car_form_name': 'Full Name',
+  'car_form_name_placeholder': 'Enter your full name',
+  'car_form_name_required': 'Full Name is required.',
   'car_form_email': 'Email Address',
+  'car_form_email_placeholder': 'Enter your email address',
+  'car_form_email_required': 'Email Address is required.',
+  'car_form_email_invalid': 'Please enter a valid email address.',
   'car_form_linkedin': 'LinkedIn Profile Link',
+  'car_form_linkedin_placeholder': 'https://linkedin.com/in/yourprofile',
+  'car_form_linkedin_required': 'LinkedIn Profile Link is required.',
   'car_form_resume': 'Resume/CV',
+  'car_form_resume_required': 'Please upload your resume/CV.',
   'car_form_upload': 'Upload a file',
-  'car_form_selected': 'Selected: ',
-  'car_form_resume_required': 'Please upload your Resume/CV.',
+  'car_form_drag_drop': 'or drag and drop',
+  'car_form_file_types': 'PDF, DOC, DOCX up to 10MB',
+  'car_form_selected': 'Selected file: ',
+  'car_form_submit': 'Submit Application',
+  'car_form_submitting': 'Submitting...',
   'car_form_success_title': 'Application Received!',
-  'car_form_success_desc': "Thank you for your interest in AgroSymbiont. We'll be in touch.",
-  'car_form_submit': 'Submit Application'
+  'car_form_success_desc': 'Thank you for your interest in AgroSymbiont. We will be in touch.',
+  'car_form_error_header': 'Please fix the following errors:',
 };
 
+// Mock react-i18next
 vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => enTranslations[key] || key
-  })
+  useTranslation: () => {
+    return {
+      t: (str: string) => translations[str] || str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {}),
+        language: 'en'
+      },
+    };
+  },
 }));
 
+// Mock lucide-react
 vi.mock('lucide-react', () => ({
-  AlertCircle: () => <span data-testid="alert-circle">AlertCircle</span>,
-  UploadCloud: () => <span data-testid="upload-cloud">UploadCloud</span>,
-  Loader2: () => <span data-testid="loader">Loader2</span>
+  AlertCircle: () => <div data-testid="alert-circle" />,
+  UploadCloud: () => <div data-testid="upload-cloud" />,
+  Loader2: ({ className }: { className?: string }) => <div data-testid="loader-2" className={className} />,
 }));
 
 describe('JobApplicationForm Component', () => {
-  it('should successfully select a file', () => {
-    render(<JobApplicationForm />);
-
-    // Use the name attribute to find the input since the label is not directly linked via aria
-    const fileInput = document.querySelector('input[name="resume"]') as HTMLInputElement;
-    expect(fileInput).toBeInTheDocument();
-
-    const file = new File(['dummy content'], 'resume.pdf', { type: 'application/pdf' });
-    fireEvent.change(fileInput, { target: { name: 'resume', files: [file] } });
-
-    expect(screen.getByText('Selected: resume.pdf')).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('should display validation error when submitting without a resume', () => {
+  it('renders correctly with all fields', () => {
     render(<JobApplicationForm />);
 
-    const nameInput = document.querySelector('input[name="name"]') as HTMLInputElement;
-    const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-    const linkedinInput = document.querySelector('input[name="linkedin"]') as HTMLInputElement;
-
-    fireEvent.change(nameInput, { target: { name: 'name', value: 'John Doe' } });
-    fireEvent.change(emailInput, { target: { name: 'email', value: 'test@example.com' } });
-    fireEvent.change(linkedinInput, { target: { name: 'linkedin', value: 'https://linkedin.com/in/johndoe' } });
-
-    const submitBtn = screen.getByText('Submit Application');
-    fireEvent.click(submitBtn);
-
-    expect(screen.getAllByText('Please upload your Resume/CV.')).not.toHaveLength(0);
+    expect(screen.getByLabelText('Full Name')).toBeInTheDocument();
+    expect(screen.getByLabelText('Email Address')).toBeInTheDocument();
+    expect(screen.getByLabelText('LinkedIn Profile Link')).toBeInTheDocument();
+    expect(screen.getByText('Resume/CV')).toBeInTheDocument();
+    expect(screen.getByText('Submit Application')).toBeInTheDocument();
   });
 
-  it('should successfully submit the form with a resume', async () => {
-    const onSuccessMock = vi.fn();
-    render(<JobApplicationForm onSuccess={onSuccessMock} />);
+  it('validates form fields and displays error messages', async () => {
+    render(<JobApplicationForm />);
 
-    const nameInput = document.querySelector('input[name="name"]') as HTMLInputElement;
-    const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-    const linkedinInput = document.querySelector('input[name="linkedin"]') as HTMLInputElement;
-    const fileInput = document.querySelector('input[name="resume"]') as HTMLInputElement;
+    const submitButton = screen.getByText('Submit Application');
+    fireEvent.click(submitButton);
 
-    fireEvent.change(nameInput, { target: { name: 'name', value: 'John Doe' } });
-    fireEvent.change(emailInput, { target: { name: 'email', value: 'test@example.com' } });
-    fireEvent.change(linkedinInput, { target: { name: 'linkedin', value: 'https://linkedin.com/in/johndoe' } });
+    await waitFor(() => {
+      expect(screen.getAllByText('Full Name is required.').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Email Address is required.').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('LinkedIn Profile Link is required.').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Please upload your resume/CV.').length).toBeGreaterThan(0);
+    });
+
+    const emailInput = screen.getByLabelText('Email Address');
+    fireEvent.change(emailInput, { target: { value: 'invalid-email', name: 'email' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Please enter a valid email address.').length).toBeGreaterThan(0);
+    });
+  });
+
+  it('submits the form successfully when all fields are valid', async () => {
+    const onSuccess = vi.fn();
+    render(<JobApplicationForm onSuccess={onSuccess} />);
+
+    fireEvent.change(screen.getByLabelText('Full Name'), { target: { value: 'John Doe', name: 'name' } });
+    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'john@example.com', name: 'email' } });
+    fireEvent.change(screen.getByLabelText('LinkedIn Profile Link'), { target: { value: 'https://linkedin.com/in/johndoe', name: 'linkedin' } });
 
     const file = new File(['dummy content'], 'resume.pdf', { type: 'application/pdf' });
-    fireEvent.change(fileInput, { target: { name: 'resume', files: [file] } });
+    const fileInput = screen.getByLabelText('Upload a file');
+    fireEvent.change(fileInput, { target: { files: [file], name: 'resume' } });
 
-    const submitBtn = screen.getByText('Submit Application');
-    fireEvent.click(submitBtn);
+    const submitButton = screen.getByText('Submit Application');
+    fireEvent.click(submitButton);
+
+    expect(screen.getByText('Submitting...')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('Application Received!')).toBeInTheDocument();
-      expect(screen.getByText("Thank you for your interest in AgroSymbiont. We'll be in touch.")).toBeInTheDocument();
-    }, { timeout: 2000 }); // Increase timeout since API call simulated is 1500ms
+      expect(onSuccess).toHaveBeenCalled();
+    }, { timeout: 3000 });
+  });
+
+  it('uses jobId in id attributes if provided', () => {
+    const jobId = 'test-job-id';
+    render(<JobApplicationForm jobId={jobId} />);
+
+    expect(screen.getByLabelText('Full Name')).toHaveAttribute('id', `${jobId}-name`);
+    expect(screen.getByLabelText('Email Address')).toHaveAttribute('id', `${jobId}-email`);
+    expect(screen.getByLabelText('LinkedIn Profile Link')).toHaveAttribute('id', `${jobId}-linkedin`);
   });
 });

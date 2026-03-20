@@ -180,7 +180,9 @@ export const renderConnections = (
     // Note: Since particles are sorted by Z, neighbors in array aren't necessarily neighbors in 3D space,
     // but iterating a small window or randomizing creates a cool effect without O(N^2) cost.
     // For better visual accuracy with performance, we just check against a limited number of subsequent particles.
-    for (let j = i + 1; j < Math.min(i + connectionWindow, projectedParticles.length); j++) {
+    // Optimization: Pre-calculate loop bound outside inner loop to avoid re-evaluating Math.min
+    const maxJ = Math.min(i + connectionWindow, projectedParticles.length);
+    for (let j = i + 1; j < maxJ; j++) {
        const p2 = projectedParticles[j];
        const dx = p1.x - p2.x;
        const dy = p1.y - p2.y;
