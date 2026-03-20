@@ -6,6 +6,95 @@ import { useTranslation } from 'react-i18next';
 type CropType = 'wheat' | 'apple' | 'coffee' | 'vegetables' | null;
 type SymptomType = 'yellow_leaves' | 'stunted_growth' | 'low_yield' | 'pests' | null;
 
+interface CropOption {
+  id: CropType;
+  label: string;
+  icon: React.ReactNode;
+}
+
+interface SymptomOption {
+  id: string;
+  label: string;
+}
+
+interface Solution {
+  name: string;
+  desc: string;
+}
+
+const CropSelector: React.FC<{
+  cropOptions: CropOption[];
+  selectedCrop: CropType;
+  onSelect: (cropId: CropType) => void;
+}> = ({ cropOptions, selectedCrop, onSelect }) => (
+  <div className="grid grid-cols-2 gap-3">
+      {cropOptions.map((crop) => (
+          <button
+              key={crop.id}
+              onClick={() => onSelect(crop.id)}
+              className={`flex items-center gap-2 p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedCrop === crop.id ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-white dark:hover:bg-stone-800'}`}
+          >
+              {crop.icon} <span className="font-semibold text-sm">{crop.label}</span>
+          </button>
+      ))}
+  </div>
+);
+
+const SymptomSelector: React.FC<{
+  currentSymptoms: SymptomOption[];
+  selectedSymptom: SymptomType;
+  onSelect: (symptomId: SymptomType) => void;
+}> = ({ currentSymptoms, selectedSymptom, onSelect }) => (
+  <div className="flex flex-col gap-2">
+      {currentSymptoms.map((symptom) => (
+          <button
+              key={symptom.id}
+              onClick={() => onSelect(symptom.id as SymptomType)}
+              className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedSymptom === symptom.id ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
+          >
+              <span className="font-semibold text-sm">{symptom.label}</span>
+          </button>
+      ))}
+  </div>
+);
+
+const DiagnosisResult: React.FC<{
+  isAnalyzing: boolean;
+  showResult: boolean;
+  recommendedSolution: Solution | null;
+  t: (key: string) => string;
+}> = ({ isAnalyzing, showResult, recommendedSolution, t }) => (
+  <div className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
+      {isAnalyzing ? (
+          <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>
+              <p className="text-stone-500 font-medium animate-pulse">{t('solver_analyzing')}</p>
+          </div>
+      ) : showResult && recommendedSolution ? (
+          <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center"
+          >
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8" />
+              </div>
+              <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
+              <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
+              <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
+              <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
+                  {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
+              </button>
+          </motion.div>
+      ) : (
+          <div className="text-stone-400 dark:text-stone-500 flex flex-col items-center gap-3">
+              <Search className="w-12 h-12 opacity-50" />
+              <p>{t('solver_placeholder')}</p>
+          </div>
+      )}
+  </div>
+);
+
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
 
@@ -77,21 +166,15 @@ const CropProblemSolver: React.FC = () => {
         <div className="space-y-6">
             <div>
                 <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">{t('solver_step1')}</label>
-                <div className="grid grid-cols-2 gap-3">
-                    {cropOptions.map((crop) => (
-                        <button
-                            key={crop.id}
-                            onClick={() => {
-                                setSelectedCrop(crop.id);
-                                setSelectedSymptom(null);
-                                setShowResult(false);
-                            }}
-                            className={`flex items-center gap-2 p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedCrop === crop.id ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-white dark:hover:bg-stone-800'}`}
-                        >
-                            {crop.icon} <span className="font-semibold text-sm">{crop.label}</span>
-                        </button>
-                    ))}
-                </div>
+                <CropSelector
+                    cropOptions={cropOptions}
+                    selectedCrop={selectedCrop}
+                    onSelect={(cropId) => {
+                        setSelectedCrop(cropId);
+                        setSelectedSymptom(null);
+                        setShowResult(false);
+                    }}
+                />
             </div>
 
             <AnimatePresence>
@@ -102,20 +185,14 @@ const CropProblemSolver: React.FC = () => {
                         exit={{ opacity: 0, height: 0 }}
                     >
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 mt-4">{t('solver_step2')}</label>
-                        <div className="flex flex-col gap-2">
-                            {currentSymptoms.map((symptom) => (
-                                <button
-                                    key={symptom.id}
-                                    onClick={() => {
-                                        setSelectedSymptom(symptom.id as SymptomType);
-                                        setShowResult(false);
-                                    }}
-                                    className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedSymptom === symptom.id ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
-                                >
-                                    <span className="font-semibold text-sm">{symptom.label}</span>
-                                </button>
-                            ))}
-                        </div>
+                        <SymptomSelector
+                            currentSymptoms={currentSymptoms}
+                            selectedSymptom={selectedSymptom}
+                            onSelect={(symptomId) => {
+                                setSelectedSymptom(symptomId);
+                                setShowResult(false);
+                            }}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -134,35 +211,12 @@ const CropProblemSolver: React.FC = () => {
             </AnimatePresence>
         </div>
 
-        <div className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden">
-            {isAnalyzing ? (
-                <div className="flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>
-                    <p className="text-stone-500 font-medium animate-pulse">{t('solver_analyzing')}</p>
-                </div>
-            ) : showResult && recommendedSolution ? (
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }} 
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center"
-                >
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-4">
-                        <CheckCircle2 className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
-                    <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
-                    <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
-                    <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
-                        {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
-                    </button>
-                </motion.div>
-            ) : (
-                <div className="text-stone-400 dark:text-stone-500 flex flex-col items-center gap-3">
-                    <Search className="w-12 h-12 opacity-50" />
-                    <p>{t('solver_placeholder')}</p>
-                </div>
-            )}
-        </div>
+        <DiagnosisResult
+            isAnalyzing={isAnalyzing}
+            showResult={showResult}
+            recommendedSolution={recommendedSolution}
+            t={t}
+        />
       </div>
     </div>
   );
