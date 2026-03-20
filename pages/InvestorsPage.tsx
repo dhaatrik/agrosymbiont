@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import InvestorContactForm from '../components/InvestorContactForm';
