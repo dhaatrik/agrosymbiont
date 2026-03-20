@@ -76,7 +76,10 @@ describe('ThreeDBackground Component', () => {
     unmount();
 
     // Verify cleanup
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('mousedown', expect.any(Function));
     expect(removeEventListenerSpy).toHaveBeenCalledWith('mousemove', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseup', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseleave', expect.any(Function));
     expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
     expect(global.cancelAnimationFrame).toHaveBeenCalled();
   });

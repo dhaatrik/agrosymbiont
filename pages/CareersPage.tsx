@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Sparkles } from 'lucide-react';
@@ -78,7 +78,7 @@ const CareersPage: React.FC = () => {
         }
     };
 
-    const filteredJobs = jobOpenings.filter(job => activeTab === 'all' || job.category === activeTab);
+    const filteredJobs = useMemo(() => jobOpenings.filter(job => activeTab === 'all' || job.category === activeTab), [activeTab]);
 
     return (
          <div className="py-20">

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Loader2, Sprout, ArrowRight } from 'lucide-react';
+import { Check, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const PARTICLES = Array.from({ length: 12 });
+import WaitlistParticles from './WaitlistParticles';
 
 const WaitlistForm: React.FC = () => {
     const { t } = useTranslation();
@@ -20,11 +19,51 @@ const WaitlistForm: React.FC = () => {
         const trimmedValue = value.trim();
         if (!trimmedValue) {
             setEmailError(t('prod_email_required'));
-        } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedValue)) {
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
             setEmailError(t('prod_email_invalid'));
         } else {
             setEmailError('');
         }
+    };
+
+    const renderButtonContent = () => {
+        if (showParticles) {
+            return (
+                <motion.div
+                    key="success"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                    <Check className="h-6 w-6 text-white" />
+                </motion.div>
+            );
+        }
+        if (isSubmitting) {
+            return (
+                <motion.div
+                    key="submitting"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center"
+                >
+                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                    {t('prod_wait')}
+                </motion.div>
+            );
+        }
+        return (
+            <motion.div
+                key="idle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
+                {t('prod_notify')}
+            </motion.div>
+        );
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +72,7 @@ const WaitlistForm: React.FC = () => {
       if (!trimmedEmail) {
           setEmailError(t('prod_email_required'));
           return;
-      } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedEmail)) {
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
           setEmailError(t('prod_email_invalid'));
           return;
       }
@@ -104,65 +143,11 @@ const WaitlistForm: React.FC = () => {
                                 } ${isSubmitting ? 'opacity-75 cursor-not-allowed sm:w-44 px-8' : ''}`}
                             >
                                 <AnimatePresence mode="wait">
-                                    {showParticles ? (
-                                        <motion.div
-                                            key="success"
-                                            initial={{ scale: 0, opacity: 0 }}
-                                            animate={{ scale: 1, opacity: 1 }}
-                                            exit={{ scale: 0, opacity: 0 }}
-                                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                        >
-                                            <Check className="h-6 w-6 text-white" />
-                                        </motion.div>
-                                    ) : isSubmitting ? (
-                                        <motion.div
-                                            key="submitting"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            className="flex items-center"
-                                        >
-                                            <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                            {t('prod_wait')}
-                                        </motion.div>
-                                    ) : (
-                                        <motion.div
-                                            key="idle"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                        >
-                                            {t('prod_notify')}
-                                        </motion.div>
-                                    )}
+                                    {renderButtonContent()}
                                 </AnimatePresence>
 
                                 {/* Micro-interaction Particles */}
-                                {showParticles && (
-                                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                        {PARTICLES.map((_, i) => {
-                                            const angle = (Math.PI * 2 * i) / 12;
-                                            const v = 80 + Math.random() * 40;
-                                            return (
-                                              <motion.div
-                                                  key={i}
-                                                  className="absolute w-2 h-2"
-                                                  initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
-                                                  animate={{
-                                                      x: Math.cos(angle) * v,
-                                                      y: Math.sin(angle) * v - (Math.random() * 50),
-                                                      scale: 0,
-                                                      opacity: 0,
-                                                      rotate: Math.random() * 360
-                                                  }}
-                                                  transition={{ duration: 0.6 + Math.random() * 0.2, ease: "easeOut" }}
-                                              >
-                                                  <Sprout className="w-5 h-5 text-green-200 drop-shadow-sm" />
-                                              </motion.div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
+                                {showParticles && <WaitlistParticles />}
                             </button>
                         </div>
                     </form>
