@@ -9,3 +9,6 @@
 ## 2025-03-18 - Missing focus states on custom selectable cards (Onboarding Flow)
 **Learning:** Found an accessibility pattern in the onboarding flow where `motion.button` and regular `button` elements acting as large selectable cards completely lacked focus indicators, rendering keyboard navigation invisible during the primary user journey. Custom heavily-styled interactive cards often drop native focus styles.
 **Action:** When creating custom interactive selection cards or complex radio buttons using `framer-motion` or Tailwind, always explicitly append `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate theme colors) to ensure keyboard visibility is preserved.
+## 2024-03-21 - [Accessibility: Link accordion controls with aria-controls]
+**Learning:** Screen readers rely on `aria-controls` to navigate from a toggle button (with `aria-expanded`) to the specific content panel it reveals. Without this explicit linkage, users may not know where the expanded content appeared in the DOM, making navigation of complex layouts like FAQs confusing.
+**Action:** When implementing custom accordion or disclosure patterns, always ensure the `<button>` includes `aria-controls="[panel-id]"` matching the `id` of the collapsible content `<div>`.
