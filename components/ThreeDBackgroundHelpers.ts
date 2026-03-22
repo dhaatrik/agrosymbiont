@@ -179,34 +179,40 @@ export const renderConnections = (
   ctx.lineWidth = 0.5;
   const connectionStep = isMobile ? 8 : 5;
   const connectionWindow = isMobile ? 10 : 20;
+  const limit = projectedParticles.length;
 
-  for (let i = 0; i < projectedParticles.length; i++) {
+  for (let i = 0; i < limit; i += connectionStep) {
     const p1 = projectedParticles[i];
-
-    // Optimization: Only check every Nth particle for connections to reduce draw calls
-    if (i % connectionStep !== 0) continue;
+    const p1x = p1.x;
+    const p1y = p1.y;
 
     // Check a subset of other particles
     // Note: Since particles are sorted by Z, neighbors in array aren't necessarily neighbors in 3D space,
     // but iterating a small window or randomizing creates a cool effect without O(N^2) cost.
     // For better visual accuracy with performance, we just check against a limited number of subsequent particles.
     // Optimization: Pre-calculate loop bound outside inner loop to avoid re-evaluating Math.min
-    const maxJ = Math.min(i + connectionWindow, projectedParticles.length);
+    const maxJ = Math.min(i + connectionWindow, limit);
     for (let j = i + 1; j < maxJ; j++) {
        const p2 = projectedParticles[j];
-       const dx = p1.x - p2.x;
-       const dy = p1.y - p2.y;
+       const dx = p1x - p2.x;
 
-       // Fast distance check
-       if (Math.abs(dx) > 80 || Math.abs(dy) > 80) continue;
+       // Fast distance check X
+       if (dx > 80 || dx < -80) continue;
 
-       const dist = Math.sqrt(dx*dx + dy*dy);
+       const dy = p1y - p2.y;
 
-       if (dist < 80) {
+       // Fast distance check Y
+       if (dy > 80 || dy < -80) continue;
+
+       const distSq = dx*dx + dy*dy;
+
+       // 80 * 80 = 6400. Compare squared distance to avoid Math.sqrt if possible
+       if (distSq < 6400) {
          ctx.beginPath();
          // Dynamic opacity based on distance
-         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 * (1 - dist / 80)})`;
-         ctx.moveTo(p1.x, p1.y);
+         // Precalculated value for 0.12 / 80 = 0.0015
+         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.0015 * Math.sqrt(distSq))})`;
+         ctx.moveTo(p1x, p1y);
          ctx.lineTo(p2.x, p2.y);
          ctx.stroke();
        }
