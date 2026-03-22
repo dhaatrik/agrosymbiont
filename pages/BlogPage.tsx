@@ -29,7 +29,7 @@ const BlogCard: React.FC<{ post: BlogPost; onCategoryClick: (category: string) =
                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                      <button 
                         onClick={handleCategoryClick}
-                        className="absolute top-4 left-4 bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm text-cerulean-blue dark:text-blue-400 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wide shadow-lg hover:bg-cerulean-blue dark:hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors z-10 translate-z-4"
+                        className="absolute top-4 left-4 bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm text-cerulean-blue dark:text-blue-400 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wide shadow-lg hover:bg-cerulean-blue dark:hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors z-10 translate-z-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800"
                      >
                         {post.category}
                      </button>
@@ -43,7 +43,7 @@ const BlogCard: React.FC<{ post: BlogPost; onCategoryClick: (category: string) =
                     <p className="text-stone-500 dark:text-stone-400 text-base mb-8 flex-grow leading-relaxed">{post.excerpt}</p>
                     <button 
                         onClick={handleReadMore}
-                        className="text-cerulean-blue dark:text-blue-400 font-bold text-sm hover:text-burnt-orange dark:hover:text-orange-400 transition-colors self-start flex items-center mt-auto group/btn bg-blue-50 dark:bg-blue-900/20 px-5 py-2.5 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 shadow-sm hover:shadow-md active:translate-y-1 active:shadow-none"
+                        className="text-cerulean-blue dark:text-blue-400 font-bold text-sm hover:text-burnt-orange dark:hover:text-orange-400 transition-colors self-start flex items-center mt-auto group/btn bg-blue-50 dark:bg-blue-900/20 px-5 py-2.5 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 shadow-sm hover:shadow-md active:translate-y-1 active:shadow-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800"
                     >
                         {post.date === "Coming Soon" ? readPreviewText : readArticleText} <span className="ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
                     </button>
@@ -161,7 +161,7 @@ const BlogPage: React.FC = () => {
                         <button
                             key={category}
                             onClick={() => setSelectedCategory(category)}
-                            className={`text-sm font-bold py-2.5 px-6 rounded-full whitespace-nowrap transition-all duration-300 ${
+                            className={`text-sm font-bold py-2.5 px-6 rounded-full whitespace-nowrap transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
                                 selectedCategory === category
                                     ? 'bg-cerulean-blue dark:bg-blue-600 text-white shadow-md transform scale-105'
                                     : 'bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-cerulean-blue dark:hover:border-blue-500 hover:text-cerulean-blue dark:hover:text-blue-400'
@@ -201,7 +201,7 @@ const BlogPage: React.FC = () => {
                     <p className="text-stone-500 dark:text-stone-400 text-lg mb-4">{t('blog_no_articles')}</p>
                     <button 
                         onClick={() => setSelectedCategory('All')}
-                        className="text-cerulean-blue dark:text-blue-400 hover:underline font-bold"
+                        className="text-cerulean-blue dark:text-blue-400 hover:underline font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800 rounded px-2 py-1"
                     >
                         {t('blog_view_all')}
                     </button>
@@ -248,7 +248,7 @@ const BlogPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full transition duration-300 shadow-lg whitespace-nowrap flex items-center justify-center ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-white dark:hover:bg-stone-200 transform hover:scale-105'}`}
+                    className={`bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full transition duration-300 shadow-lg whitespace-nowrap flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-mustard-yellow dark:focus-visible:ring-offset-slate-800 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-white dark:hover:bg-stone-200 transform hover:scale-105'}`}
                   >
                     {isSubmitting ? (
                         <>
@@ -287,7 +287,7 @@ const BlogPage: React.FC = () => {
                 </div>
                 <button 
                     onClick={() => setToastMessage(null)}
-                    className="text-gray-400 hover:text-white transition-colors p-1 flex-shrink-0"
+                    className="text-gray-400 hover:text-white transition-colors p-1 flex-shrink-0 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     aria-label="Close notification"
                 >
                     <X className="w-4 h-4" />
