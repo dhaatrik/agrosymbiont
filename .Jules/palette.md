@@ -12,3 +12,7 @@
 ## 2024-03-21 - [Accessibility: Link accordion controls with aria-controls]
 **Learning:** Screen readers rely on `aria-controls` to navigate from a toggle button (with `aria-expanded`) to the specific content panel it reveals. Without this explicit linkage, users may not know where the expanded content appeared in the DOM, making navigation of complex layouts like FAQs confusing.
 **Action:** When implementing custom accordion or disclosure patterns, always ensure the `<button>` includes `aria-controls="[panel-id]"` matching the `id` of the collapsible content `<div>`.
+
+## 2025-03-22 - Missing keyboard focus states on primary form action buttons
+**Learning:** Found an accessibility pattern across multiple form components (`InvestorContactForm`, `ContactForm`, `JobApplicationForm`) where the primary `type="submit"` buttons (and success state buttons like "Submit another inquiry") had elaborate hover and shadow states but completely lacked focus indicators. This makes submitting forms via keyboard navigation unpredictable as users cannot tell if the button has received focus.
+**Action:** Always explicitly define `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on all primary form action buttons to ensure keyboard visibility is preserved.

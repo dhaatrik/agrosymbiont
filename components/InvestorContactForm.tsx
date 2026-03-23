@@ -71,7 +71,7 @@ const InvestorContactForm: React.FC = () => {
                       <p className="text-stone-600 dark:text-stone-400 max-w-md mx-auto mb-8 text-lg">
                           Thank you for your interest in AgroSymbiont. Our investor relations team will review your details and send the requested materials shortly.
                       </p>
-                      <button onClick={() => setIsSubmitted(false)} className="text-cerulean-blue dark:text-blue-400 font-bold hover:underline">
+                      <button onClick={() => setIsSubmitted(false)} className="text-cerulean-blue dark:text-blue-400 font-bold hover:underline rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900">
                           Submit another inquiry
                       </button>
                   </motion.div>
@@ -105,7 +105,7 @@ const InvestorContactForm: React.FC = () => {
                             <ShieldCheck className="w-4 h-4 mr-2 text-green-500" />
                             Your information is secure
                         </div>
-                        <button type="submit" disabled={isSubmitting} className={`bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}>
+                        <button type="submit" disabled={isSubmitting} className={`bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}>
                              {isSubmitting ? (
                                 <>
                                     <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
