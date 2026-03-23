@@ -28,10 +28,11 @@ export interface DustParticle {
 }
 
 export const createSphereParticles = (count: number, colors: string[]): SphereParticle[] => {
-  return Array.from({ length: count }, () => {
+  const arr = new Array(count);
+  for (let i = 0; i < count; i++) {
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(Math.random() * 2 - 1);
-    return {
+    arr[i] = {
       theta,
       phi,
       color: colors[Math.floor(Math.random() * colors.length)],
@@ -41,19 +42,24 @@ export const createSphereParticles = (count: number, colors: string[]): SpherePa
       unitY: Math.sin(phi) * Math.sin(theta),
       unitZ: Math.cos(phi),
     };
-  });
+  }
+  return arr;
 };
 
 export const createDustParticles = (count: number, width: number, height: number): DustParticle[] => {
-  return Array.from({ length: count }, () => ({
-    x: (Math.random() - 0.5) * width * 1.5,
-    y: (Math.random() - 0.5) * height * 1.5,
-    z: (Math.random() - 0.5) * 1000,
-    size: Math.random() * 1.5,
-    speedX: (Math.random() - 0.5) * 0.2,
-    speedY: (Math.random() - 0.5) * 0.2,
-    opacity: Math.random() * 0.4 + 0.1,
-  }));
+  const arr = new Array(count);
+  for (let i = 0; i < count; i++) {
+    arr[i] = {
+      x: (Math.random() - 0.5) * width * 1.5,
+      y: (Math.random() - 0.5) * height * 1.5,
+      z: (Math.random() - 0.5) * 1000,
+      size: Math.random() * 1.5,
+      speedX: (Math.random() - 0.5) * 0.2,
+      speedY: (Math.random() - 0.5) * 0.2,
+      opacity: Math.random() * 0.4 + 0.1,
+    };
+  }
+  return arr;
 };
 
 export const renderDustParticles = (
