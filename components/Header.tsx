@@ -6,7 +6,7 @@ import { Menu, X, Mail, Phone, Sun, Moon, Globe, Zap, ZapOff } from 'lucide-reac
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
-const getNavLinks = (t: any) => [
+const getNavLinks = (t: (key: string) => string) => [
   { path: '/', label: t('nav_home') },
   { path: '/about', label: t('nav_about') },
   { path: '/products', label: t('nav_products') },
@@ -18,7 +18,7 @@ const getNavLinks = (t: any) => [
   { path: '/contact', label: t('nav_contact') },
 ];
 
-const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: any }) => {
+const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: (key: string) => string }) => {
   const links = getNavLinks(t);
   return (
   <>
