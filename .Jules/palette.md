@@ -20,3 +20,7 @@
 ## 2025-03-22 - Screen reader unfriendliness with dynamic results and errors
 **Learning:** Found an accessibility issue pattern where conditionally rendered form field errors, global form errors, and async operation results (like the Crop Problem Solver diagnosis) appear visually but are completely silent to screen readers.
 **Action:** Always wrap dynamic form field errors in `<div aria-live="polite">` (or `<p aria-live="polite">`) and use `role="alert"` on top-level global error summaries. Ensure async interactive tools that show results without reloading the page also present those results within an `aria-live="polite"` region.
+
+## 2025-03-25 - Focus rings on interactive elements in constrained layouts
+**Learning:** Found an accessibility issue where interactive elements in headers (like language selectors and toggle buttons) had `focus-visible:ring-2` applied but the focus ring was visually clipped or invisible because it was painted outwards in a tightly packed or overflow-hidden container.
+**Action:** When adding keyboard focus states to interactive elements in constrained layouts (like top navigation bars), append `focus-visible:ring-inset` alongside the standard `focus-visible:ring-2` to ensure the focus indicator is painted inwards and remains fully visible to keyboard users.
