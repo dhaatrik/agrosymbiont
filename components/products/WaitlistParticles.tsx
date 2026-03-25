@@ -2,7 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sprout } from 'lucide-react';
 
-const PARTICLES = Array.from({ length: 12 });
+const PARTICLES = new Array(12);
+for (let i = 0; i < 12; i++) {
+    PARTICLES[i] = i;
+}
 
 const WaitlistParticles: React.FC = () => {
     return (

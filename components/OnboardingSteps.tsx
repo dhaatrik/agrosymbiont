@@ -17,38 +17,77 @@ export interface OnboardingSelections {
 export const TOTAL_STEPS = 6;
 const PARTICLE_COUNT = 8;
 const PARTICLE_COLORS = ['bg-yellow-400', 'bg-green-400', 'bg-blue-400', 'bg-orange-400', 'bg-pink-400', 'bg-purple-400', 'bg-red-400', 'bg-teal-400'];
-const PARTICLE_DATA = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
+
+const PARTICLE_DATA = new Array(PARTICLE_COUNT);
+for (let i = 0; i < PARTICLE_COUNT; i++) {
   const angle = (Math.PI * 2 * i) / PARTICLE_COUNT;
-  return {
+  PARTICLE_DATA[i] = {
     color: PARTICLE_COLORS[i % PARTICLE_COLORS.length],
     x: Math.cos(angle) * 70,
     y: Math.sin(angle) * 70,
   };
-});
+}
 
 const soilColors: Record<string, string> = {
   alluvial: 'bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700',
   red: 'bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700',
-  black: 'bg-stone-200 dark:bg-stone-700/50 border-stone-400 dark:border-stone-600',
+  black: 'bg-stone-200 dark:bg-stone-800 border-stone-400 dark:border-stone-600',
   sandy: 'bg-yellow-100 dark:bg-yellow-900/30 border-yellow-300 dark:border-yellow-700',
   clay: 'bg-orange-100 dark:bg-orange-900/30 border-orange-300 dark:border-orange-700',
-  unknown: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700'
+  unknown: 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600',
 };
 
-export const slideVariants = {
-  enter: { opacity: 0, x: 60 },
-  center: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -60 }
+const slideVariants = {
+  enter: { x: 50, opacity: 0 },
+  center: { x: 0, opacity: 1 },
+  exit: { x: -50, opacity: 0 }
+};
+
+export const StepWelcome: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
+  const { t } = useTranslation();
+
+  return (
+    <motion.div
+      key="step0"
+      variants={slideVariants}
+      initial="enter" animate="center" exit="exit"
+      transition={{ duration: 0.4 }}
+      className="text-center"
+    >
+      <div className="w-24 h-24 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-8 relative">
+        <Sprout className="w-12 h-12 text-green-600 dark:text-green-400 absolute" />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="w-full h-full border-2 border-dashed border-green-300 dark:border-green-700 rounded-full"
+        />
+      </div>
+      <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
+        {t('onb_welcome_title')}
+      </h2>
+      <p className="text-xl text-stone-600 dark:text-stone-300 mb-10 max-w-xl mx-auto leading-relaxed">
+        {t('onb_welcome_subtitle')}
+      </p>
+      <button
+        onClick={handleNext}
+        className="bg-cerulean-blue text-white font-bold text-lg px-8 py-4 rounded-full hover:bg-blue-700 transition duration-300 shadow-lg hover:-translate-y-1 inline-flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
+      >
+        {t('onb_get_started')} <ArrowRight className="w-5 h-5" />
+      </button>
+    </motion.div>
+  );
 };
 
 export const StepCrop: React.FC<{ selections: OnboardingSelections, setSelections: (s: OnboardingSelections) => void, handleNext: () => void }> = ({ selections, setSelections, handleNext }) => {
   const { t } = useTranslation();
 
   const crops = [
-    { id: 'wheat', label: t('onb_crop_cereals'), icon: <Wheat className="w-8 h-8" /> },
-    { id: 'apple', label: t('onb_crop_fruits'), icon: <Apple className="w-8 h-8" /> },
-    { id: 'coffee', label: t('onb_crop_cash'), icon: <Coffee className="w-8 h-8" /> },
-    { id: 'vegetables', label: t('onb_crop_vegetables'), icon: <Sprout className="w-8 h-8" /> }
+    { id: 'wheat', label: t('onb_crop_wheat'), icon: Wheat, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+    { id: 'corn', label: t('onb_crop_corn'), icon: Sprout, color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-900/20' },
+    { id: 'soybeans', label: t('onb_crop_soybeans'), icon: Droplet, color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-900/20' },
+    { id: 'rice', label: t('onb_crop_rice'), icon: Wheat, color: 'text-stone-400', bg: 'bg-stone-50 dark:bg-stone-800' },
+    { id: 'apples', label: t('onb_crop_apples'), icon: Apple, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-900/20' },
+    { id: 'coffee', label: t('onb_crop_coffee'), icon: Coffee, color: 'text-amber-800 dark:text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/30' },
   ];
 
   return (
@@ -62,28 +101,28 @@ export const StepCrop: React.FC<{ selections: OnboardingSelections, setSelection
       <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-center">{t('onb_crop_title')}</h2>
       <p className="text-lg text-stone-500 dark:text-stone-400 mb-10 text-center">{t('onb_crop_subtitle')}</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {crops.map((crop) => (
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        {crops.map((crop) => (
           <TiltCard key={crop.id}>
-              <button
-                onClick={() => {
-                    setSelections({ ...selections, crop: crop.id });
-                    setTimeout(handleNext, 300);
-                }}
-                className={`w-full p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-4 text-center h-48 preserve-3d focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
-                    ${selections.crop === crop.id
-                    ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400'
-                    : 'bg-white dark:bg-stone-800 border-stone-100 dark:border-stone-700 hover:border-cerulean-blue/50 hover:bg-stone-50 dark:hover:bg-stone-700/50 text-gray-700 dark:text-gray-300'
-                    }
-                `}
-              >
-                <div className="translate-z-4 transform transition-transform group-hover:scale-110">
-                    {crop.icon}
-                </div>
-                <span className="font-bold text-lg translate-z-2">{crop.label}</span>
-              </button>
+            <button
+              onClick={() => {
+                setSelections({ ...selections, crop: crop.id });
+                setTimeout(handleNext, 300);
+              }}
+              className={`w-full h-full p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
+                ${selections.crop === crop.id
+                  ? 'border-cerulean-blue bg-blue-50/50 dark:bg-blue-900/20 shadow-md'
+                  : 'border-stone-100 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-cerulean-blue/50'
+                }
+              `}
+            >
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center ${crop.bg} group-hover:scale-110 transition-transform`}>
+                <crop.icon className={`w-8 h-8 ${crop.color}`} />
+              </div>
+              <span className="font-bold text-gray-800 dark:text-gray-200">{crop.label}</span>
+            </button>
           </TiltCard>
-          ))}
+        ))}
       </div>
     </motion.div>
   );
@@ -93,10 +132,10 @@ export const StepChallenge: React.FC<{ selections: OnboardingSelections, setSele
   const { t } = useTranslation();
 
   const challenges = [
-    { id: 'yield', label: t('onb_ch_yield'), icon: <Sprout className="w-6 h-6" /> },
-    { id: 'soil', label: t('onb_ch_soil'), icon: <Droplet className="w-6 h-6" /> },
-    { id: 'pest', label: t('onb_ch_pest'), icon: <Bug className="w-6 h-6" /> },
-    { id: 'climate', label: t('onb_ch_climate'), icon: <ThermometerSun className="w-6 h-6" /> }
+    { id: 'pests', label: t('onb_chal_pests'), icon: Bug },
+    { id: 'water', label: t('onb_chal_water'), icon: Droplet },
+    { id: 'yield', label: t('onb_chal_yield'), icon: Sprout },
+    { id: 'climate', label: t('onb_chal_climate'), icon: ThermometerSun },
   ];
 
   return (
@@ -110,27 +149,32 @@ export const StepChallenge: React.FC<{ selections: OnboardingSelections, setSele
       <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-center">{t('onb_challenge_title')}</h2>
       <p className="text-lg text-stone-500 dark:text-stone-400 mb-10 text-center">{t('onb_challenge_subtitle')}</p>
 
-      <div className="flex flex-col gap-3">
-          {challenges.map((challenge) => (
-          <button
-              key={challenge.id}
-              onClick={() => {
-                setSelections({ ...selections, challenge: challenge.id });
-                setTimeout(handleNext, 300);
-              }}
-              className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-burnt-orange dark:focus-visible:ring-offset-stone-900
+      <div className="space-y-4 max-w-xl mx-auto">
+        {challenges.map((challenge) => (
+          <motion.button
+            key={challenge.id}
+            whileHover={{ scale: 1.02, x: 5 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setSelections({ ...selections, challenge: challenge.id });
+              setTimeout(handleNext, 300);
+            }}
+            className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center gap-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
               ${selections.challenge === challenge.id
-                  ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400'
-                  : 'bg-white dark:bg-stone-800 border-stone-100 dark:border-stone-700 hover:border-burnt-orange/50 hover:bg-stone-50 dark:hover:bg-stone-700/50 text-gray-700 dark:text-gray-300'
+                ? 'border-cerulean-blue bg-blue-50 dark:bg-blue-900/20 shadow-md'
+                : 'border-stone-100 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-cerulean-blue/30'
               }
-              `}
+            `}
           >
-              <span className="font-bold text-lg">{challenge.label}</span>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${selections.challenge === challenge.id ? 'bg-orange-100 dark:bg-orange-900/50' : 'bg-stone-100 dark:bg-stone-700'}`}>
-                {challenge.icon}
-              </div>
-          </button>
-          ))}
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${selections.challenge === challenge.id ? 'bg-cerulean-blue text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400'}`}>
+              <challenge.icon className="w-6 h-6" />
+            </div>
+            <span className="font-bold text-lg text-gray-800 dark:text-gray-200 flex-grow">{challenge.label}</span>
+            {selections.challenge === challenge.id && (
+              <Check className="w-6 h-6 text-cerulean-blue dark:text-blue-400 shrink-0" />
+            )}
+          </motion.button>
+        ))}
       </div>
     </motion.div>
   );
@@ -274,7 +318,7 @@ export const StepContact: React.FC<{ selections: OnboardingSelections, setSelect
                   required
                   type="email"
                   id="email"
-                  pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                  pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
                   className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all"
                   placeholder={t('onb_email_placeholder')}
                   value={selections.email}

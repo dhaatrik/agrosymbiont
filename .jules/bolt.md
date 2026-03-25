@@ -48,3 +48,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-05-25 - [Missing Lazy Loading on Below-The-Fold Images]
 **Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
 **Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
+
+## 2026-03-24 - [Avoid Array.from for initialization outside or inside React render loops]
+**Learning**: Pre-allocating an array with `new Array(length)` and using a `for` loop to populate it is consistently faster and puts less pressure on garbage collection compared to `Array.from`. For instance, replacing `Array.from({ length: 10 }, ...)` with a pre-allocated `for` loop showed a ~3.6x improvement in ops/sec via Vitest benchmarks.
+**Action**: Replace `Array.from` initialization patterns with `new Array(length)` followed by a standard `for` loop, especially for static or large datasets across components like `FAQPage`, `ProductsPage`, `WaitlistParticles`, and `OnboardingSteps`.

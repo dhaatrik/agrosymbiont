@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { Sprout, Sparkles } from 'lucide-react';
@@ -11,7 +10,10 @@ import WaitlistForm from '../components/products/WaitlistForm';
 
 // Performance optimization: Pre-allocate static array outside the render loop
 // to avoid unnecessary object creation/GC pressure on every render.
-const PARTICLES = Array.from({ length: 12 });
+const PARTICLES = new Array(12);
+for (let i = 0; i < 12; i++) {
+    PARTICLES[i] = i;
+}
 
 const ProductsPage: React.FC = () => {
   const { t } = useTranslation();
