@@ -111,7 +111,7 @@ const BlogPostPage: React.FC = () => {
                   <Link to={`/blog/${relatedPost.id}`} key={relatedPost.id} className="group">
                     <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-md overflow-hidden border border-stone-100 dark:border-stone-700 h-full flex flex-col transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
                       <div className="h-48 overflow-hidden relative">
-                        <img src={relatedPost.imageUrl} alt={relatedPost.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <img src={relatedPost.imageUrl} alt={relatedPost.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-black/20 transition-colors duration-500"></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       </div>
