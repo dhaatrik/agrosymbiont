@@ -153,7 +153,7 @@ const AboutPage: React.FC = () => {
                     <TiltCard className="h-full">
                         <div className="bg-white dark:bg-stone-800 rounded-3xl overflow-hidden shadow-xl border border-stone-100 dark:border-stone-700 h-full flex flex-col group preserve-3d">
                             <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
-                                <img src="https://picsum.photos/600/400?random=11" alt="Prototype Testing" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
+                                <img src="https://picsum.photos/600/400?random=11" alt="Prototype Testing" loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
                                 <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-green-600 dark:text-green-400 translate-z-4 shadow-sm border border-green-100 dark:border-green-900/50">
                                     {t('about_lab_1_tag')}
                                 </div>
@@ -170,7 +170,7 @@ const AboutPage: React.FC = () => {
                     <TiltCard className="h-full">
                         <div className="bg-white dark:bg-stone-800 rounded-3xl overflow-hidden shadow-xl border border-stone-100 dark:border-stone-700 h-full flex flex-col group preserve-3d">
                             <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
-                                <img src="https://picsum.photos/600/400?random=12" alt="Sensor Integration" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
+                                <img src="https://picsum.photos/600/400?random=12" alt="Sensor Integration" loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
                                 <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-cerulean-blue dark:text-blue-400 translate-z-4 shadow-sm border border-blue-100 dark:border-blue-900/50">
                                     {t('about_lab_2_tag')}
                                 </div>

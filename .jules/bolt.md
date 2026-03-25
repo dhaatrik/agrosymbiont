@@ -44,3 +44,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2026-03-24 - [Array.from Overhead in Initialization Loops]
 **Learning:** In high-frequency 60fps loops (like those initializing particles using `Array.from` combined with a mapping callback), allocating hundreds of objects via mapping callback inside `Array.from` incurs measurable performance overhead (function creation and invocation per element).
 **Action:** When initializing large sets of items in performance critical paths, replace `Array.from` mapping patterns with pre-allocating an array using `new Array(count)` and explicitly populating it within a standard `for` loop to avoid the closure and callback overhead.
+
+## 2024-05-25 - [Missing Lazy Loading on Below-The-Fold Images]
+**Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
+**Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
