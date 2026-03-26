@@ -29,14 +29,18 @@ export interface DustParticle {
 
 export const createSphereParticles = (count: number, colors: string[]): SphereParticle[] => {
   const arr = new Array(count);
+  const colorsLength = colors.length;
+  const pi2 = Math.PI * 2;
+
   for (let i = 0; i < count; i++) {
-    const theta = Math.random() * Math.PI * 2;
+    const theta = Math.random() * pi2;
     const phi = Math.acos(Math.random() * 2 - 1);
+
     arr[i] = {
       theta,
       phi,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      pulseOffset: Math.random() * Math.PI * 2,
+      color: colors[Math.floor(Math.random() * colorsLength)],
+      pulseOffset: Math.random() * pi2,
       pulseSpeed: 0.02 + Math.random() * 0.04,
       unitX: Math.sin(phi) * Math.cos(theta),
       unitY: Math.sin(phi) * Math.sin(theta),
@@ -48,10 +52,13 @@ export const createSphereParticles = (count: number, colors: string[]): SpherePa
 
 export const createDustParticles = (count: number, width: number, height: number): DustParticle[] => {
   const arr = new Array(count);
+  const w15 = width * 1.5;
+  const h15 = height * 1.5;
+
   for (let i = 0; i < count; i++) {
     arr[i] = {
-      x: (Math.random() - 0.5) * width * 1.5,
-      y: (Math.random() - 0.5) * height * 1.5,
+      x: (Math.random() - 0.5) * w15,
+      y: (Math.random() - 0.5) * h15,
       z: (Math.random() - 0.5) * 1000,
       size: Math.random() * 1.5,
       speedX: (Math.random() - 0.5) * 0.2,
