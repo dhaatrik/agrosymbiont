@@ -45,16 +45,19 @@ const fastRandom = () => {
 
 export const createSphereParticles = (count: number, colors: string[]): SphereParticle[] => {
   const arr = new Array(count);
-  const colorCount = colors.length;
+  const colorsLength = colors.length;
+  const pi2 = Math.PI * 2;
+
   for (let i = 0; i < count; i++) {
-    const theta = fastRandom() * Math.PI * 2;
-    const phi = Math.acos(fastRandom() * 2 - 1);
+    const theta = Math.random() * pi2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+
     arr[i] = {
       theta,
       phi,
-      color: colors[Math.floor(fastRandom() * colorCount)],
-      pulseOffset: fastRandom() * Math.PI * 2,
-      pulseSpeed: 0.02 + fastRandom() * 0.04,
+      color: colors[Math.floor(Math.random() * colorsLength)],
+      pulseOffset: Math.random() * pi2,
+      pulseSpeed: 0.02 + Math.random() * 0.04,
       unitX: Math.sin(phi) * Math.cos(theta),
       unitY: Math.sin(phi) * Math.sin(theta),
       unitZ: Math.cos(phi),
@@ -65,15 +68,18 @@ export const createSphereParticles = (count: number, colors: string[]): SpherePa
 
 export const createDustParticles = (count: number, width: number, height: number): DustParticle[] => {
   const arr = new Array(count);
+  const w15 = width * 1.5;
+  const h15 = height * 1.5;
+
   for (let i = 0; i < count; i++) {
     arr[i] = {
-      x: (fastRandom() - 0.5) * width * 1.5,
-      y: (fastRandom() - 0.5) * height * 1.5,
-      z: (fastRandom() - 0.5) * 1000,
-      size: fastRandom() * 1.5,
-      speedX: (fastRandom() - 0.5) * 0.2,
-      speedY: (fastRandom() - 0.5) * 0.2,
-      opacity: fastRandom() * 0.4 + 0.1,
+      x: (Math.random() - 0.5) * w15,
+      y: (Math.random() - 0.5) * h15,
+      z: (Math.random() - 0.5) * 1000,
+      size: Math.random() * 1.5,
+      speedX: (Math.random() - 0.5) * 0.2,
+      speedY: (Math.random() - 0.5) * 0.2,
+      opacity: Math.random() * 0.4 + 0.1,
     };
   }
   return arr;
