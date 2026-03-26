@@ -215,9 +215,9 @@ export const renderConnections = (
        // 80 * 80 = 6400. Compare squared distance to avoid Math.sqrt if possible
        if (distSq < 6400) {
          ctx.beginPath();
-         // Dynamic opacity based on distance
-         // Precalculated value for 0.12 / 80 = 0.0015
-         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.0015 * Math.sqrt(distSq))})`;
+         // Dynamic opacity based on squared distance
+         // Precalculated value for 0.12 / 6400 = 0.00001875
+         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.00001875 * distSq)})`;
          ctx.moveTo(p1x, p1y);
          ctx.lineTo(p2.x, p2.y);
          ctx.stroke();
