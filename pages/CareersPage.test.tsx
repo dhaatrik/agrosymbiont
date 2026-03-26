@@ -187,28 +187,31 @@ describe('CareersPage Component', () => {
     expect(screen.getAllByText('Lead Agronomist').length).toBe(1);
   });
 
-  it('validates form fields and displays error messages', async () => {
+  it('validates form fields sequentially and short-circuits on first error', async () => {
     render(<CareersPage />);
 
     // Find the generic application form
-    // The submit button is of type "submit" inside the form
     const submitButton = screen.getAllByText('Submit Application')[0];
 
     // Trigger submit
     fireEvent.click(submitButton);
 
-    // Wait for errors to appear.
-    // The errors appear both in the header and below the inputs.
+    // Wait for the FIRST error to appear (Full Name).
     await waitFor(() => {
-      // Use getAllByText because errors appear twice (in the summary and below input)
       expect(screen.getAllByText('Full Name is required.').length).toBeGreaterThan(0);
+      expect(screen.queryByText('Email Address is required.')).toBeNull();
+    });
+
+    // Fix name, submit again, now email should fail
+    const nameInput = screen.getAllByLabelText('Full Name')[0];
+    fireEvent.change(nameInput, { target: { value: 'John Doe', name: 'name' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
       expect(screen.getAllByText('Email Address is required.').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('LinkedIn Profile Link is required.').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Please upload your resume/CV.').length).toBeGreaterThan(0);
     });
 
     // Fill invalid email
-    // "Email Address" label is associated with input using htmlFor="general-email"
     const emailInput = screen.getAllByLabelText('Email Address')[0];
     fireEvent.change(emailInput, { target: { value: 'invalid-email', name: 'email' } });
     fireEvent.click(submitButton);
