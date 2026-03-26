@@ -5,8 +5,9 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { Menu, X, Mail, Phone, Sun, Moon, Globe, Zap, ZapOff } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
-const getNavLinks = (t: (key: string) => string) => [
+const getNavLinks = (t: TFunction) => [
   { path: '/', label: t('nav_home') },
   { path: '/about', label: t('nav_about') },
   { path: '/products', label: t('nav_products') },
@@ -18,7 +19,7 @@ const getNavLinks = (t: (key: string) => string) => [
   { path: '/contact', label: t('nav_contact') },
 ];
 
-const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: (key: string) => string }) => {
+const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: TFunction }) => {
   const links = getNavLinks(t);
   return (
   <>

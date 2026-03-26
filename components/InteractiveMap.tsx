@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import {
   ComposableMap,
   Geographies,
@@ -63,6 +63,29 @@ const projects: ProjectLocation[] = [
   }
 ];
 
+
+const MemoizedGeographies = memo(({ geographies }: { geographies: any[] }) => {
+  return (
+    <>
+      {geographies.map((geo) => (
+        <Geography
+          key={geo.rsmKey}
+          geography={geo}
+          fill="#E5E7EB"
+          stroke="#D1D5DB"
+          strokeWidth={0.5}
+          className="dark:fill-stone-800 dark:stroke-stone-700 outline-none"
+          style={{
+            default: { outline: "none" },
+            hover: { fill: "#D1D5DB", outline: "none" },
+            pressed: { outline: "none" },
+          }}
+        />
+      ))}
+    </>
+  );
+});
+
 const InteractiveMap: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectLocation | null>(null);
 
@@ -78,23 +101,9 @@ const InteractiveMap: React.FC = () => {
       >
         <ZoomableGroup zoom={1}>
           <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#E5E7EB"
-                  stroke="#D1D5DB"
-                  strokeWidth={0.5}
-                  className="dark:fill-stone-800 dark:stroke-stone-700 outline-none"
-                  style={{
-                    default: { outline: "none" },
-                    hover: { fill: "#D1D5DB", outline: "none" },
-                    pressed: { outline: "none" },
-                  }}
-                />
-              ))
-            }
+            {({ geographies }) => (
+              <MemoizedGeographies geographies={geographies} />
+            )}
           </Geographies>
           {projects.map((project) => (
             <Marker

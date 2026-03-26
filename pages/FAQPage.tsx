@@ -3,12 +3,15 @@ import AnimatedSection from '../components/AnimatedSection';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-const FAQItem: React.FC<{ id: string, question: string, answer: string, isOpen: boolean, onClick: () => void }> = ({ id, question, answer, isOpen, onClick }) => {
+// ⚡ Bolt Optimization: Wrapped in React.memo to prevent all FAQ items from re-rendering
+// synchronously when only a single item's state changes. Passed `index` and a stable
+// `onToggle` callback instead of an inline closure to ensure shallow prop equality works.
+const FAQItem: React.FC<{ id: string, index: number, question: string, answer: string, isOpen: boolean, onToggle: (index: number) => void }> = React.memo(({ id, index, question, answer, isOpen, onToggle }) => {
     return (
         <div className="border border-stone-200 dark:border-stone-700 rounded-2xl mb-4 overflow-hidden bg-white dark:bg-stone-800 shadow-sm hover:shadow-md transition-shadow duration-300">
             <button 
                 className="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cerulean-blue dark:focus-visible:ring-blue-500"
-                onClick={onClick}
+                onClick={() => onToggle(index)}
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${id}`}
             >
@@ -27,7 +30,7 @@ const FAQItem: React.FC<{ id: string, question: string, answer: string, isOpen: 
             </div>
         </div>
     );
-};
+});
 
 const FAQPage: React.FC = () => {
     const { t } = useTranslation();
@@ -38,9 +41,11 @@ const FAQPage: React.FC = () => {
         answer: t(`faq_a${i + 1}`)
     })), [t]);
 
-    const toggleFAQ = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
+    // ⚡ Bolt Optimization: Wrapped in useCallback to provide a stable function reference
+    // to the memoized FAQItem children, avoiding unnecessary re-renders.
+    const toggleFAQ = React.useCallback((index: number) => {
+        setOpenIndex(prev => prev === index ? null : index);
+    }, []);
 
     return (
         <div className="py-20 bg-ivory/20 dark:bg-stone-900/20 min-h-screen">
@@ -60,7 +65,8 @@ const FAQPage: React.FC = () => {
                             question={faq.question}
                             answer={faq.answer}
                             isOpen={openIndex === index}
-                            onClick={() => toggleFAQ(index)}
+                            index={index}
+                            onToggle={toggleFAQ}
                         />
                     ))}
                 </AnimatedSection>

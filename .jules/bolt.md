@@ -1,3 +1,10 @@
+<<<<<<< bolt/remove-math-sqrt-11581113785764336320
+# 2024-03-26
+- **What**: Replaced `Math.sqrt()` inside `renderConnections` line opacity rendering in `components/ThreeDBackgroundHelpers.ts`.
+- **Why**: `Math.sqrt` was called thousands of times per frame inside an $O(N^2)$ pseudo-loop. Modifying the drop-off opacity curve to use `distSq` directly achieved functionally equivalent visuals while drastically decreasing CPU load.
+- **Impact**: Increased rendering speed inside the inner loop by reducing complex math calculations.
+- **Measurement**: Vitest local `bench` mode verified a measurable performance improvement for `renderConnections`.
+=======
 ## 2024-03-12 - [React Re-renders on Scroll]
 **Learning:** Attaching a window 'scroll' event listener that triggers a React state update (e.g., `setScrollY`) at the root `Layout` component level is a severe performance bottleneck. It causes the entire application tree to re-render synchronously on every scroll tick, causing noticeable jank.
 **Action:** Always prefer off-main-thread or composition-level solutions for scroll animations. Use Framer Motion's `useScroll` and `useTransform` to bind scroll progress directly to a `<motion.div>`'s style, bypassing the React render cycle entirely.
@@ -48,3 +55,8 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-05-25 - [Missing Lazy Loading on Below-The-Fold Images]
 **Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
 **Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
+
+## 2025-03-05 - [Missing React.memo on FAQ List Items]
+**Learning:** Rendering a list of items (like FAQs) where state resides in the parent (e.g. `openIndex` in `FAQPage`) causes all children in the list to re-render synchronously whenever the state changes. For components without memoization, this can significantly delay time-to-interactive for high frequency actions like toggles.
+**Action:** When a parent component manages state for a list of items and passes handlers/data to them, wrap the individual list item component in `React.memo` and ensure that all callbacks passed to the children are wrapped in `React.useCallback`.
+>>>>>>> main
