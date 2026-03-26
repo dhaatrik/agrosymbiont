@@ -143,12 +143,30 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
 
     const validateForm = useCallback((): { [key: string]: string } => {
         const newErrors: { [key: string]: string } = {};
-        const fields: (keyof typeof formData)[] = ['name', 'email', 'linkedin', 'resume'];
 
-        fields.forEach((field) => {
-            const error = validateField(field as string, formData[field]);
-            if (error) newErrors[field as string] = error;
-        });
+        const nameError = validateField('name', formData.name);
+        if (nameError) {
+            newErrors.name = nameError;
+            return newErrors;
+        }
+
+        const emailError = validateField('email', formData.email);
+        if (emailError) {
+            newErrors.email = emailError;
+            return newErrors;
+        }
+
+        const linkedinError = validateField('linkedin', formData.linkedin);
+        if (linkedinError) {
+            newErrors.linkedin = linkedinError;
+            return newErrors;
+        }
+
+        const resumeError = validateField('resume', formData.resume);
+        if (resumeError) {
+            newErrors.resume = resumeError;
+            return newErrors;
+        }
 
         return newErrors;
     }, [formData, validateField]);

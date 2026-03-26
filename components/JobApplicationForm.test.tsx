@@ -63,19 +63,28 @@ describe('JobApplicationForm Component', () => {
     expect(screen.getByText('Submit Application')).toBeInTheDocument();
   });
 
-  it('validates form fields and displays error messages', async () => {
+  it('validates form fields sequentially and short-circuits on first error', async () => {
     render(<JobApplicationForm />);
 
     const submitButton = screen.getByText('Submit Application');
     fireEvent.click(submitButton);
 
+    // Name should be the first and only error due to short-circuiting
     await waitFor(() => {
       expect(screen.getAllByText('Full Name is required.').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Email Address is required.').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('LinkedIn Profile Link is required.').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Please upload your resume/CV.').length).toBeGreaterThan(0);
+      expect(screen.queryByText('Email Address is required.')).toBeNull();
     });
 
+    // Fix name, submit again, now email should fail
+    const nameInput = screen.getByLabelText('Full Name');
+    fireEvent.change(nameInput, { target: { value: 'John Doe', name: 'name' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Email Address is required.').length).toBeGreaterThan(0);
+    });
+
+    // Make email invalid
     const emailInput = screen.getByLabelText('Email Address');
     fireEvent.change(emailInput, { target: { value: 'invalid-email', name: 'email' } });
     fireEvent.click(submitButton);
