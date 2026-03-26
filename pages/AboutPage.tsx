@@ -347,14 +347,14 @@ const TeamCarousel: React.FC = () => {
             <button 
                 onClick={prevSlide}
                 aria-label="Previous slide"
-                className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10"
+                className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
             >
                 <ChevronLeft size={24} />
             </button>
             <button 
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10"
+                className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-stone-800/80 hover:bg-white dark:hover:bg-stone-800 p-3 rounded-full shadow-lg text-cerulean-blue dark:text-blue-400 transition-all duration-300 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
             >
                 <ChevronRight size={24} />
             </button>
@@ -364,7 +364,7 @@ const TeamCarousel: React.FC = () => {
                     <button
                         key={index}
                         onClick={() => setCurrentIndex(index)}
-                        className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                        className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
                             currentIndex === index ? 'bg-cerulean-blue dark:bg-blue-500 w-6 sm:w-8' : 'bg-stone-300 dark:bg-stone-600'
                         }`}
                         aria-label={`Go to slide ${index + 1}`}
