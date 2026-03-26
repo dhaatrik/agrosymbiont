@@ -10,6 +10,24 @@ import { MapPin, TrendingUp, Droplets, Leaf, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { geoUrl, mapMarkers, MarkerData } from "../data/mapData";
 
+
+const MemoizedGeographies = React.memo(({ geographies }: { geographies: any[] }) => {
+  return (
+    <>
+      {geographies.map((geo) => (
+        <Geography
+          key={geo.rsmKey}
+          geography={geo}
+          fill="currentColor"
+          className="text-stone-200 dark:text-stone-800 outline-none transition-colors duration-300 hover:text-stone-300 dark:hover:text-stone-700"
+          stroke="#ffffff"
+          strokeWidth={0.5}
+        />
+      ))}
+    </>
+  );
+});
+
 const ImpactMap: React.FC = () => {
   const { t } = useTranslation();
 
@@ -35,18 +53,7 @@ const ImpactMap: React.FC = () => {
             projectionConfig={{ scale: 120 }}
           >
             <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill="currentColor"
-                    className="text-stone-200 dark:text-stone-800 outline-none transition-colors duration-300 hover:text-stone-300 dark:hover:text-stone-700"
-                    stroke="#ffffff"
-                    strokeWidth={0.5}
-                  />
-                ))
-              }
+              {({ geographies }) => <MemoizedGeographies geographies={geographies} />}
             </Geographies>
 
             {mapMarkers.map((marker, index) => (

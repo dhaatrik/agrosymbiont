@@ -49,5 +49,6 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 **Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
 **Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
 
-### 2025-03-08
-* When rendering large arrays of unchanging components derived from external state (e.g., `Geography` components loaded from an external topojson file in `InteractiveMap.tsx`), applying `useMemo` inline around the array map callback prevents expensive re-renders and re-calculations triggered by unrelated component state changes (e.g., `selectedProject`).
+## 2025-03-05 - [Missing React.memo on FAQ List Items]
+**Learning:** Rendering a list of items (like FAQs) where state resides in the parent (e.g. `openIndex` in `FAQPage`) causes all children in the list to re-render synchronously whenever the state changes. For components without memoization, this can significantly delay time-to-interactive for high frequency actions like toggles.
+**Action:** When a parent component manages state for a list of items and passes handlers/data to them, wrap the individual list item component in `React.memo` and ensure that all callbacks passed to the children are wrapped in `React.useCallback`.
