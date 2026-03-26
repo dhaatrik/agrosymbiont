@@ -111,7 +111,7 @@ const BlogPage: React.FC = () => {
     return selectedCategory === 'All'
       ? blogs
       : blogs.filter(post => post.category === selectedCategory);
-  }, [selectedCategory, blogs]);
+  }, [selectedCategory]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;

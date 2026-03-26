@@ -48,3 +48,9 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-05-25 - [Missing Lazy Loading on Below-The-Fold Images]
 **Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
 **Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
+
+## 2024-05-15
+
+**Optimization:** Removed static import `blogs` from `useMemo` dependency array in `pages/BlogPage.tsx`.
+
+**Learning:** Including statically imported constants in a `useMemo` or `useEffect` dependency array is unnecessary and technically incorrect, as their reference will never change during the application lifecycle. Removing them cleans up the dependency array and prevents potential (though unlikely in prod) re-evaluations during Hot Module Replacement (HMR) or if the bundler handles the reference unusually. The performance impact on a single initial render benchmark is negligible, but it's a solid code health and micro-optimization improvement to reduce tracking overhead.
