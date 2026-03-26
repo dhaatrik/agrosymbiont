@@ -27,17 +27,34 @@ export interface DustParticle {
   opacity: number;
 }
 
+
+// Performance optimization: Pre-calculated lookup table for Math.random()
+// Since Math.random() is relatively slow when called thousands of times per frame,
+// we pre-generate a large array of random floats and cycle through it.
+// 4096 is a power of 2, allowing us to use a fast bitwise AND for modulo.
+const RAND_COUNT = 4096;
+const randTable = new Float64Array(RAND_COUNT);
+for (let i = 0; i < RAND_COUNT; i++) {
+  randTable[i] = Math.random();
+}
+let randIdx = 0;
+const fastRandom = () => {
+  randIdx = (randIdx + 1) & 4095;
+  return randTable[randIdx];
+};
+
 export const createSphereParticles = (count: number, colors: string[]): SphereParticle[] => {
   const arr = new Array(count);
+  const colorCount = colors.length;
   for (let i = 0; i < count; i++) {
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(Math.random() * 2 - 1);
+    const theta = fastRandom() * Math.PI * 2;
+    const phi = Math.acos(fastRandom() * 2 - 1);
     arr[i] = {
       theta,
       phi,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      pulseOffset: Math.random() * Math.PI * 2,
-      pulseSpeed: 0.02 + Math.random() * 0.04,
+      color: colors[Math.floor(fastRandom() * colorCount)],
+      pulseOffset: fastRandom() * Math.PI * 2,
+      pulseSpeed: 0.02 + fastRandom() * 0.04,
       unitX: Math.sin(phi) * Math.cos(theta),
       unitY: Math.sin(phi) * Math.sin(theta),
       unitZ: Math.cos(phi),
@@ -50,13 +67,13 @@ export const createDustParticles = (count: number, width: number, height: number
   const arr = new Array(count);
   for (let i = 0; i < count; i++) {
     arr[i] = {
-      x: (Math.random() - 0.5) * width * 1.5,
-      y: (Math.random() - 0.5) * height * 1.5,
-      z: (Math.random() - 0.5) * 1000,
-      size: Math.random() * 1.5,
-      speedX: (Math.random() - 0.5) * 0.2,
-      speedY: (Math.random() - 0.5) * 0.2,
-      opacity: Math.random() * 0.4 + 0.1,
+      x: (fastRandom() - 0.5) * width * 1.5,
+      y: (fastRandom() - 0.5) * height * 1.5,
+      z: (fastRandom() - 0.5) * 1000,
+      size: fastRandom() * 1.5,
+      speedX: (fastRandom() - 0.5) * 0.2,
+      speedY: (fastRandom() - 0.5) * 0.2,
+      opacity: fastRandom() * 0.4 + 0.1,
     };
   }
   return arr;
