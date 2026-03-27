@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="md:col-span-1 pr-8">
-            <NavLink to="/" className="flex items-center gap-3 mb-8 group">
+            <NavLink to="/" className="flex items-center gap-3 mb-8 group focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-lg">
                 <img src="/favicon.png" alt="AgroSymbiont Logo" className="w-14 h-14 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500" />
                 <span className="text-white text-2xl font-bold tracking-wider">
                 AgroSymbiont
@@ -28,20 +28,20 @@ const Footer: React.FC = () => {
           <div className="md:pl-8">
             <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">{t('footer_company')}</h3>
             <ul className="space-y-4 text-sm">
-                <li><NavLink to="/about" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_about')}</NavLink></li>
-                <li><NavLink to="/careers" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_careers')}</NavLink></li>
-                <li><NavLink to="/investors" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_investors')}</NavLink></li>
-                <li><NavLink to="/contact" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_contact')}</NavLink></li>
+                <li><NavLink to="/about" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_about')}</NavLink></li>
+                <li><NavLink to="/careers" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_careers')}</NavLink></li>
+                <li><NavLink to="/investors" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_investors')}</NavLink></li>
+                <li><NavLink to="/contact" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_contact')}</NavLink></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-white font-bold mb-8 uppercase tracking-[0.15em] text-xs">{t('footer_resources')}</h3>
             <ul className="space-y-4 text-sm">
-                <li><NavLink to="/blog" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_insights')}</NavLink></li>
-                <li><NavLink to="/stories" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_stories')}</NavLink></li>
-                <li><NavLink to="/technology" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_technology')}</NavLink></li>
-                <li><NavLink to="/faq" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300">{t('nav_faq')}</NavLink></li>
+                <li><NavLink to="/blog" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_insights')}</NavLink></li>
+                <li><NavLink to="/stories" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_stories')}</NavLink></li>
+                <li><NavLink to="/technology" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_technology')}</NavLink></li>
+                <li><NavLink to="/faq" className="text-gray-400 hover:text-mustard-yellow transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('nav_faq')}</NavLink></li>
             </ul>
           </div>
 
@@ -53,15 +53,15 @@ const Footer: React.FC = () => {
                 <li className="flex items-center"><Mail className="mr-3 w-5 h-5 opacity-50 flex-shrink-0" /> contact@agrosymbiont.com</li>
             </ul>
              <div className="flex space-x-4 mt-8">
-              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1" aria-label="Facebook">
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1" aria-label="X">
+              <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950" aria-label="X">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1" aria-label="Instagram">
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-cerulean-blue dark:hover:text-blue-900 transition-all duration-300 shadow-[0_4px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_0_rgba(255,255,255,0.1)] active:shadow-[0_0px_0_rgba(255,255,255,0.1)] transform hover:-translate-y-1 active:translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950" aria-label="Instagram">
                  <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -71,8 +71,8 @@ const Footer: React.FC = () => {
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-100 font-medium">
             <p className="text-gray-100">© {new Date().getFullYear()} AgroSymbiont Agricultural Solutions. {t('footer_rights')}</p>
             <div className="flex space-x-8 mt-4 md:mt-0">
-                <NavLink to="/privacy-policy" className="text-gray-100 hover:text-mustard-yellow transition-colors">{t('footer_privacy')}</NavLink>
-                <NavLink to="/terms-of-service" className="text-gray-100 hover:text-mustard-yellow transition-colors">{t('footer_terms')}</NavLink>
+                <NavLink to="/privacy-policy" className="text-gray-100 hover:text-mustard-yellow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('footer_privacy')}</NavLink>
+                <NavLink to="/terms-of-service" className="text-gray-100 hover:text-mustard-yellow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded">{t('footer_terms')}</NavLink>
             </div>
         </div>
       </div>
