@@ -154,6 +154,10 @@ export const updateAndProjectSphereParticles = (
   const cosFinalRotationX = Math.cos(finalRotationX);
   const sinFinalRotationX = Math.sin(finalRotationX);
 
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  const scrollParallaxMultiplier = scrollY * 0.15;
+
   // Optimization: Reuse pre-allocated array and update object properties in place
   // instead of re-creating hundreds of objects per frame to reduce GC pressure.
   if (projectedParticles.length !== sphereParticles.length) {
@@ -184,9 +188,9 @@ export const updateAndProjectSphereParticles = (
 
     // Perspective projection with scroll parallax
     const scale = 800 / (800 + z2);
-    const scrollParallaxY = scrollY * 0.15 * scale;
-    const x2d = x1 * scale + width / 2;
-    const y2d = y1 * scale + height / 2 - scrollParallaxY;
+    const scrollParallaxY = scrollParallaxMultiplier * scale;
+    const x2d = x1 * scale + halfWidth;
+    const y2d = y1 * scale + halfHeight - scrollParallaxY;
 
     const pp = projectedParticles[i];
     pp.x = x2d;

@@ -60,3 +60,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 **Learning:** Rendering a list of items (like FAQs) where state resides in the parent (e.g. `openIndex` in `FAQPage`) causes all children in the list to re-render synchronously whenever the state changes. For components without memoization, this can significantly delay time-to-interactive for high frequency actions like toggles.
 **Action:** When a parent component manages state for a list of items and passes handlers/data to them, wrap the individual list item component in `React.memo` and ensure that all callbacks passed to the children are wrapped in `React.useCallback`.
 >>>>>>> main
+
+## 2026-03-24 - [Hoisting invariant arithmetic out of 60FPS loops]
+**Learning:** Found redundant math and divisions within the inner loop of `updateAndProjectSphereParticles` inside a 60FPS `requestAnimationFrame` loop. Frame-invariant calculations like `width / 2` and `scrollY * 0.15` were recalculated for every single particle on every single frame.
+**Action:** Hoist these static values to local constants right before the loop body. For instance, define `const halfWidth = width / 2;` outside the loop to eliminate thousands of useless division operations and optimize rendering throughput.
