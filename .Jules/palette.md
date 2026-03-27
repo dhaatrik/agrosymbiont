@@ -24,3 +24,7 @@
 ## 2025-03-25 - Focus rings on interactive elements in constrained layouts
 **Learning:** Found an accessibility issue where interactive elements in headers (like language selectors and toggle buttons) had `focus-visible:ring-2` applied but the focus ring was visually clipped or invisible because it was painted outwards in a tightly packed or overflow-hidden container.
 **Action:** When adding keyboard focus states to interactive elements in constrained layouts (like top navigation bars), append `focus-visible:ring-inset` alongside the standard `focus-visible:ring-2` to ensure the focus indicator is painted inwards and remains fully visible to keyboard users.
+
+## 2024-05-24 - Missing focus rings on footer links and social icons
+**Learning:** Navigational lists and social icon links within footers often contain complex hover styles and active states but miss explicit focus indicators, creating an accessibility gap for keyboard users traversing the bottom of the page.
+**Action:** Always append `focus:outline-none focus-visible:ring-2 focus-visible:ring-[color] focus-visible:ring-offset-2` (matching the section's background) to footer links and custom icon anchors to preserve clear keyboard accessibility.
