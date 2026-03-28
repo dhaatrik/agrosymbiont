@@ -8,7 +8,10 @@ const secureRandom = () => {
     return array[0] / (0xffffffff + 1);
 };
 
-const PARTICLES = Array.from({ length: 12 });
+const PARTICLES = new Array(12);
+for (let i = 0; i < 12; i++) {
+    PARTICLES[i] = i;
+}
 
 const WaitlistParticles: React.FC = () => {
     return (

@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import {
   ComposableMap,
   Geographies,
@@ -64,6 +64,39 @@ const projects: ProjectLocation[] = [
 ];
 
 
+const InteractiveMarker = memo(({ project, onClick }: { project: ProjectLocation; onClick: (project: ProjectLocation) => void }) => {
+  return (
+    <Marker
+      coordinates={project.coordinates}
+      onClick={() => onClick(project)}
+      onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick(project);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
+      aria-label={`View details for ${project.name}`}
+    >
+      <g
+        fill="none"
+        stroke="#2A52BE"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        transform="translate(-12, -24)"
+        className="hover:scale-125 transition-transform duration-300 dark:stroke-blue-400"
+      >
+        <circle cx="12" cy="10" r="3" />
+        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+      </g>
+      <circle r={12} fill="transparent" /> {/* Larger hit area */}
+    </Marker>
+  );
+});
+
 const MemoizedGeographies = memo(({ geographies }: { geographies: any[] }) => {
   return (
     <>
@@ -89,6 +122,10 @@ const MemoizedGeographies = memo(({ geographies }: { geographies: any[] }) => {
 const InteractiveMap: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectLocation | null>(null);
 
+  const handleProjectSelect = useCallback((project: ProjectLocation) => {
+    setSelectedProject(project);
+  }, []);
+
   return (
     <div className="relative w-full h-[600px] bg-blue-50/50 dark:bg-stone-900/50 rounded-3xl overflow-hidden border border-stone-200 dark:border-stone-800 shadow-inner">
       <ComposableMap
@@ -106,35 +143,11 @@ const InteractiveMap: React.FC = () => {
             )}
           </Geographies>
           {projects.map((project) => (
-            <Marker
+            <InteractiveMarker
               key={project.id}
-              coordinates={project.coordinates}
-              onClick={() => setSelectedProject(project)}
-              onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setSelectedProject(project);
-                }
-              }}
-              tabIndex={0}
-              role="button"
-              className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
-              aria-label={`View details for ${project.name}`}
-            >
-              <g
-                fill="none"
-                stroke="#2A52BE"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                transform="translate(-12, -24)"
-                className="hover:scale-125 transition-transform duration-300 dark:stroke-blue-400"
-              >
-                <circle cx="12" cy="10" r="3" />
-                <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
-              </g>
-              <circle r={12} fill="transparent" /> {/* Larger hit area */}
-            </Marker>
+              project={project}
+              onClick={handleProjectSelect}
+            />
           ))}
         </ZoomableGroup>
       </ComposableMap>

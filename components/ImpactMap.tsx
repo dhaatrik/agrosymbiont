@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo, useCallback } from "react";
 import {
   ComposableMap,
   Geographies,
@@ -10,6 +10,39 @@ import { MapPin, TrendingUp, Droplets, Leaf, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { geoUrl, mapMarkers, MarkerData } from "../data/mapData";
 
+
+const MemoizedMarker = memo(({ marker, onClick, t }: { marker: MarkerData; onClick: (marker: MarkerData) => void; t: (key: string) => string }) => {
+  return (
+    <Marker
+      coordinates={marker.coordinates}
+      onClick={() => onClick(marker)}
+      onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick(marker);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
+      aria-label={t(marker.nameKey)}
+    >
+      <motion.g whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+        <circle r={8} fill="#2a52be" className="drop-shadow-md" />
+        <circle
+          r={8}
+          fill="#2a52be"
+          opacity={0.3}
+          className="animate-ping"
+        />
+        <MapPin
+          className="text-white w-4 h-4 -translate-x-2 -translate-y-2 pointer-events-none"
+          strokeWidth={2.5}
+        />
+      </motion.g>
+    </Marker>
+  );
+});
 
 const MemoizedGeographies = React.memo(({ geographies }: { geographies: any[] }) => {
   return (
@@ -32,6 +65,10 @@ const ImpactMap: React.FC = () => {
   const { t } = useTranslation();
 
   const [activeTooltip, setActiveTooltip] = useState<MarkerData | null>(null);
+
+  const handleMarkerSelect = useCallback((marker: MarkerData) => {
+    setActiveTooltip(marker);
+  }, []);
 
   return (
     <div className="w-full relative">
@@ -57,35 +94,12 @@ const ImpactMap: React.FC = () => {
             </Geographies>
 
             {mapMarkers.map((marker, index) => (
-              <Marker
+              <MemoizedMarker
                 key={index}
-                coordinates={marker.coordinates}
-                onClick={() => setActiveTooltip(marker)}
-                onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActiveTooltip(marker);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
-                aria-label={t(marker.nameKey)}
-              >
-                <motion.g whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
-                  <circle r={8} fill="#2a52be" className="drop-shadow-md" />
-                  <circle
-                    r={8}
-                    fill="#2a52be"
-                    opacity={0.3}
-                    className="animate-ping"
-                  />
-                  <MapPin
-                    className="text-white w-4 h-4 -translate-x-2 -translate-y-2 pointer-events-none"
-                    strokeWidth={2.5}
-                  />
-                </motion.g>
-              </Marker>
+                marker={marker}
+                onClick={handleMarkerSelect}
+                t={t}
+              />
             ))}
           </ComposableMap>
 
