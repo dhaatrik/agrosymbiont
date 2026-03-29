@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { EMAIL_REGEX } from '../utils/validation';
+import { isValidEmail } from '../utils/validation';
 
 import { useContactForm } from '../hooks/useContactForm';
 import { EMAIL_REGEX } from '../utils/validation';
@@ -17,7 +17,7 @@ const ContactForm: React.FC = () => {
         if (name === 'email') {
             const trimmedValue = value.trim();
             if (!trimmedValue) return t('contact_email_required');
-            if (!EMAIL_REGEX.test(trimmedValue)) return t('contact_email_invalid');
+            if (!isValidEmail(trimmedValue)) return t('contact_email_invalid');
         }
         if (name === 'phone' && !value.trim()) return t('contact_phone_required');
         if (name === 'inquiryType' && !value) return t('contact_inquiry_required');

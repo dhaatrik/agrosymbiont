@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EMAIL_REGEX } from '../utils/validation';
+import { isValidEmail } from '../utils/validation';
+
 import { AlertCircle, UploadCloud, Loader2 } from 'lucide-react';
 import { EMAIL_REGEX } from '../utils/validation';
 
@@ -112,7 +113,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
             if (typeof value !== 'string') return t('car_form_email_required');
             const trimmedValue = value.trim();
             if (!trimmedValue) return t('car_form_email_required');
-            if (!EMAIL_REGEX.test(trimmedValue)) return t('car_form_email_invalid');
+            if (!isValidEmail(trimmedValue)) return t('car_form_email_invalid');
         }
         if (name === 'linkedin' && (typeof value !== 'string' || !value.trim())) return t('car_form_linkedin_required');
         if (name === 'resume' && !value) return t('car_form_resume_required');
