@@ -130,7 +130,9 @@ const WaitlistForm: React.FC = () => {
                                 className={`w-full px-6 py-4 bg-stone-50 dark:bg-stone-900 border ${emailError ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} rounded-xl focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 transition-all text-gray-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-stone-500`}
                                 aria-label="Email for product notifications"
                             />
-                            {emailError && <p className="absolute -bottom-6 left-1 text-xs text-red-500 font-medium">{emailError}</p>}
+                            <div aria-live="polite">
+                                {emailError && <p className="absolute -bottom-6 left-1 text-xs text-red-500 font-medium">{emailError}</p>}
+                            </div>
                         </div>
                         <div className="flex-shrink-0 relative flex justify-center w-full sm:w-auto">
                             <button

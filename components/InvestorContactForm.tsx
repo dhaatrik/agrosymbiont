@@ -80,19 +80,19 @@ const InvestorContactForm: React.FC = () => {
                     <div className="md:col-span-1 border-stone-200 dark:border-stone-700">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="name">Full Name *</label>
                         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.name ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Jane Doe" />
-                        {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}
+                        <div aria-live="polite">{errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}</div>
                     </div>
 
                     <div className="md:col-span-1">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="email">Work Email *</label>
                         <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.email ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="jane@investmentfirm.com" />
-                        {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}
+                        <div aria-live="polite">{errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}</div>
                     </div>
 
                     <div className="md:col-span-2">
                          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="company">Firm / Company *</label>
                          <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.company ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Investment Firm LLC" />
-                         {errors.company && <p className="text-red-500 text-xs mt-1 font-medium">{errors.company}</p>}
+                         <div aria-live="polite">{errors.company && <p className="text-red-500 text-xs mt-1 font-medium">{errors.company}</p>}</div>
                     </div>
 
                     <div className="md:col-span-2">
