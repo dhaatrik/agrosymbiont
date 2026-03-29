@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EMAIL_REGEX } from '../utils/validation';
 import { AlertCircle, UploadCloud, Loader2 } from 'lucide-react';
 import { EMAIL_REGEX } from '../utils/validation';
 
