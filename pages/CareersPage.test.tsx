@@ -202,7 +202,7 @@ describe('CareersPage Component', () => {
       expect(screen.queryByText('Email Address is required.')).toBeNull();
     });
 
-    // Fix name, submit again, now email should fail
+    // Enter a valid name, submit again, now email should fail
     const nameInput = screen.getAllByLabelText('Full Name')[0];
     fireEvent.change(nameInput, { target: { value: 'John Doe', name: 'name' } });
     fireEvent.click(submitButton);

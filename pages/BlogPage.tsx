@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Bell } from 'lucide-react';
-import { blogs, BlogPost } from '../data/blogs';
+import { blogs } from '../data/blogs';
 import { useTranslation } from 'react-i18next';
 
 import BlogCard from '../components/BlogCard';

@@ -11,6 +11,11 @@ import { MapPin, X } from 'lucide-react';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
+interface MapGeography {
+  rsmKey: string;
+  [key: string]: any;
+}
+
 interface ProjectLocation {
   id: string;
   name: string;
@@ -97,7 +102,7 @@ const InteractiveMarker = memo(({ project, onClick }: { project: ProjectLocation
   );
 });
 
-const MemoizedGeographies = memo(({ geographies }: { geographies: any[] }) => {
+const MemoizedGeographies = memo(({ geographies }: { geographies: MapGeography[] }) => {
   return (
     <>
       {geographies.map((geo) => (

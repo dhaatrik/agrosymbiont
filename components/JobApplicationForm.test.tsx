@@ -75,7 +75,7 @@ describe('JobApplicationForm Component', () => {
       expect(screen.queryByText('Email Address is required.')).toBeNull();
     });
 
-    // Fix name, submit again, now email should fail
+    // Fill in name, submit again, now email should fail
     const nameInput = screen.getByLabelText('Full Name');
     fireEvent.change(nameInput, { target: { value: 'John Doe', name: 'name' } });
     fireEvent.click(submitButton);
