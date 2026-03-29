@@ -27,10 +27,7 @@ const ROICalculator: React.FC = () => {
                             min="1"
                             max="1000"
                             value={farmSize}
-                            className="w-full h-3 bg-stone-200 dark:bg-stone-700 rounded-lg appearance-none cursor-pointer hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors focus:outline-none focus:ring-2 focus:ring-cerulean-blue"
-                            style={{
-                                accentColor: 'var(--color-cerulean-blue, #2a52be)',
-                            }}
+                            className="w-full h-3 bg-stone-200 dark:bg-stone-700 rounded-lg appearance-none cursor-pointer hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors focus:outline-none focus:ring-2 focus:ring-cerulean-blue accent-cerulean-blue"
                             onChange={(e) => setFarmSize(parseInt(e.target.value))}
                             aria-label="Farm size in acres"
                         />

@@ -28,12 +28,11 @@ const MemoizedMarker = memo(({ marker, onClick, t }: { marker: MarkerData; onCli
       aria-label={t(marker.nameKey)}
     >
       <motion.g whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
-        <circle r={8} fill="#2a52be" className="drop-shadow-md" />
+        <circle r={8} className="fill-cerulean-blue drop-shadow-md" />
         <circle
           r={8}
-          fill="#2a52be"
           opacity={0.3}
-          className="animate-ping"
+          className="fill-cerulean-blue animate-ping"
         />
         <MapPin
           className="text-white w-4 h-4 -translate-x-2 -translate-y-2 pointer-events-none"
