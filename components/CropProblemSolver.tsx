@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wheat, Apple, Coffee, Sprout, Search, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -40,6 +40,15 @@ const CropSelector: React.FC<{
   </div>
 );
 
+const SymptomButton = memo(({ symptom, isSelected, onSelect }: { symptom: SymptomOption, isSelected: boolean, onSelect: (id: SymptomType) => void }) => (
+  <button
+      onClick={() => onSelect(symptom.id as SymptomType)}
+      className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${isSelected ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
+  >
+      <span className="font-semibold text-sm">{symptom.label}</span>
+  </button>
+));
+
 const SymptomSelector: React.FC<{
   currentSymptoms: SymptomOption[];
   selectedSymptom: SymptomType;
@@ -47,13 +56,12 @@ const SymptomSelector: React.FC<{
 }> = ({ currentSymptoms, selectedSymptom, onSelect }) => (
   <div className="flex flex-col gap-2">
       {currentSymptoms.map((symptom) => (
-          <button
+          <SymptomButton
               key={symptom.id}
-              onClick={() => onSelect(symptom.id as SymptomType)}
-              className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedSymptom === symptom.id ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
-          >
-              <span className="font-semibold text-sm">{symptom.label}</span>
-          </button>
+              symptom={symptom}
+              isSelected={selectedSymptom === symptom.id}
+              onSelect={onSelect}
+          />
       ))}
   </div>
 );
@@ -140,7 +148,7 @@ const CropProblemSolver: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
-  const handleDiagnose = () => {
+  const handleDiagnose = useCallback(() => {
     if (!selectedCrop || !selectedSymptom) return;
     setIsAnalyzing(true);
     setShowResult(false);
@@ -148,7 +156,18 @@ const CropProblemSolver: React.FC = () => {
         setIsAnalyzing(false);
         setShowResult(true);
     }, 1200);
-  };
+  }, [selectedCrop, selectedSymptom]);
+
+  const handleSelectCrop = useCallback((cropId: CropType) => {
+      setSelectedCrop(cropId);
+      setSelectedSymptom(null);
+      setShowResult(false);
+  }, []);
+
+  const handleSelectSymptom = useCallback((symptomId: SymptomType) => {
+      setSelectedSymptom(symptomId);
+      setShowResult(false);
+  }, []);
 
   const currentSymptoms = selectedCrop ? symptomOptions[selectedCrop] : [];
   const recommendedSolution = selectedSymptom ? solutions[selectedSymptom] : null;
@@ -169,11 +188,7 @@ const CropProblemSolver: React.FC = () => {
                 <CropSelector
                     cropOptions={cropOptions}
                     selectedCrop={selectedCrop}
-                    onSelect={(cropId) => {
-                        setSelectedCrop(cropId);
-                        setSelectedSymptom(null);
-                        setShowResult(false);
-                    }}
+                    onSelect={handleSelectCrop}
                 />
             </div>
 
@@ -188,10 +203,7 @@ const CropProblemSolver: React.FC = () => {
                         <SymptomSelector
                             currentSymptoms={currentSymptoms}
                             selectedSymptom={selectedSymptom}
-                            onSelect={(symptomId) => {
-                                setSelectedSymptom(symptomId);
-                                setShowResult(false);
-                            }}
+                            onSelect={handleSelectSymptom}
                         />
                     </motion.div>
                 )}

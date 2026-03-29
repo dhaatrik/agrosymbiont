@@ -1,6 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TeamMemberCard from './TeamMemberCard';
+
+
+const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isActive: boolean, onClick: (index: number) => void }) => {
+    return (
+        <button
+            onClick={() => onClick(index)}
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
+                isActive ? 'bg-cerulean-blue dark:bg-blue-500 w-6 sm:w-8' : 'bg-stone-300 dark:bg-stone-600'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+        />
+    );
+});
 
 const TeamCarousel: React.FC = () => {
     const teamMembers = [
@@ -14,6 +27,10 @@ const TeamCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+        const handleDotClick = useCallback((index: number) => {
+        setCurrentIndex(index);
+    }, []);
 
     const minSwipeDistance = 50;
 
@@ -92,13 +109,11 @@ const TeamCarousel: React.FC = () => {
 
             <div className="flex justify-center mt-6 sm:mt-8 gap-2">
                 {teamMembers.map((_, index) => (
-                    <button
+                    <PaginationDot
                         key={index}
-                        onClick={() => setCurrentIndex(index)}
-                        className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
-                            currentIndex === index ? 'bg-cerulean-blue dark:bg-blue-500 w-6 sm:w-8' : 'bg-stone-300 dark:bg-stone-600'
-                        }`}
-                        aria-label={`Go to slide ${index + 1}`}
+                        index={index}
+                        isActive={currentIndex === index}
+                        onClick={handleDotClick}
                     />
                 ))}
             </div>
