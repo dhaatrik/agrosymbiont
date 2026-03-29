@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Sparkles } from 'lucide-react';
@@ -14,7 +14,7 @@ interface JobModalProps {
     onClose: () => void;
 }
 
-const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
+const JobModal: React.FC<JobModalProps> = React.memo(({ job, onClose }) => {
     const { t } = useTranslation();
 
     return (
@@ -62,7 +62,7 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose }) => {
             )}
         </AnimatePresence>
     );
-};
+});
 
 const CareersPage: React.FC = () => {
     const { t } = useTranslation();
@@ -70,19 +70,23 @@ const CareersPage: React.FC = () => {
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
     const applicationFormRef = useRef<HTMLDivElement>(null);
 
-    const handleApplyClick = (job?: Job) => {
+    const handleApplyClick = useCallback((job?: Job) => {
         if (job) {
             setSelectedJob(job);
         } else {
             applicationFormRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
-    };
+    }, []);
+
+    const handleCloseModal = useCallback(() => {
+        setSelectedJob(null);
+    }, []);
 
     const filteredJobs = useMemo(() => jobOpenings.filter(job => activeTab === 'all' || job.category === activeTab), [activeTab]);
 
     return (
          <div className="py-20">
-            <JobModal job={selectedJob} onClose={() => setSelectedJob(null)} />
+            <JobModal job={selectedJob} onClose={handleCloseModal} />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <AnimatedSection className="text-center mb-20">
                     <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">{t('car_title')}</h1>
@@ -130,7 +134,8 @@ const CareersPage: React.FC = () => {
                                     title={t(job.titleKey)}
                                     location={t(job.locationKey)}
                                     type={t(job.typeKey)}
-                                    onApply={() => handleApplyClick(job)}
+                                    onApply={handleApplyClick}
+                                    job={job}
                                 />
                             ))
                         ) : (

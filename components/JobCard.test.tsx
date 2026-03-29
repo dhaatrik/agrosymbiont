@@ -21,11 +21,20 @@ vi.mock('./TiltCard', () => ({
 }));
 
 describe('JobCard', () => {
+  const mockJob = {
+    id: 'senior-agronomist',
+    titleKey: 'car_job_agronomist',
+    locationKey: 'car_loc_remote',
+    typeKey: 'car_type_fulltime',
+    category: 'science' as const,
+  };
+
   const mockProps = {
     title: 'Senior Agronomist',
     location: 'Bangalore, India',
     type: 'Full-time',
     onApply: vi.fn(),
+    job: mockJob,
   };
 
   it('renders correctly with given props', () => {
@@ -45,12 +54,13 @@ describe('JobCard', () => {
     expect(applyButton).toHaveAttribute('aria-label', 'Apply Now Senior Agronomist');
   });
 
-  it('calls onApply when the apply button is clicked', () => {
+  it('calls onApply with job when the apply button is clicked', () => {
     render(<JobCard {...mockProps} />);
 
     const applyButton = screen.getByRole('button', { name: /Apply Now Senior Agronomist/i });
     fireEvent.click(applyButton);
 
     expect(mockProps.onApply).toHaveBeenCalledTimes(1);
+    expect(mockProps.onApply).toHaveBeenCalledWith(mockJob);
   });
 });
