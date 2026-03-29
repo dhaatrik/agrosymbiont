@@ -43,7 +43,12 @@ const MemoizedMarker = memo(({ marker, onClick, t }: { marker: MarkerData; onCli
   );
 });
 
-const MemoizedGeographies = React.memo(({ geographies }: { geographies: any[] }) => {
+interface GeographyData {
+  rsmKey: string;
+  [key: string]: any;
+}
+
+const MemoizedGeographies = React.memo(({ geographies }: { geographies: GeographyData[] }) => {
   return (
     <>
       {geographies.map((geo) => (
