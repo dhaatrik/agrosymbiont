@@ -86,6 +86,7 @@ const BlogPostPage: React.FC = () => {
                   alt={post.title} 
                   className="w-full h-full object-cover translate-z-0"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent translate-z-2"></div>
                 <div className="absolute bottom-0 left-0 p-8 text-white translate-z-10">
