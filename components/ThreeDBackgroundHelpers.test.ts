@@ -174,8 +174,8 @@ describe('ThreeDBackgroundHelpers', () => {
   describe('renderConnections', () => {
     it('draws connections between close particles', () => {
       const projected: ProjectedParticle[] = [
-        { x: 500, y: 500, z: 0, scale: 1, color: '#fff' },
-        { x: 510, y: 510, z: 0, scale: 1, color: '#fff' }
+        { x: 500, y: 500, z: 0, scale: 1, color: '#fff', index: 0 },
+        { x: 510, y: 510, z: 0, scale: 1, color: '#fff', index: 1 }
       ];
 
       renderConnections(mockCtx, projected, false);
@@ -188,7 +188,7 @@ describe('ThreeDBackgroundHelpers', () => {
 
     it('respects connectionStep and connectionWindow', () => {
       const projected = Array.from({ length: 10 }, (_, i) => ({
-        x: 500 + i, y: 500 + i, z: 0, scale: 1, color: '#fff'
+        x: 500 + i, y: 500 + i, z: 0, scale: 1, color: '#fff', index: i
       }));
 
       renderConnections(mockCtx, projected, false); // isMobile = false => step 5, window 20
@@ -201,7 +201,7 @@ describe('ThreeDBackgroundHelpers', () => {
   describe('renderSphereParticles', () => {
     it('renders dots and glows with scale-based sizing', () => {
       const projected: ProjectedParticle[] = [
-        { x: 500, y: 500, z: 0, scale: 2, color: '#ff0000' }
+        { x: 500, y: 500, z: 0, scale: 2, color: '#ff0000', index: 0 }
       ];
 
       renderSphereParticles(mockCtx, projected, 100);
@@ -212,7 +212,7 @@ describe('ThreeDBackgroundHelpers', () => {
 
     it('renders only dots for small particles', () => {
       const projected: ProjectedParticle[] = [
-        { x: 500, y: 500, z: 0, scale: 0.5, color: '#ff0000' }
+        { x: 500, y: 500, z: 0, scale: 0.5, color: '#ff0000', index: 0 }
       ];
 
       renderSphereParticles(mockCtx, projected, 100);

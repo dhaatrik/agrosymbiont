@@ -5,6 +5,8 @@ import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import InvestorContactForm from '../components/InvestorContactForm';
 import { TrendingUp, ArrowRight, Globe, Lightbulb } from 'lucide-react';
+import { isValidEmail } from '../utils/validation';
+
 
 const InvestorsPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -65,7 +67,7 @@ const InvestorsPage: React.FC = () => {
                 Partner with AgroSymbiont to scale revolutionary nanotechnology and organic inputs globally.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-                 <button onClick={() => document.getElementById('pitch-deck-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-mustard-yellow hover:bg-yellow-500 text-stone-900 font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-[0_6px_0_#b38b1e] hover:shadow-[0_8px_0_#b38b1e] active:shadow-[0_0px_0_#b38b1e] active:translate-y-1 flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-mustard-yellow dark:focus-visible:ring-offset-stone-900">
+                 <button onClick={() => document.getElementById('pitch-deck-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-mustard-yellow hover:bg-yellow-500 text-stone-900 font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-solid-md shadow-[#b38b1e] hover:shadow-solid-lg hover:shadow-[#b38b1e] active:shadow-solid-none active:shadow-[#b38b1e] active:translate-y-1 flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-mustard-yellow dark:focus-visible:ring-offset-stone-900">
                     Request Pitch Deck <ArrowRight className="w-5 h-5" />
                 </button>
             </div>

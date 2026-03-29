@@ -4,6 +4,7 @@ export interface ProjectedParticle {
   z: number;
   scale: number;
   color: string;
+  index: number;
 }
 
 export interface SphereParticle {
@@ -163,12 +164,16 @@ export const updateAndProjectSphereParticles = (
   if (projectedParticles.length !== sphereParticles.length) {
     projectedParticles.length = sphereParticles.length;
     for (let i = 0; i < sphereParticles.length; i++) {
-      projectedParticles[i] = { x: 0, y: 0, z: 0, scale: 0, color: sphereParticles[i].color };
+      projectedParticles[i] = { x: 0, y: 0, z: 0, scale: 0, color: sphereParticles[i].color, index: i };
     }
   }
 
-  for (let i = 0; i < sphereParticles.length; i++) {
-    const p = sphereParticles[i];
+  // Iterate over projectedParticles to maintain temporal coherence.
+  // Because the array from the previous frame is mostly sorted,
+  // we can update it in-place and use a fast insertion sort.
+  for (let i = 0; i < projectedParticles.length; i++) {
+    const pp = projectedParticles[i];
+    const p = sphereParticles[pp.index];
     // Individual particle oscillation (organic feel)
     const individualPulse = Math.sin(time * p.pulseSpeed + p.pulseOffset) * 5;
     const currentRadius = baseRadius + breathingRadius + individualPulse;
@@ -192,7 +197,6 @@ export const updateAndProjectSphereParticles = (
     const x2d = x1 * scale + halfWidth;
     const y2d = y1 * scale + halfHeight - scrollParallaxY;
 
-    const pp = projectedParticles[i];
     pp.x = x2d;
     pp.y = y2d;
     pp.scale = scale;
@@ -200,8 +204,20 @@ export const updateAndProjectSphereParticles = (
     pp.color = p.color;
   }
 
-  // Sort for depth handling (painters algorithm)
-  projectedParticles.sort((a, b) => b.z - a.z);
+  // Optimization: Insertion sort is significantly faster (O(N)) for nearly-sorted data
+  // compared to native Array.prototype.sort() (O(N log N)).
+  // Since frame-to-frame depth changes are minimal, this provides a massive performance boost.
+  const len = projectedParticles.length;
+  for (let i = 1; i < len; i++) {
+    const current = projectedParticles[i];
+    const currentZ = current.z;
+    let j = i - 1;
+    while (j >= 0 && projectedParticles[j].z < currentZ) {
+      projectedParticles[j + 1] = projectedParticles[j];
+      j--;
+    }
+    projectedParticles[j + 1] = current;
+  }
 };
 
 export const renderConnections = (

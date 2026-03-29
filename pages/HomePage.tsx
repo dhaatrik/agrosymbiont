@@ -72,7 +72,7 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-16 md:mb-0">
               <Link
                 to="/onboarding"
-                className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_6px_0_#994000] hover:shadow-[0_8px_0_#ccb046] active:shadow-[0_0px_0_#994000] flex items-center gap-2 relative overflow-hidden group"
+                className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-solid-md shadow-[#994000] hover:shadow-solid-lg hover:shadow-[#ccb046] active:shadow-solid-none active:shadow-[#994000] flex items-center gap-2 relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   {t('start_growing')}
@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
               </Link>
               <Link
                 to="/about"
-                className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-[0_6px_0_rgba(42,82,190,0.2)] dark:shadow-[0_6px_0_rgba(96,165,250,0.2)] hover:shadow-[0_8px_0_rgba(42,82,190,0.3)] dark:hover:shadow-[0_8px_0_rgba(96,165,250,0.3)] active:translate-y-1 active:shadow-[0_0px_0_rgba(42,82,190,0.2)] transform hover:-translate-y-1"
+                className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-solid-md shadow-cerulean-blue/20 dark:shadow-solid-md dark:shadow-blue-400/20 hover:shadow-solid-lg hover:shadow-cerulean-blue/30 dark:hover:shadow-solid-lg dark:hover:shadow-blue-400/30 active:translate-y-1 active:shadow-solid-none active:shadow-cerulean-blue/20 transform hover:-translate-y-1"
               >
                 {t('learn_more')}
               </Link>
@@ -129,12 +129,12 @@ const HomePage: React.FC = () => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform transition-transform hover:scale-105">
+                        <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-solid-2xl shadow-black/30 transform transition-transform hover:scale-105">
                              {/* 3D Floating Element */}
                              <div className="relative w-64 h-64 preserve-3d animate-float" role="img" aria-label="3D Floating Energy Bolt Graphic">
                                 <div className="absolute inset-0 bg-yellow-500/20 dark:bg-yellow-500/10 rounded-full blur-xl animate-pulse"></div>
                                 <div className="absolute inset-4 bg-gradient-to-br from-white/20 to-transparent dark:from-white/10 rounded-full backdrop-blur-xl flex items-center justify-center border border-white/40 dark:border-white/20 shadow-inner">
-                                    <Zap className="h-24 w-24 text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transform translate-z-10" strokeWidth={1} />
+                                    <Zap className="h-24 w-24 text-white drop-shadow-2xl transform translate-z-10" strokeWidth={1} />
                                 </div>
                                 {/* Orbital rings */}
                                 <div className="absolute inset-[-20px] border border-white/10 dark:border-white/5 rounded-full rotate-45"></div>
@@ -189,7 +189,7 @@ const HomePage: React.FC = () => {
           <AnimatedSection className="text-center max-w-4xl mx-auto px-4 relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200 mb-10 leading-tight drop-shadow-sm">{t('home_cta_title_1')}<br/><span className="text-cerulean-blue dark:text-blue-400">{t('home_cta_title_2')}</span></h2>
               <div>
-                  <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-[0_8px_0_#1e3a8a] hover:shadow-[0_10px_0_#1e3a8a] hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-[0_0px_0_#1e3a8a]">
+                  <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-solid-lg shadow-blue-900 hover:shadow-solid-xl shadow-blue-900 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-solid-none active:shadow-blue-900">
                       {t('home_cta_btn')}
                   </Link>
               </div>

@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import WaitlistParticles from './WaitlistParticles';
+import { isValidEmail } from '../../utils/validation';
+
 
 const WaitlistForm: React.FC = () => {
     const { t } = useTranslation();

@@ -3,7 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
 
-
 export const useContactForm = () => {
     const { t } = useTranslation();
 

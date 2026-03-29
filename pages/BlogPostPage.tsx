@@ -120,7 +120,7 @@ const BlogPostPage: React.FC = () => {
                         <a {...props} href={sanitizeUrl(props.href)} />
                       ),
                       img: ({ node, ...props }) => (
-                        <img {...props} src={sanitizeUrl(props.src)} />
+                        <img {...props} loading="lazy" src={sanitizeUrl(props.src)} />
                       ),
                     }}
                   >
