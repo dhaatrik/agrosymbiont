@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="md:col-span-1 pr-8">
             <NavLink to="/" className="flex items-center gap-3 mb-8 group focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-lg">
-                <img src="/favicon.png" alt="AgroSymbiont Logo" className="w-14 h-14 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500" />
+                <img loading="lazy" src="/favicon.png" alt="AgroSymbiont Logo" className="w-14 h-14 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500" />
                 <span className="text-white text-2xl font-bold tracking-wider">
                 AgroSymbiont
                 </span>
