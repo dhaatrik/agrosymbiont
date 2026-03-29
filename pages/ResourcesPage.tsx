@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import { isValidEmail } from '../utils/validation';
+
 import AnimatedSection from '../components/AnimatedSection';
 import { motion } from 'framer-motion';
 import { Check, Loader2 } from 'lucide-react';
@@ -16,7 +18,7 @@ const ResourcesPage: React.FC = () => {
       const trimmedValue = value.trim();
       if (!trimmedValue) {
           setEmailError('Email Address is required.');
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+      } else if (!isValidEmail(trimmedValue)) {
           setEmailError('Please enter a valid email address.');
       } else {
           setEmailError('');
@@ -29,7 +31,7 @@ const ResourcesPage: React.FC = () => {
     if (!trimmedEmail) {
         setEmailError('Email Address is required.');
         return;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    } else if (!isValidEmail(trimmedEmail)) {
         setEmailError('Please enter a valid email address.');
         return;
     }

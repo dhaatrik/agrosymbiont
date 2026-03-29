@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { isValidEmail } from '../../utils/validation';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -19,7 +21,7 @@ const WaitlistForm: React.FC = () => {
         const trimmedValue = value.trim();
         if (!trimmedValue) {
             setEmailError(t('prod_email_required'));
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+        } else if (!isValidEmail(trimmedValue)) {
             setEmailError(t('prod_email_invalid'));
         } else {
             setEmailError('');
@@ -72,7 +74,7 @@ const WaitlistForm: React.FC = () => {
       if (!trimmedEmail) {
           setEmailError(t('prod_email_required'));
           return;
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      } else if (!isValidEmail(trimmedEmail)) {
           setEmailError(t('prod_email_invalid'));
           return;
       }

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { isValidEmail } from '../utils/validation';
+
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import InvestorContactForm from '../components/InvestorContactForm';
@@ -20,7 +22,7 @@ const InvestorsPage: React.FC = () => {
     if (!formData.name.trim()) tempErrors.name = "Name is required";
     if (!formData.email.trim()) {
       tempErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!isValidEmail(formData.email)) {
       tempErrors.email = "Invalid email format";
     }
     if (!formData.company.trim()) tempErrors.company = "Company is required";
