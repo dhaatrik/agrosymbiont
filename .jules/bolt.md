@@ -68,3 +68,6 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2026-03-24 - [Avoid Array.from and Inline Component Mapping for List Overheads]
 **Learning:** Initializing small static arrays with `Array.from` incurs a functional callback overhead compared to `new Array()` with a traditional `for` loop. Additionally, when mapping over arrays to render child elements (e.g., SVG Markers on a Map) that contain inline callbacks updating the parent state, every state update (e.g., selecting a marker) causes all child elements in the array to re-render.
 **Action:** Replace `Array.from` with standard loop initialization in critical animation setups. Extract inline mapped components into separate `<ChildComponent>` items wrapped with `React.memo` and pass them a stable `useCallback` handler from the parent. This prevents massive re-renders across the mapped elements when selecting a single item.
+
+## 2024-03-24
+Memoizing React Context provider values using useMemo and wrapping toggle functions using useCallback improves performance by preventing unnecessary re-renders in all consuming components.
