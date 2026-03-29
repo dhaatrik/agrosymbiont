@@ -144,7 +144,7 @@ const ServicesPage: React.FC = () => {
                         {t('tech_cta_text')}
                     </p>
                     <div>
-                        <Link to="/contact" className="inline-block bg-burnt-orange text-white font-bold py-5 px-12 rounded-full hover:bg-orange-700 transition duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_8px_0_#994000] hover:shadow-[0_10px_0_#994000] active:shadow-[0_0px_0_#994000] text-lg">
+                        <Link to="/contact" className="inline-block bg-burnt-orange text-white font-bold py-5 px-12 rounded-full hover:bg-orange-700 transition duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-solid-lg shadow-[#994000] hover:shadow-solid-xl hover:shadow-[#994000] active:shadow-solid-none active:shadow-[#994000] text-lg">
                             {t('tech_cta_btn')}
                         </Link>
                     </div>

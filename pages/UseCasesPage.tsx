@@ -151,7 +151,7 @@ const UseCasesPage: React.FC = () => {
                         <p className="text-blue-100 dark:text-blue-200 mb-10 text-lg font-light">
                             {t('use_cases_cta_desc')}
                         </p>
-                        <Link to="/contact" className="inline-block bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full hover:bg-white dark:hover:bg-stone-100 transition duration-300 shadow-[0_6px_0_#b3993d] dark:shadow-[0_6px_0_#a18836] hover:shadow-[0_8px_0_#b3993d] dark:hover:shadow-[0_8px_0_#a18836] active:shadow-[0_0px_0_#b3993d] dark:active:shadow-[0_0px_0_#a18836] transform hover:-translate-y-1 active:translate-y-1">
+                        <Link to="/contact" className="inline-block bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full hover:bg-white dark:hover:bg-stone-100 transition duration-300 shadow-solid-md shadow-[#b3993d] dark:shadow-solid-md dark:shadow-[#a18836] hover:shadow-solid-lg hover:shadow-[#b3993d] dark:hover:shadow-solid-lg dark:hover:shadow-[#a18836] active:shadow-solid-none active:shadow-[#b3993d] dark:active:shadow-solid-none dark:active:shadow-[#a18836] transform hover:-translate-y-1 active:translate-y-1">
                             {t('use_cases_cta_btn')}
                         </Link>
                     </div>
