@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useContactForm } from '../hooks/useContactForm';
+import { EMAIL_REGEX } from '../utils/validation';
 import FormField from './FormField';
 
 const ContactForm: React.FC = () => {
@@ -12,8 +13,7 @@ const ContactForm: React.FC = () => {
         if (name === 'email') {
             const trimmedValue = value.trim();
             if (!trimmedValue) return t('contact_email_required');
-            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-            if (!emailRegex.test(trimmedValue)) return t('contact_email_invalid');
+            if (!EMAIL_REGEX.test(trimmedValue)) return t('contact_email_invalid');
         }
         if (name === 'phone' && !value.trim()) return t('contact_phone_required');
         if (name === 'inquiryType' && !value) return t('contact_inquiry_required');
