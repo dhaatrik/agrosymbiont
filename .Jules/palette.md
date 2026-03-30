@@ -32,3 +32,7 @@
 ## 2026-03-28 - Missing keyboard focus states on custom carousels
 **Learning:** Custom UI components like image or team carousels often implement their own "Next/Previous" and pagination dot controls using raw `<button>` elements with heavy custom styling (e.g., circular, absolute positioning). This completely overrides native focus rings, rendering them completely inaccessible to keyboard users navigating through the interactive dots or arrows.
 **Action:** When creating custom carousels or modifying existing ones, explicitly append `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (using appropriate theme colors like `focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900`) to both directional arrows and pagination dots.
+
+## 2025-03-31 - Missing keyboard focus states on global utility buttons and specific form submits
+**Learning:** Found an accessibility issue pattern where global utility elements like the "Back to Top" floating button and specific form submits (like the Waitlist Form) had extensive hover and shadow states but lacked `focus-visible` indicators.
+**Action:** Always explicitly define `focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on interactive `<button>` elements that act as global utilities or dynamic submit buttons, even if standard `focus:ring` states are present, to ensure keyboard accessibility.
