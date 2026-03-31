@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Bell } from 'lucide-react';
-import { blogs } from '../data/blogs';
+import { BlogPost, blogs } from '../data/blogs';
 import { useTranslation } from 'react-i18next';
 
 import BlogCard from '../components/BlogCard';
@@ -47,6 +47,53 @@ const BlogPage: React.FC = () => {
       : blogs.filter(post => post.category === selectedCategory);
   }, [selectedCategory]);
 
+  const handleReadMore = (post: BlogPost) => {
+    if (post.date === "Coming Soon") {
+      showToast(t('blog_toast_msg'));
+    } else {
+      navigate(`/blog/${post.id}`);
+    }
+  };
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {BLOG_SKELETON_ITEMS.map(i => <BlogSkeletonCard key={i} />)}
+        </div>
+      );
+    }
+
+    if (filteredPosts.length > 0) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {filteredPosts.map(post => (
+            <BlogCard
+              key={post.id}
+              post={post}
+              onCategoryClick={setSelectedCategory}
+              readPreviewText={t('blog_read_preview')}
+              readArticleText={t('blog_read_article')}
+              onReadMore={() => handleReadMore(post)}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-center py-24 bg-white/50 dark:bg-stone-800/50 rounded-[2rem] border border-dashed border-stone-300 dark:border-stone-700">
+        <p className="text-stone-500 dark:text-stone-400 text-lg mb-4">{t('blog_no_articles')}</p>
+        <button
+          onClick={() => setSelectedCategory('All')}
+          className="text-cerulean-blue dark:text-blue-400 hover:underline font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800 rounded px-2 py-1"
+        >
+          {t('blog_view_all')}
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="py-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,40 +124,7 @@ const BlogPage: React.FC = () => {
                 </div>
             </div>
             
-            {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {BLOG_SKELETON_ITEMS.map(i => <BlogSkeletonCard key={i} />)}
-                </div>
-            ) : filteredPosts.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {filteredPosts.map(post => (
-                        <BlogCard 
-                            key={post.id} 
-                            post={post} 
-                            onCategoryClick={setSelectedCategory}
-                            readPreviewText={t('blog_read_preview')}
-                            readArticleText={t('blog_read_article')}
-                            onReadMore={() => {
-                                if (post.date === "Coming Soon") {
-                                    showToast(t('blog_toast_msg'));
-                                } else {
-                                    navigate(`/blog/${post.id}`);
-                                }
-                            }}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="text-center py-24 bg-white/50 dark:bg-stone-800/50 rounded-[2rem] border border-dashed border-stone-300 dark:border-stone-700">
-                    <p className="text-stone-500 dark:text-stone-400 text-lg mb-4">{t('blog_no_articles')}</p>
-                    <button 
-                        onClick={() => setSelectedCategory('All')}
-                        className="text-cerulean-blue dark:text-blue-400 hover:underline font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800 rounded px-2 py-1"
-                    >
-                        {t('blog_view_all')}
-                    </button>
-                </div>
-            )}
+            {renderContent()}
         </AnimatedSection>
 
         <AnimatedSection className="max-w-4xl mx-auto">
