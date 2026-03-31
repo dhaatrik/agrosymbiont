@@ -4,6 +4,24 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ContactForm from '../components/ContactForm';
 
+interface ContactInfoItemProps {
+    icon: React.ElementType;
+    label: string;
+    value: string;
+}
+
+const ContactInfoItem: React.FC<ContactInfoItemProps> = React.memo(({ icon: Icon, label, value }) => (
+    <div className="flex items-start">
+        <div className="bg-white/20 p-3 rounded-xl mr-4 backdrop-blur-sm">
+            <Icon className="w-6 h-6" strokeWidth={1.5} />
+        </div>
+        <div>
+            <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{label}</p>
+            <p className="text-xl font-medium">{value}</p>
+        </div>
+    </div>
+));
+
 const ContactPage: React.FC = () => {
     const { t } = useTranslation();
 
@@ -29,33 +47,9 @@ const ContactPage: React.FC = () => {
                              
                              <h3 className="text-3xl font-bold mb-8">{t('contact_headquarters')}</h3>
                              <div className="space-y-8 relative z-10">
-                                 <div className="flex items-start">
-                                     <div className="bg-white/20 p-3 rounded-xl mr-4 backdrop-blur-sm">
-                                        <MapPin className="w-6 h-6" strokeWidth={1.5} />
-                                     </div>
-                                     <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_address_label')}</p>
-                                        <p className="text-xl font-medium">{t('contact_address')}</p>
-                                     </div>
-                                 </div>
-                                 <div className="flex items-start">
-                                     <div className="bg-white/20 p-3 rounded-xl mr-4 backdrop-blur-sm">
-                                        <Phone className="w-6 h-6" strokeWidth={1.5} />
-                                     </div>
-                                     <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_phone_label')}</p>
-                                        <p className="text-xl font-medium">{t('contact_phone_val')}</p>
-                                     </div>
-                                 </div>
-                                 <div className="flex items-start">
-                                     <div className="bg-white/20 p-3 rounded-xl mr-4 backdrop-blur-sm">
-                                        <Mail className="w-6 h-6" strokeWidth={1.5} />
-                                     </div>
-                                     <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_email_label')}</p>
-                                        <p className="text-xl font-medium">{t('contact_email_val')}</p>
-                                     </div>
-                                 </div>
+                                 <ContactInfoItem icon={MapPin} label={t('contact_address_label')} value={t('contact_address')} />
+                                 <ContactInfoItem icon={Phone} label={t('contact_phone_label')} value={t('contact_phone_val')} />
+                                 <ContactInfoItem icon={Mail} label={t('contact_email_label')} value={t('contact_email_val')} />
                              </div>
                          </div>
                          <div className="h-80 rounded-[2.5rem] shadow-2xl overflow-hidden border border-white/50 dark:border-stone-700/50 transform transition-transform hover:scale-[1.02] relative group">

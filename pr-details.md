@@ -1,16 +1,7 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 [Code Health] Extract ContactInfoItem to reduce deeply nested logic in ContactPage
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
-
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
-
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+Description:
+🎯 **What:** Extracted the deeply nested and duplicated contact information items (MapPin, Phone, Mail wrappers) from `ContactPage` into a new modular functional component, `ContactInfoItem`.
+💡 **Why:** This refactoring reduces repetitive markup, abstracts styling details, and flattens the previously deeply nested JSX structure within `ContactPage`. It improves overall codebase readability and makes it easier to modify the layout or styling of contact items consistently.
+✅ **Verification:** Verified by checking that `pnpm test` successfully executed all 239 tests (including the 5 tests targeting `pages/ContactPage.test.tsx`), guaranteeing no breaking functional regressions were introduced. Also confirmed type checking with TypeScript.
+✨ **Result:** A much cleaner `ContactPage` file with reduced lines of code dedicated to structural boilerplate, enabling faster future modifications and ensuring compliance with the DRY (Don't Repeat Yourself) principle.
