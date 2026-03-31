@@ -10,6 +10,14 @@ import ValueCard from '../components/ValueCard';
 import TeamCarousel from '../components/TeamCarousel';
 
 
+// Static icons extracted outside the render body so React.memo optimization works on ValueCard
+const VALUE_ICONS = {
+    lightbulb: <Lightbulb className="w-full h-full" strokeWidth={1.5} />,
+    leaf: <Leaf className="w-full h-full" strokeWidth={1.5} />,
+    shieldCheck: <ShieldCheck className="w-full h-full" strokeWidth={1.5} />,
+    users: <Users className="w-full h-full" strokeWidth={1.5} />
+};
+
 const AboutPage: React.FC = () => {
     const { t } = useTranslation();
     return (
@@ -89,10 +97,10 @@ const AboutPage: React.FC = () => {
                     <div className="w-20 h-1.5 bg-gradient-to-r from-cerulean-blue to-blue-400 mx-auto mt-6 rounded-full"></div>
                 </AnimatedSection>
                 <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <ValueCard title={t('about_value_1_title')} description={t('about_value_1_desc')} icon={<Lightbulb className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title={t('about_value_2_title')} description={t('about_value_2_desc')} icon={<Leaf className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title={t('about_value_3_title')} description={t('about_value_3_desc')} icon={<ShieldCheck className="w-full h-full" strokeWidth={1.5} />} />
-                    <ValueCard title={t('about_value_4_title')} description={t('about_value_4_desc')} icon={<Users className="w-full h-full" strokeWidth={1.5} />} />
+                    <ValueCard title={t('about_value_1_title')} description={t('about_value_1_desc')} icon={VALUE_ICONS.lightbulb} />
+                    <ValueCard title={t('about_value_2_title')} description={t('about_value_2_desc')} icon={VALUE_ICONS.leaf} />
+                    <ValueCard title={t('about_value_3_title')} description={t('about_value_3_desc')} icon={VALUE_ICONS.shieldCheck} />
+                    <ValueCard title={t('about_value_4_title')} description={t('about_value_4_desc')} icon={VALUE_ICONS.users} />
                 </AnimatedSection>
              </div>
 

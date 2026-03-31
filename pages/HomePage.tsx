@@ -8,7 +8,11 @@ import { ArrowRight, TrendingUp, Sparkles, Coins, CheckCircle, Zap } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
-const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
+// ⚡ Bolt Optimization: Wrapped in React.memo to prevent unnecessary re-renders.
+// Since icon is a React.ReactNode passed from the parent, the parent MUST pass a stable
+// reference (e.g., extracted outside its render body) otherwise this memoization will fail
+// the shallow equality check on every render.
+const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = React.memo(({ title, description, icon }) => (
     <TiltCard className="h-full">
         <div 
           className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden" 
@@ -26,8 +30,16 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-sm transform transition-all group-hover:translate-z-2">{description}</p>
         </div>
     </TiltCard>
-);
+));
 
+
+// Static icons extracted outside the render body so React.memo optimization works on FeatureCard
+const ICONS = {
+    trendingUp: <TrendingUp className="w-8 h-8" strokeWidth={1.5} />,
+    sparkles: <Sparkles className="w-8 h-8" strokeWidth={1.5} />,
+    coins: <Coins className="w-8 h-8" strokeWidth={1.5} />,
+    checkCircle: <CheckCircle className="w-8 h-8" strokeWidth={1.5} />
+};
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -159,22 +171,22 @@ const HomePage: React.FC = () => {
                  <FeatureCard 
                     title={t('home_feat_1_title')}
                     description={t('home_feat_1_desc')}
-                    icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
+                    icon={ICONS.trendingUp}
                  />
                  <FeatureCard 
                     title={t('home_feat_2_title')}
                     description={t('home_feat_2_desc')}
-                    icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
+                    icon={ICONS.sparkles}
                  />
                  <FeatureCard 
                     title={t('home_feat_3_title')}
                     description={t('home_feat_3_desc')}
-                    icon={<Coins className="w-8 h-8" strokeWidth={1.5} />}
+                    icon={ICONS.coins}
                  />
                  <FeatureCard 
                     title={t('home_feat_4_title')}
                     description={t('home_feat_4_desc')}
-                    icon={<CheckCircle className="w-8 h-8" strokeWidth={1.5} />}
+                    icon={ICONS.checkCircle}
                  />
             </AnimatedSection>
         </div>
