@@ -6,7 +6,6 @@ import { isValidEmail } from '../utils/validation';
 import { useContactForm } from '../hooks/useContactForm';
 import { EMAIL_REGEX } from '../utils/validation';
 import FormField from './FormField';
-import { EMAIL_REGEX } from '../utils/validation';
 
 
 const ContactForm: React.FC = () => {

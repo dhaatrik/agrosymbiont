@@ -5,7 +5,6 @@ import { isValidEmail } from '../utils/validation';
 import AnimatedSection from '../components/AnimatedSection';
 import { motion } from 'framer-motion';
 import { Check, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const ResourcesPage: React.FC = () => {

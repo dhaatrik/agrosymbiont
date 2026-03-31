@@ -29,6 +29,14 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
 );
 
 
+
+const ImpactStat: React.FC<{ value: string; label: string }> = ({ value, label }) => (
+    <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
+        <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">{value}</div>
+        <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{label}</div>
+    </Link>
+);
+
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   return (
@@ -115,18 +123,9 @@ const HomePage: React.FC = () => {
                                 {t('home_impact_desc')}
                             </p>
                              <div className="grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
-                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">10K+</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_farmers')}</div>
-                                </Link>
-                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">25%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_yield')}</div>
-                                </Link>
-                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">100%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_eco')}</div>
-                                </Link>
+                                <ImpactStat value="10K+" label={t('home_stat_farmers')} />
+                                <ImpactStat value="25%" label={t('home_stat_yield')} />
+                                <ImpactStat value="100%" label={t('home_stat_eco')} />
                             </div>
                         </div>
                         <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-solid-2xl shadow-black/30 transform transition-transform hover:scale-105">
