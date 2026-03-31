@@ -1,16 +1,6 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
-
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
-
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
-
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+Title: "⚡ Bolt: Remove artificial delay in WaitlistForm submission"
+Description:
+💡 **What:** Removed the 1500ms artificial delay (simulated API call) in the waitlist form submission.
+🎯 **Why:** Artificial delays increase latency and hurt user experience by needlessly holding the user back from the confirmation state.
+📊 **Impact:** The submission form immediately moves to the success particles phase, saving 1.5 seconds per submission.
+🔬 **Measurement:** Previously, tests required 1500ms of simulated time to advance past the initial loading phase. This has been reduced to 0ms for the API call simulation phase.

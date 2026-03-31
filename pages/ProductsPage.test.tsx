@@ -163,13 +163,6 @@ describe('ProductsPage', () => {
 
     fireEvent.click(submitBtn);
 
-    // Should show loading state
-    expect(screen.getByText('Please wait...')).toBeInTheDocument();
-
-    // Wait for the mock API to finish
-    await act(async () => {
-        vi.advanceTimersByTime(1500);
-    });
 
     // Wait for the micro-interaction to finish
     await act(async () => {
