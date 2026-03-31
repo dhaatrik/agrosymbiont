@@ -4,7 +4,6 @@ import { isValidEmail } from '../utils/validation';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import { FileText, ShieldCheck, Check, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const InvestorContactForm: React.FC = () => {
@@ -49,6 +48,24 @@ const InvestorContactForm: React.FC = () => {
       setFormData({ name: '', email: '', company: '', message: '' });
     }
   };
+
+  const renderButtonContent = () => {
+    if (isSubmitting) {
+      return (
+        <>
+          <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+          Sending...
+        </>
+      );
+    }
+    return (
+      <>
+        Request Access <FileText className="ml-2 w-5 h-5" />
+      </>
+    );
+  };
+
+  const buttonClasses = `bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`;
 
   return (
       <section id="pitch-deck-form" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -109,17 +126,8 @@ const InvestorContactForm: React.FC = () => {
                             <ShieldCheck className="w-4 h-4 mr-2 text-green-500" />
                             Your information is secure
                         </div>
-                        <button type="submit" disabled={isSubmitting} className={`bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}>
-                             {isSubmitting ? (
-                                <>
-                                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                    Sending...
-                                </>
-                            ) : (
-                                <>
-                                    Request Access <FileText className="ml-2 w-5 h-5" />
-                                </>
-                            )}
+                        <button type="submit" disabled={isSubmitting} className={buttonClasses}>
+                            {renderButtonContent()}
                         </button>
                     </div>
                 </form>
