@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { isValidEmail } from '../utils/validation';
 
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';

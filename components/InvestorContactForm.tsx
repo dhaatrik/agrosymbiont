@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { isValidEmail } from '../utils/validation';
 
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';

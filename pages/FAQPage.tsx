@@ -47,6 +47,18 @@ const FAQPage: React.FC = () => {
         setOpenIndex(prev => prev === index ? null : index);
     }, []);
 
+    const faqListItems = faqs.map((faq, index) => (
+        <FAQItem
+            key={index}
+            id={index.toString()}
+            question={faq.question}
+            answer={faq.answer}
+            isOpen={openIndex === index}
+            index={index}
+            onToggle={toggleFAQ}
+        />
+    ));
+
     return (
         <div className="py-20 bg-ivory/20 dark:bg-stone-900/20 min-h-screen">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,17 +70,7 @@ const FAQPage: React.FC = () => {
                 </AnimatedSection>
 
                 <AnimatedSection className="space-y-2">
-                    {faqs.map((faq, index) => (
-                        <FAQItem 
-                            key={index}
-                            id={index.toString()}
-                            question={faq.question}
-                            answer={faq.answer}
-                            isOpen={openIndex === index}
-                            index={index}
-                            onToggle={toggleFAQ}
-                        />
-                    ))}
+                    {faqListItems}
                 </AnimatedSection>
                 
                 <AnimatedSection className="mt-16 text-center">
