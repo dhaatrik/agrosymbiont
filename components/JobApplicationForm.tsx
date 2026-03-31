@@ -193,6 +193,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
     };
 
     const idPrefix = useMemo(() => jobId || 'general', [jobId]);
+    const errorValues = useMemo(() => Object.values(errors), [errors]);
 
     if (isSubmitted) {
         return (
@@ -211,7 +212,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
                     <div>
                         <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('car_form_error_header')}</h4>
                         <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
-                            {Object.values(errors).map((error, index) => (
+                            {errorValues.map((error, index) => (
                                 <li key={index}>{error}</li>
                             ))}
                         </ul>
