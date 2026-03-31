@@ -7,6 +7,16 @@ import {
   TOTAL_STEPS, OnboardingSelections
 } from '../components/OnboardingSteps';
 
+const getStepIndicatorClasses = (isCompleted: boolean, isCurrent: boolean) => {
+  if (isCompleted) return 'bg-green-500 text-white shadow-md shadow-green-500/30';
+  if (isCurrent) return 'bg-cerulean-blue text-white shadow-md shadow-blue-500/30 ring-4 ring-blue-100 dark:ring-blue-900/50';
+  return 'bg-stone-200 dark:bg-stone-700 text-stone-400 dark:text-stone-500';
+};
+
+const getStepLabelClasses = (isCurrent: boolean) => {
+  return isCurrent ? 'text-cerulean-blue dark:text-blue-400' : 'text-stone-400 dark:text-stone-500';
+};
+
 const OnboardingPage: React.FC = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
@@ -72,17 +82,13 @@ const OnboardingPage: React.FC = () => {
                     return (
                         <div key={label} className="flex flex-col items-center gap-1 flex-1">
                             <motion.div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-300 ${
-                                    isCompleted ? 'bg-green-500 text-white shadow-md shadow-green-500/30' :
-                                    isCurrent ? 'bg-cerulean-blue text-white shadow-md shadow-blue-500/30 ring-4 ring-blue-100 dark:ring-blue-900/50' :
-                                    'bg-stone-200 dark:bg-stone-700 text-stone-400 dark:text-stone-500'
-                                }`}
+                                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-300 ${getStepIndicatorClasses(isCompleted, isCurrent)}`}
                                 animate={isCurrent ? { scale: [1, 1.1, 1] } : {}}
                                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                             >
                                 {isCompleted ? <Check className="w-4 h-4" /> : stepNum}
                             </motion.div>
-                            <span className={`text-[10px] font-semibold uppercase tracking-wider hidden sm:block ${isCurrent ? 'text-cerulean-blue dark:text-blue-400' : 'text-stone-400 dark:text-stone-500'}`}>
+                            <span className={`text-[10px] font-semibold uppercase tracking-wider hidden sm:block ${getStepLabelClasses(isCurrent)}`}>
                                 {label}
                             </span>
                         </div>

@@ -1,16 +1,15 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 [Code Health] Extract nested conditional logic for step indicator styling
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+## Description
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+🎯 **What:**
+The issue of deeply nested conditional logic within `pages/OnboardingPage.tsx` at line 75 has been addressed. The inline ternary operations used to define styling classes for step markers and labels based on `isCompleted` and `isCurrent` states have been extracted into two independent helper functions: `getStepIndicatorClasses` and `getStepLabelClasses`.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+💡 **Why:**
+Extracting complex formatting conditionals from inline JSX improves the readability and maintainability of the component. The helper functions abstract away logic details and separate the concern of calculating CSS classes from the React component structure itself.
+
+✅ **Verification:**
+Verified the changes visually by running the application and navigating through the multi-step form to ensure all styling states remain accurate without regressions. Additionally, the existing test suite (`pages/OnboardingPage.test.tsx`) alongside all 239 repository tests successfully passed (`pnpm test`).
+
+✨ **Result:**
+The `OnboardingPage` component JSX is now cleaner and easier to parse. Future stylistic changes or new logic conditions for step markers can be maintained cleanly in isolated helper functions instead of muddying the UI structure.
