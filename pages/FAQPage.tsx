@@ -36,10 +36,16 @@ const FAQPage: React.FC = () => {
     const { t } = useTranslation();
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-    const faqs = React.useMemo(() => Array.from({ length: 10 }, (_, i) => ({
-        question: t(`faq_q${i + 1}`),
-        answer: t(`faq_a${i + 1}`)
-    })), [t]);
+    const faqs = React.useMemo(() => {
+        const arr = new Array(10);
+        for (let i = 0; i < 10; i++) {
+            arr[i] = {
+                question: t(`faq_q${i + 1}`),
+                answer: t(`faq_a${i + 1}`)
+            };
+        }
+        return arr;
+    }, [t]);
 
     // ⚡ Bolt Optimization: Wrapped in useCallback to provide a stable function reference
     // to the memoized FAQItem children, avoiding unnecessary re-renders.
