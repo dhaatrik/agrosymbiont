@@ -1,16 +1,17 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+# PR Details
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+**Title:** ⚡ Bolt: Memoize error list in ContactForm
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+## Description
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+💡 **What:**
+Implemented memoization for the error list in the `ContactForm` component using the `useMemo` hook. Replaced inline `Object.keys(errors).length` and `Object.values(errors).map()` calls with a single memoized `errorList` array.
+
+🎯 **Why:**
+Previously, `Object.values(errors)` was called on every render, creating a new array each time. This causes unnecessary garbage collection overhead, especially as the component re-renders frequently during user input (typing in fields). Memoizing this array ensures it is only recreated when the `errors` state actually changes.
+
+📊 **Impact:**
+This change reduces the frequency of array allocations and garbage collection pressure. While the absolute performance gain for a small form is minor, it follows React performance best practices and prevents scaling issues as form complexity grows.
+
+🔬 **Measurement:**
+Created a benchmark in `components/ContactForm.bench.tsx` to measure render performance with and without memoization. Due to environment/network issues preventing `pnpm install`, a numeric baseline could not be established in the current sandbox. The improvement is justified by the technical rationale of avoiding O(N) array allocations in a hot render path.

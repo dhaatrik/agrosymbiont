@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
@@ -35,6 +35,9 @@ const ContactForm: React.FC = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const errorList = useMemo(() => Object.values(errors), [errors]);
+
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -119,13 +122,13 @@ const ContactForm: React.FC = () => {
 
     return (
         <form noValidate onSubmit={handleSubmit} className="bg-white/60 dark:bg-stone-800/60 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-stone-700/50 space-y-8">
-            {Object.keys(errors).length > 0 && (
+            {errorList.length > 0 && (
                 <div role="alert" className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl flex items-start">
                     <div className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0">⚠️</div>
                     <div>
                         <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('contact_error_header')}</h4>
                         <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
-                            {Object.values(errors).map((error, index) => (
+                            {errorList.map((error, index) => (
                                 <li key={index}>{error}</li>
                             ))}
                         </ul>
