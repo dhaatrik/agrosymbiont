@@ -36,3 +36,6 @@
 ## 2025-03-31 - Missing keyboard focus states on global utility buttons and specific form submits
 **Learning:** Found an accessibility issue pattern where global utility elements like the "Back to Top" floating button and specific form submits (like the Waitlist Form) had extensive hover and shadow states but lacked `focus-visible` indicators.
 **Action:** Always explicitly define `focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on interactive `<button>` elements that act as global utilities or dynamic submit buttons, even if standard `focus:ring` states are present, to ensure keyboard accessibility.
+## 2025-04-03 - Missing semantic state for selectable visual cards
+**Learning:** In modern React applications, custom components that behave as toggle buttons or selectable cards often rely solely on CSS classes (e.g. background color or border changes) to indicate their selected state. While visually apparent, screen readers receive no semantic indication of this state change, making the interface completely inaccessible for users relying on assistive technologies.
+**Action:** When implementing custom selectable cards or toggle components, always include the `aria-pressed={isSelected}` attribute alongside visual indicators. This ensures the component semantically communicates its active state to screen readers.

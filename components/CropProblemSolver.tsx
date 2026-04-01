@@ -32,6 +32,7 @@ const CropSelector: React.FC<{
           <button
               key={crop.id}
               onClick={() => onSelect(crop.id)}
+              aria-pressed={selectedCrop === crop.id}
               className={`flex items-center gap-2 p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${selectedCrop === crop.id ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-white dark:hover:bg-stone-800'}`}
           >
               {crop.icon} <span className="font-semibold text-sm">{crop.label}</span>
@@ -43,6 +44,7 @@ const CropSelector: React.FC<{
 const SymptomButton = memo(({ symptom, isSelected, onSelect }: { symptom: SymptomOption, isSelected: boolean, onSelect: (id: SymptomType) => void }) => (
   <button
       onClick={() => onSelect(symptom.id as SymptomType)}
+      aria-pressed={isSelected}
       className={`text-left p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 ${isSelected ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400 shadow-md' : 'bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-white dark:hover:bg-stone-800'}`}
   >
       <span className="font-semibold text-sm">{symptom.label}</span>

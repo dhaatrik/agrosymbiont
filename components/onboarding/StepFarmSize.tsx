@@ -40,6 +40,7 @@ export const StepFarmSize: React.FC<{ selections: OnboardingSelections, setSelec
                       setSelections({ ...selections, farmSize: size.id });
                       setTimeout(handleNext, 300);
                   }}
+                  aria-pressed={selections.farmSize === size.id}
                   className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-3 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 dark:focus-visible:ring-offset-stone-900
                       ${selections.farmSize === size.id
                       ? 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-400 shadow-lg shadow-green-500/10'

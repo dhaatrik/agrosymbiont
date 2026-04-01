@@ -42,6 +42,7 @@ export const StepSoilType: React.FC<{ selections: OnboardingSelections, setSelec
                       setSelections({ ...selections, soilType: soil.id });
                       setTimeout(handleNext, 300);
                   }}
+                  aria-pressed={selections.soilType === soil.id}
                   className={`p-5 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-2 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
                       ${selections.soilType === soil.id
                       ? `${soilColors[soil.id]} border-cerulean-blue shadow-lg`

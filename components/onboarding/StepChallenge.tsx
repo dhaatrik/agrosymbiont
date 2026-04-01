@@ -33,6 +33,7 @@ export const StepChallenge: React.FC<{ selections: OnboardingSelections, setSele
                 setSelections({ ...selections, challenge: challenge.id });
                 setTimeout(handleNext, 300);
               }}
+              aria-pressed={selections.challenge === challenge.id}
               className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-burnt-orange dark:focus-visible:ring-offset-stone-900
               ${selections.challenge === challenge.id
                   ? 'bg-orange-50 dark:bg-orange-900/20 border-burnt-orange text-burnt-orange dark:text-orange-400'

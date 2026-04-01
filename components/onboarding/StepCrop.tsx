@@ -34,6 +34,7 @@ export const StepCrop: React.FC<{ selections: OnboardingSelections, setSelection
                     setSelections({ ...selections, crop: crop.id });
                     setTimeout(handleNext, 300);
                 }}
+                aria-pressed={selections.crop === crop.id}
                 className={`w-full p-6 rounded-2xl border-2 transition-all flex flex-col items-center justify-center gap-4 text-center h-48 preserve-3d focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900
                     ${selections.crop === crop.id
                     ? 'bg-blue-50 dark:bg-blue-900/20 border-cerulean-blue text-cerulean-blue dark:text-blue-400'
