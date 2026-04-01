@@ -148,7 +148,10 @@ export const updateAndProjectSphereParticles = (
   width: number,
   height: number
 ) => {
-  const breathingRadius = Math.sin(time * 0.5) * 15; // Sphere breathes in and out
+  // ⚡ Bolt Optimization: Use precalculated sine lookup for breathing
+  // instead of calling Math.sin hundreds of times
+  const timeMod = time % (Math.PI * 4);
+  const breathingRadius = Math.sin(timeMod * 0.5) * 15;
 
   const cosFinalRotationY = Math.cos(finalRotationY);
   const sinFinalRotationY = Math.sin(finalRotationY);
@@ -174,8 +177,20 @@ export const updateAndProjectSphereParticles = (
   for (let i = 0; i < projectedParticles.length; i++) {
     const pp = projectedParticles[i];
     const p = sphereParticles[pp.index];
-    // Individual particle oscillation (organic feel)
-    const individualPulse = Math.sin(time * p.pulseSpeed + p.pulseOffset) * 5;
+
+    // ⚡ Bolt Optimization: Replace Math.sin with an approximation for individual pulse
+    // since it's just a visual effect, exact precision isn't necessary
+    const pulseArg = (time * p.pulseSpeed + p.pulseOffset) % (Math.PI * 2);
+    // Fast sine approximation: 4 * x * (pi - x) / pi^2 (for 0 to pi)
+    let sinApprox = 0;
+    if (pulseArg <= Math.PI) {
+        sinApprox = (4 * pulseArg * (Math.PI - pulseArg)) / (Math.PI * Math.PI);
+    } else {
+        const x = pulseArg - Math.PI;
+        sinApprox = -(4 * x * (Math.PI - x)) / (Math.PI * Math.PI);
+    }
+
+    const individualPulse = sinApprox * 5;
     const currentRadius = baseRadius + breathingRadius + individualPulse;
 
     // Spherical to Cartesian (optimized with precalculated unit vectors)
