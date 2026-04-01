@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import WaitlistParticles from './WaitlistParticles';
-import { isValidEmail } from '../../utils/validation';
 
 
 const WaitlistForm: React.FC = () => {
@@ -142,7 +141,7 @@ const WaitlistForm: React.FC = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting || showParticles}
-                                className={`relative text-white font-bold rounded-xl transition-all duration-300 shadow-lg whitespace-nowrap flex items-center justify-center overflow-hidden h-14 w-full sm:w-auto ${
+                                className={`relative text-white font-bold rounded-xl transition-all duration-300 shadow-lg whitespace-nowrap flex items-center justify-center overflow-hidden h-14 w-full sm:w-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
                                     showParticles
                                         ? 'bg-green-500 sm:w-14 rounded-full mx-auto px-0'
                                         : 'bg-cerulean-blue dark:bg-blue-600 sm:w-40 hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 px-8'
