@@ -15,14 +15,15 @@ const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isAct
     );
 });
 
+const TEAM_MEMBERS = [
+    { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
+    { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
+    { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
+    { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
+    { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
+];
+
 const TeamCarousel: React.FC = () => {
-    const teamMembers = [
-        { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
-        { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
-        { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
-        { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
-        { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
-    ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -58,13 +59,13 @@ const TeamCarousel: React.FC = () => {
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === teamMembers.length - 1 ? 0 : prevIndex + 1
+            prevIndex === TEAM_MEMBERS.length - 1 ? 0 : prevIndex + 1
         );
     };
 
     const prevSlide = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? teamMembers.length - 1 : prevIndex - 1
+            prevIndex === 0 ? TEAM_MEMBERS.length - 1 : prevIndex - 1
         );
     };
 
@@ -84,7 +85,7 @@ const TeamCarousel: React.FC = () => {
                         @media (min-width: 768px) { .flex { --items-per-screen: 2; } }
                         @media (min-width: 1024px) { .flex { --items-per-screen: 3; } }
                     `}</style>
-                    {teamMembers.map((member, index) => (
+                    {TEAM_MEMBERS.map((member, index) => (
                         <div key={index} className="w-full flex-shrink-0 px-2 sm:px-4 md:w-1/2 lg:w-1/3">
                             <TeamMemberCard name={member.name} title={member.title} imageUrl={member.imageUrl} />
                         </div>
@@ -108,7 +109,7 @@ const TeamCarousel: React.FC = () => {
             </button>
 
             <div className="flex justify-center mt-6 sm:mt-8 gap-2">
-                {teamMembers.map((_, index) => (
+                {TEAM_MEMBERS.map((_, index) => (
                     <PaginationDot
                         key={index}
                         index={index}

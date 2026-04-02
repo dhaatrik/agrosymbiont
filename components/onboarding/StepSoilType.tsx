@@ -7,14 +7,14 @@ import { OnboardingSelections, slideVariants, soilColors } from './types';
 export const StepSoilType: React.FC<{ selections: OnboardingSelections, setSelections: (s: OnboardingSelections) => void, handleNext: () => void }> = ({ selections, setSelections, handleNext }) => {
   const { t } = useTranslation();
 
-  const soilTypes = [
+  const soilTypes = React.useMemo(() => [
     { id: 'alluvial', label: t('onb_soil_alluvial') },
     { id: 'red', label: t('onb_soil_red') },
     { id: 'black', label: t('onb_soil_black') },
     { id: 'sandy', label: t('onb_soil_sandy') },
     { id: 'clay', label: t('onb_soil_clay') },
     { id: 'unknown', label: t('onb_soil_unknown') }
-  ];
+  ], [t]);
 
   return (
     <motion.div

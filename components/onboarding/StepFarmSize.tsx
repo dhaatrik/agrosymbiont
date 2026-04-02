@@ -7,12 +7,12 @@ import { OnboardingSelections, slideVariants } from './types';
 export const StepFarmSize: React.FC<{ selections: OnboardingSelections, setSelections: (s: OnboardingSelections) => void, handleNext: () => void }> = ({ selections, setSelections, handleNext }) => {
   const { t } = useTranslation();
 
-  const farmSizes = [
+  const farmSizes = React.useMemo(() => [
     { id: 'small', label: t('onb_fs_small'), emoji: '🌱' },
     { id: 'medium', label: t('onb_fs_medium'), emoji: '🌿' },
     { id: 'large', label: t('onb_fs_large'), emoji: '🌾' },
     { id: 'commercial', label: t('onb_fs_commercial'), emoji: '🏭' }
-  ];
+  ], [t]);
 
   return (
     <motion.div

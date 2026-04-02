@@ -20,7 +20,7 @@ const OnboardingPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const stepLabels = [t('onb_step_crop'), t('onb_step_challenge'), t('onb_step_farmsize'), t('onb_step_soil'), t('onb_step_contact'), t('onb_step_done')];
+  const stepLabels = React.useMemo(() => [t('onb_step_crop'), t('onb_step_challenge'), t('onb_step_farmsize'), t('onb_step_soil'), t('onb_step_contact'), t('onb_step_done')], [t]);
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handlePrev = () => setStep((prev) => prev - 1);

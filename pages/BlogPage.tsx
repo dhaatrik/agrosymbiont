@@ -11,6 +11,8 @@ import BlogCard from '../components/BlogCard';
 import { BlogSkeletonCard, BLOG_SKELETON_ITEMS } from '../components/BlogSkeletonCard';
 import BlogNewsletterForm from '../components/BlogNewsletterForm';
 
+const CATEGORIES = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
+
 const BlogPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,8 +41,6 @@ const BlogPage: React.FC = () => {
       };
   }, []);
 
-  const categories = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
-
   const filteredPosts = useMemo(() => {
     return selectedCategory === 'All'
       ? blogs
@@ -61,7 +61,7 @@ const BlogPage: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('blog_latest')}</h2>
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide p-1">
-                    {categories.map((category) => (
+                    {CATEGORIES.map((category) => (
                         <button
                             key={category}
                             onClick={() => setSelectedCategory(category)}

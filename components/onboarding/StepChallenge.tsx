@@ -7,12 +7,12 @@ import { OnboardingSelections, slideVariants } from './types';
 export const StepChallenge: React.FC<{ selections: OnboardingSelections, setSelections: (s: OnboardingSelections) => void, handleNext: () => void }> = ({ selections, setSelections, handleNext }) => {
   const { t } = useTranslation();
 
-  const challenges = [
+  const challenges = React.useMemo(() => [
     { id: 'yield', label: t('onb_ch_yield'), icon: <Sprout className="w-6 h-6" /> },
     { id: 'soil', label: t('onb_ch_soil'), icon: <Droplet className="w-6 h-6" /> },
     { id: 'pest', label: t('onb_ch_pest'), icon: <Bug className="w-6 h-6" /> },
     { id: 'climate', label: t('onb_ch_climate'), icon: <ThermometerSun className="w-6 h-6" /> }
-  ];
+  ], [t]);
 
   return (
     <motion.div
