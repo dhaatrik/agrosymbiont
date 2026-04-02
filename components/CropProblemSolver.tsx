@@ -108,14 +108,14 @@ const DiagnosisResult: React.FC<{
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
 
-  const cropOptions = React.useMemo(() => [
+  const cropOptions = useMemo(() => [
     { id: 'wheat' as CropType, label: t('solver_crop_cereals'), icon: <Wheat className="w-6 h-6" /> },
     { id: 'apple' as CropType, label: t('solver_crop_fruits'), icon: <Apple className="w-6 h-6" /> },
     { id: 'coffee' as CropType, label: t('solver_crop_cash'), icon: <Coffee className="w-6 h-6" /> },
     { id: 'vegetables' as CropType, label: t('solver_crop_vegetables'), icon: <Sprout className="w-6 h-6" /> },
   ], [t]);
 
-  const symptomOptions: Record<string, { id: string; label: string }[]> = React.useMemo(() => ({
+  const symptomOptions: Record<string, { id: string; label: string }[]> = useMemo(() => ({
     wheat: [
       { id: 'yellow_leaves', label: t('solver_sym_yellow_wheat') },
       { id: 'low_yield', label: t('solver_sym_low_wheat') },
@@ -138,7 +138,7 @@ const CropProblemSolver: React.FC = () => {
     ]
   }), [t]);
 
-  const solutions: Record<string, { name: string; desc: string }> = React.useMemo(() => ({
+  const solutions: Record<string, { name: string; desc: string }> = useMemo(() => ({
     yellow_leaves: { name: t('solver_sol_yellow_name'), desc: t('solver_sol_yellow_desc') },
     stunted_growth: { name: t('solver_sol_stunted_name'), desc: t('solver_sol_stunted_desc') },
     low_yield: { name: t('solver_sol_low_name'), desc: t('solver_sol_low_desc') },

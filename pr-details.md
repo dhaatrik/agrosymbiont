@@ -1,9 +1,7 @@
-# ⚡ Bolt: Optimize Static Array Creation in CropProblemSolver
+Title: ⚡ Bolt: Memoize static translation arrays to reduce React render overhead
 
-💡 **What:** Wrapped the inline definition of `cropOptions`, `symptomOptions`, and `solutions` configuration arrays/objects in `components/CropProblemSolver.tsx` with `React.useMemo`.
-
-🎯 **Why:** These variables are defined inside the functional component because they depend on the `t` (translation) function. However, defining them inline without memoization causes new object instances to be allocated on every single render. This puts unnecessary pressure on the Garbage Collector and can break React's shallow equality checks for child components (like `SymptomButton` which is a `React.memo` component receiving the `symptom` prop from `symptomOptions`).
-
-📊 **Impact:** Reduces unnecessary object and array allocations per render from O(M*N) to O(1) (only recreating when language changes). This improves rendering performance and stabilizes object references for child components.
-
-🔬 **Measurement:** Verified that the component continues to work correctly and pass all tests. Profiling the component with React DevTools would show fewer re-renders of child components like `SymptomButton`.
+Description:
+💡 **What**: Wrapped statically defined configuration arrays containing `react-i18next` translation functions (`t(...)`) in `useMemo` hooks inside `CropProblemSolver.tsx`, `StepChallenge.tsx`, `StepCrop.tsx`, `StepSoilType.tsx`, and `StepFarmSize.tsx`.
+🎯 **Why**: Because the arrays included translation calls, they were previously being recreated on every component render cycle. Extracting them purely outside the component body wasn't feasible without wrapping them in functions (which would still run on every render). By memoizing them with `useMemo`, we preserve exactly one instance of the array reference until the translation dependencies change.
+📊 **Impact**: Reduces unnecessary array allocations and garbage collection (GC) pressure, especially critical during heavy re-renders or Framer Motion animations in the onboarding flow.
+🔬 **Measurement**: Verify by running `pnpm test` (all tests pass) and profiling component re-renders during interactions using React DevTools Profiler, observing fewer deep object diffs.
