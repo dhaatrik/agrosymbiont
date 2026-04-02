@@ -15,15 +15,18 @@ const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isAct
     );
 });
 
-const TeamCarousel: React.FC = () => {
-    const teamMembers = [
-        { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
-        { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
-        { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
-        { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
-        { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
-    ];
+// ⚡ Bolt Optimization: Extracted the static teamMembers array outside the component body.
+// This prevents unnecessary array creation and memory allocation on every render cycle,
+// which reduces garbage collection overhead and improves performance.
+const teamMembers = [
+    { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
+    { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
+    { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
+    { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
+    { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
+];
 
+const TeamCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);

@@ -148,9 +148,15 @@ export const updateAndProjectSphereParticles = (
   width: number,
   height: number
 ) => {
+  // ⚡ Bolt Optimization: Use precalculated math constants to avoid repeated recalculations
+  const PI = Math.PI;
+  const PI2 = PI * 2;
+  const PI_SQ = PI * PI;
+  const FOUR_OVER_PI_SQ = 4 / PI_SQ;
+
   // ⚡ Bolt Optimization: Use precalculated sine lookup for breathing
   // instead of calling Math.sin hundreds of times
-  const timeMod = time % (Math.PI * 4);
+  const timeMod = time % (PI * 4);
   const breathingRadius = Math.sin(timeMod * 0.5) * 15;
 
   const cosFinalRotationY = Math.cos(finalRotationY);
@@ -180,14 +186,14 @@ export const updateAndProjectSphereParticles = (
 
     // ⚡ Bolt Optimization: Replace Math.sin with an approximation for individual pulse
     // since it's just a visual effect, exact precision isn't necessary
-    const pulseArg = (time * p.pulseSpeed + p.pulseOffset) % (Math.PI * 2);
+    const pulseArg = (time * p.pulseSpeed + p.pulseOffset) % PI2;
     // Fast sine approximation: 4 * x * (pi - x) / pi^2 (for 0 to pi)
     let sinApprox = 0;
-    if (pulseArg <= Math.PI) {
-        sinApprox = (4 * pulseArg * (Math.PI - pulseArg)) / (Math.PI * Math.PI);
+    if (pulseArg <= PI) {
+        sinApprox = pulseArg * (PI - pulseArg) * FOUR_OVER_PI_SQ;
     } else {
-        const x = pulseArg - Math.PI;
-        sinApprox = -(4 * x * (Math.PI - x)) / (Math.PI * Math.PI);
+        const x = pulseArg - PI;
+        sinApprox = -x * (PI - x) * FOUR_OVER_PI_SQ;
     }
 
     const individualPulse = sinApprox * 5;
