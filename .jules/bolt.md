@@ -1,7 +1,3 @@
-# Bolt Learnings
-
-### 2024-05-18
-- **What**: Added `loading="lazy"` to a header image to delay fetching the image until it is visible in the viewport.
-- **Why**: The user requested adding lazy loading to the blog post header image to improve initial load times by not blocking the main thread for image loading.
-- **Impact**: Delays image fetching for off-screen images, potentially improving metrics like FCP (First Contentful Paint) and TTI (Time to Interactive).
-- **Measurement**: Verified the `loading` attribute using a Playwright script checking the DOM properties. However, as noted in review, adding lazy loading to LCP (Largest Contentful Paint) elements above the fold can be an anti-pattern as it delays the most critical content. We strictly followed user instructions here.
+## 2025-03-05 - React i18n Translation Arrays
+**Learning:** Statically defined configuration arrays or mock data objects that use dynamic translation functions (like `t()` from `react-i18next`) cannot simply be moved outside the React component body to prevent re-creation, because they depend on the translation hook's output, which reacts to language changes.
+**Action:** Wrap these arrays and objects inside `React.useMemo(() => [...], [t])` within the component body instead. This correctly optimizes memory by preventing recreation on every render loop while maintaining reactivity to the active language.

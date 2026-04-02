@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Wheat, Apple, Coffee, Sprout } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +8,12 @@ import { OnboardingSelections, slideVariants } from './types';
 export const StepCrop: React.FC<{ selections: OnboardingSelections, setSelections: (s: OnboardingSelections) => void, handleNext: () => void }> = ({ selections, setSelections, handleNext }) => {
   const { t } = useTranslation();
 
-  const crops = [
+  const crops = useMemo(() => [
     { id: 'wheat', label: t('onb_crop_cereals'), icon: <Wheat className="w-8 h-8" /> },
     { id: 'apple', label: t('onb_crop_fruits'), icon: <Apple className="w-8 h-8" /> },
     { id: 'coffee', label: t('onb_crop_cash'), icon: <Coffee className="w-8 h-8" /> },
     { id: 'vegetables', label: t('onb_crop_vegetables'), icon: <Sprout className="w-8 h-8" /> }
-  ];
+  ], [t]);
 
   return (
     <motion.div
