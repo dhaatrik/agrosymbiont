@@ -1,6 +1,8 @@
-Title: ⚡ Bolt: Optimize 3D Background Mathematical Constants
+# Title
+⚡ Bolt: Memoize CropProblemSolver configurations to fix SymptomButton re-renders
 
-💡 What: Optimized the high-frequency rendering loop `updateAndProjectSphereParticles` in `ThreeDBackgroundHelpers.ts` by precalculating mathematical constants like `Math.PI` to avoid property lookups on the `Math` object on every loop iteration.
-🎯 Why: Inside the 60fps frame loop which can handle over 500-1500 particles, repetitive global object property lookups like `Math.PI` add up and cost valuable CPU cycles. Caching them inside the function scope improves execution speed slightly but consistently.
-📊 Impact: Expected performance improvement is a 1-5% increase in operation speed for the function, contributing to a smoother 60fps experience for complex 3D scenes.
-🔬 Measurement: Verified with `pnpm vitest bench components/ThreeDBackgroundHelpers.bench.ts`, the optimized version is ~1.02x to 1.04x faster than the current implementation. Full tests run successfully.
+# Description
+💡 **What:** Wrapped `cropOptions`, `symptomOptions`, and `solutions` objects inside `components/CropProblemSolver.tsx` in `React.useMemo` hooks.
+🎯 **Why:** These configuration objects, which depend on the `t` (translation) function, were previously defined inline and recreated on every single render. This caused the shallow equality checks in the memoized child component (`SymptomButton`) to fail continuously, resulting in unnecessary re-renders of all buttons whenever the selection state changed.
+📊 **Impact:** Reduces unnecessary re-renders of the `SymptomButton` components to exactly 0 when unselected options remain unselected, significantly decreasing React reconciliation overhead during user interaction.
+🔬 **Measurement:** Verified via React DevTools Profiler that interacting with the buttons no longer causes re-renders of un-modified sibling elements. Also verified against the full `pnpm test` suite to ensure no regressions in behavior.
