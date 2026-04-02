@@ -15,20 +15,18 @@ const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isAct
     );
 });
 
-
-// ⚡ Bolt Optimization: Extracted static array outside the component to prevent
-// unnecessary recreation of the array and its object references on every render.
+// ⚡ Bolt Optimization: Extracted statically defined `teamMembers` array
+// outside the component body. This prevents the array from being
+// unnecessarily re-created on every render cycle (e.g. during swiping).
 const teamMembers = [
-        { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
-        { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
-        { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
-        { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
-        { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
-    ];
+    { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
+    { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
+    { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
+    { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
+    { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
+];
 
 const TeamCarousel: React.FC = () => {
-
-
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);

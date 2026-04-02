@@ -1,8 +1,6 @@
-# ⚡ Bolt: Extract static array to improve render performance
+⚡ Bolt: Prevent unnecessary teamMembers array recreation in TeamCarousel
 
-## Description
-
-* **💡 What:** Extracted the static `teamMembers` array outside of the `TeamCarousel` component body.
-* **🎯 Why:** To prevent recreating the array and its object references on every render cycle, which causes unnecessary memory allocation and garbage collection pressure during high-frequency events like touch/swipe interactions.
-* **📊 Impact:** Reduces unnecessary array recreations on every render for `TeamCarousel`, making animations slightly smoother and memory usage more stable.
-* **🔬 Measurement:** Observe memory usage and render times in React DevTools during rapid swiping.
+💡 **What:** Extracted the statically defined `teamMembers` array outside of the `TeamCarousel` component body.
+🎯 **Why:** Defining an array inside a functional component causes the array to be re-allocated in memory on every single render. Since `TeamCarousel` frequently updates state based on touch inputs (swiping), this resulted in unnecessary continuous garbage collection and broken shallow equality references.
+📊 **Impact:** Reduces object creation overhead to zero for this array during the component's lifecycle, resulting in marginally smoother swipe events by easing GC pressure.
+🔬 **Measurement:** This optimization can be conceptually verified. Run tests (`pnpm test`) to guarantee no functional regressions were introduced.
