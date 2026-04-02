@@ -151,6 +151,8 @@ const Header: React.FC = () => {
               onClick={() => setIsOpen(!isOpen)}
               className={`inline-flex items-center justify-center p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? (
                 <X className="h-6 w-6" strokeWidth={2} />
@@ -165,6 +167,7 @@ const Header: React.FC = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div 
+            id="mobile-menu"
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
