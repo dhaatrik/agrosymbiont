@@ -25,6 +25,7 @@ const TEAM_MEMBERS = [
 
 const TeamCarousel: React.FC = () => {
 
+const TeamCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);

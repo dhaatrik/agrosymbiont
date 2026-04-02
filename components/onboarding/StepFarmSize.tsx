@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Maximize } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
