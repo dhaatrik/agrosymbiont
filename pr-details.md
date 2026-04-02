@@ -1,9 +1,13 @@
-# ⚡ Bolt: Memoize static configuration arrays in React components
+# ⚡ Bolt: Extract static teamMembers array to prevent recreation on every render
 
-💡 **What:** Wrapped static configuration arrays and objects that rely on the `t()` translation function inside `useMemo` hooks with a `[t]` dependency array across multiple UI components (`StepChallenge`, `StepCrop`, `StepSoilType`, `StepFarmSize`, `CropProblemSolver`).
+## 💡 What:
+Extracted the static `teamMembers` array outside of the `TeamCarousel` functional component in `components/TeamCarousel.tsx`. Added an explanatory comment above the array detailing the optimization.
 
-🎯 **Why:** These configuration arrays were previously being redefined on every single render loop. Because they depend on translations, they couldn't simply be moved outside the component body. Using `useMemo` prevents continuous object recreation, reducing garbage collection pressure and unnecessary virtual DOM diffing while still responding to language toggles.
+## 🎯 Why:
+Because the array was defined inside the component body, React was allocating a new array and new member objects on every single render cycle. By hoisting it outside the component, it becomes a single, static reference, eliminating unnecessary garbage collection overhead and minor memory churn during re-renders.
 
-📊 **Impact:** Reduces memory allocation per render cycle for these components. This prevents recreation of objects passed as props (like arrays to mapping functions) and prevents subsequent cascading re-renders in optimized child components.
+## 📊 Impact:
+Small but measurable reduction in memory allocation and garbage collection overhead during re-renders of the `TeamCarousel` component. This preserves reference equality for the data array.
 
-🔬 **Measurement:** Verify by ensuring the UI components continue to work as expected, and test switching the language toggle to ensure translated text updates correctly. Tests pass successfully.
+## 🔬 Measurement:
+The optimization can be verified by observing the `TeamCarousel` component in React DevTools. The array will no longer appear as a new object instance on subsequent renders. Verified safe by ensuring the full test suite passes.

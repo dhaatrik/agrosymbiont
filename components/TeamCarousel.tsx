@@ -15,9 +15,9 @@ const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isAct
     );
 });
 
-// ⚡ Bolt Optimization: Extracted statically defined `teamMembers` array
-// outside the component body. This prevents the array from being
-// unnecessarily re-created on every render cycle (e.g. during swiping).
+// ⚡ Bolt Optimization: Extracted the static teamMembers array outside the component body.
+// This prevents unnecessary array creation and memory allocation on every render cycle,
+// which reduces garbage collection overhead and improves performance.
 const teamMembers = [
     { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
     { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
