@@ -119,6 +119,7 @@ const Header: React.FC = () => {
                 className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
                 aria-label="Toggle Data Saver"
                 title={dataSaver ? "Disable Low-Bandwidth Mode" : "Enable Low-Bandwidth Mode"}
+                aria-pressed={dataSaver}
               >
                 {dataSaver ? <ZapOff className="w-5 h-5 text-mustard-yellow" /> : <Zap className="w-5 h-5" />}
               </button>
@@ -126,6 +127,8 @@ const Header: React.FC = () => {
                 onClick={toggleTheme}
                 className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
                 aria-label="Toggle Dark Mode"
+                title={theme === 'dark' ? "Enable Light Mode" : "Enable Dark Mode"}
+                aria-pressed={theme === 'dark'}
               >
                 {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
               </button>
@@ -137,6 +140,7 @@ const Header: React.FC = () => {
               className={`p-2 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
               aria-label="Toggle Data Saver"
               title={dataSaver ? "Disable Low-Bandwidth Mode" : "Enable Low-Bandwidth Mode"}
+              aria-pressed={dataSaver}
             >
               {dataSaver ? <ZapOff className="w-5 h-5 text-mustard-yellow" /> : <Zap className="w-5 h-5" />}
             </button>
@@ -144,6 +148,8 @@ const Header: React.FC = () => {
               onClick={toggleTheme}
               className={`p-2 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
               aria-label="Toggle Dark Mode"
+              title={theme === 'dark' ? "Enable Light Mode" : "Enable Dark Mode"}
+              aria-pressed={theme === 'dark'}
             >
               {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
