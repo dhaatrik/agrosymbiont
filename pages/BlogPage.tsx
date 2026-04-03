@@ -11,6 +11,11 @@ import BlogCard from '../components/BlogCard';
 import { BlogSkeletonCard, BLOG_SKELETON_ITEMS } from '../components/BlogSkeletonCard';
 import BlogNewsletterForm from '../components/BlogNewsletterForm';
 
+// ⚡ Bolt Optimization: Extracted the static categories array outside the component body.
+// This prevents unnecessary array creation and memory allocation on every render cycle,
+// which reduces garbage collection overhead and improves performance.
+const categories = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
+
 const BlogPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,7 +44,7 @@ const BlogPage: React.FC = () => {
       };
   }, []);
 
-  const categories = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
+
 
   const filteredPosts = useMemo(() => {
     return selectedCategory === 'All'

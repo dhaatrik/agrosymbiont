@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, Check, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +20,10 @@ const OnboardingPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const stepLabels = [t('onb_step_crop'), t('onb_step_challenge'), t('onb_step_farmsize'), t('onb_step_soil'), t('onb_step_contact'), t('onb_step_done')];
+  // ⚡ Bolt Optimization: Wrapped the translation stepLabels in useMemo.
+  // This prevents the array from being recreated on every render cycle, reducing
+  // garbage collection overhead while still correctly reacting to language changes.
+  const stepLabels = useMemo(() => [t('onb_step_crop'), t('onb_step_challenge'), t('onb_step_farmsize'), t('onb_step_soil'), t('onb_step_contact'), t('onb_step_done')], [t]);
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handlePrev = () => setStep((prev) => prev - 1);
