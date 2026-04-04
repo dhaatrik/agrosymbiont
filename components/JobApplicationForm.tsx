@@ -34,10 +34,12 @@ const FormField: React.FC<FormFieldProps> = ({ label, name, type, id, placeholde
                 onChange={onChange}
                 className={`${inputClass} ${error ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`}
                 placeholder={placeholder}
+                aria-invalid={!!error}
+                aria-describedby={error ? `${id}-error` : undefined}
             />
             <div aria-live="polite">
                 {error && (
-                    <div className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                    <div id={`${id}-error`} className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                         <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
                         {error}
                     </div>
@@ -80,7 +82,7 @@ const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
                 <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
                     <label htmlFor={id} className="relative cursor-pointer rounded-md font-bold text-cerulean-blue dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 focus-within:outline-none">
                         <span>{uploadText}</span>
-                        <input id={id} name="resume" type="file" className="sr-only" onChange={onChange} required />
+                        <input id={id} name="resume" type="file" className="sr-only" onChange={onChange} required aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} />
                     </label>
                     <p className="pl-1">{dragDropText}</p>
                 </div>
@@ -90,7 +92,7 @@ const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
         </div>
         <div aria-live="polite">
             {error && (
-                <div className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                <div id={`${id}-error`} className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                     <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
                     {error}
                 </div>
