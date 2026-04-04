@@ -60,16 +60,25 @@ describe('FormField', () => {
         expect(screen.queryByText('*')).not.toBeInTheDocument();
     });
 
-    it('renders the error message and icon when error prop is provided', () => {
+    it('renders the error message and correctly associates it with the input via ARIA attributes', () => {
         const errorMessage = 'This field is required';
         render(
             <FormField {...defaultProps} error={errorMessage}>
-                <input id="test-id" />
+                <input data-testid="test-input" id="test-id" />
             </FormField>
         );
 
         expect(screen.getByText(errorMessage)).toBeInTheDocument();
         expect(screen.getByTestId('alert-icon')).toBeInTheDocument();
+
+        // Verify ARIA attributes on the input
+        const input = screen.getByTestId('test-input');
+        expect(input).toHaveAttribute('aria-invalid', 'true');
+        expect(input).toHaveAttribute('aria-describedby', 'test-id-error');
+
+        // Verify the error message has the matching ID
+        const errorMessageContainer = screen.getByText(errorMessage).closest('div');
+        expect(errorMessageContainer).toHaveAttribute('id', 'test-id-error');
 
         // Verify it's within the aria-live polite region
         const politeRegion = screen.getByText(errorMessage).closest('[aria-live="polite"]');
