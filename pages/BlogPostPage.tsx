@@ -15,9 +15,16 @@ const BlogPostPage: React.FC = () => {
 
   const relatedPosts = useMemo(() => {
     if (!post) return [];
-    return blogs
-      .filter(b => b.category === post.category && b.id !== post.id)
-      .slice(0, 3);
+    // ⚡ Bolt Optimization: Replace full array filter + slice with a short-circuiting manual loop for performance.
+    const result: BlogPost[] = [];
+    for (let i = 0; i < blogs.length; i++) {
+      const b = blogs[i];
+      if (b.category === post.category && b.id !== post.id) {
+        result.push(b);
+        if (result.length === 3) break;
+      }
+    }
+    return result;
   }, [post]);
 
   useEffect(() => {
