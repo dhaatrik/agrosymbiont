@@ -157,6 +157,79 @@ describe('ThreeDBackgroundHelpers', () => {
       expect(projected[1].z).toBe(-100);
     });
 
+
+    it('uses the secondary branch of sine approximation when pulseArg > PI', () => {
+      // pulseArg = (time * pulseSpeed + pulseOffset) % PI2
+      // We want pulseArg > PI (e.g. 1.5 * PI)
+      // time = 0, pulseSpeed = 1, pulseOffset = 1.5 * Math.PI
+      const sphereParticles: SphereParticle[] = [{
+        theta: 0, phi: 0, color: '#fff', pulseOffset: 1.5 * Math.PI, pulseSpeed: 1,
+        unitX: 1, unitY: 0, unitZ: 0
+      }];
+      const projectedParticles: ProjectedParticle[] = [];
+      const baseRadius = 100;
+      const time = 0;
+
+      updateAndProjectSphereParticles(
+        sphereParticles, projectedParticles, time, baseRadius, 0, 0, 0, 1000, 1000
+      );
+
+      // Verify that it runs without crashing and calculates a valid radius (and thus position).
+      expect(projectedParticles).toHaveLength(1);
+      expect(projectedParticles[0].x).toBeGreaterThan(0);
+    });
+
+    it('applies scrollY parallax correctly', () => {
+      const sphereParticles: SphereParticle[] = [{
+        theta: 0, phi: Math.PI / 2, color: '#fff', pulseOffset: 0, pulseSpeed: 0,
+        unitX: 1, unitY: 0, unitZ: 0
+      }];
+      const projectedParticles: ProjectedParticle[] = [];
+
+      // y1 = 0. scale = 1. scrollParallaxY = 100 * 0.15 * 1 = 15.
+      // y2d = 0 * 1 + 500 - 15 = 485
+      updateAndProjectSphereParticles(
+        sphereParticles, projectedParticles, 0, 100, 0, 0, 100, 1000, 1000
+      );
+
+      expect(projectedParticles[0].y).toBeCloseTo(485);
+    });
+
+    it('handles shrinking and growing projectedParticles array', () => {
+      const sphereParticlesSmall = createSphereParticles(2, ['#fff']);
+      const projectedParticles: ProjectedParticle[] = [];
+      // Initial projection
+      updateAndProjectSphereParticles(sphereParticlesSmall, projectedParticles, 0, 100, 0, 0, 0, 1000, 1000);
+      expect(projectedParticles).toHaveLength(2);
+
+      // Grow
+      const sphereParticlesLarge = createSphereParticles(5, ['#fff']);
+      updateAndProjectSphereParticles(sphereParticlesLarge, projectedParticles, 0, 100, 0, 0, 0, 1000, 1000);
+      expect(projectedParticles).toHaveLength(5);
+
+      // Shrink
+      updateAndProjectSphereParticles(sphereParticlesSmall, projectedParticles, 0, 100, 0, 0, 0, 1000, 1000);
+      expect(projectedParticles).toHaveLength(2);
+    });
+
+    it('applies 3D rotations correctly', () => {
+      const sphereParticles: SphereParticle[] = [{
+        theta: 0, phi: Math.PI / 2, color: '#fff', pulseOffset: 0, pulseSpeed: 0,
+        unitX: 1, unitY: 0, unitZ: 0
+      }]; // Initial: x = 100, y = 0, z = 0
+      const projectedParticles: ProjectedParticle[] = [];
+
+      // Rotate 90 degrees around Y axis.
+      // let z1 = x * sinFinalRotationY + z * cosFinalRotationY;
+      // z1 = 100 * sin(PI/2) + 0 = 100
+      updateAndProjectSphereParticles(
+        sphereParticles, projectedParticles, 0, 100, 0, Math.PI / 2, 0, 1000, 1000
+      );
+
+      expect(projectedParticles[0].x).toBeCloseTo(500); // x1 = 100 * cos(PI/2) - 0 = 0 -> x2d = 0*scale + 500 = 500
+      expect(projectedParticles[0].z).toBeCloseTo(100);
+    });
+
     it('reuses the projectedParticles array for optimization', () => {
       const sphereParticles = createSphereParticles(5, ['#fff']);
       const projectedParticles: ProjectedParticle[] = [];
