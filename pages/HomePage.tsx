@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import ThreeDBackground from '../components/ThreeDBackground';
@@ -8,7 +8,8 @@ import { ArrowRight, TrendingUp, Sparkles, Coins, CheckCircle, Zap } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
-const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
+// ⚡ Bolt Optimization: Memoize presentation component to prevent unnecessary re-renders
+const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = React.memo(({ title, description, icon }) => (
     <TiltCard className="h-full">
         <div 
           className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden" 
@@ -26,19 +27,44 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-sm transform transition-all group-hover:translate-z-2">{description}</p>
         </div>
     </TiltCard>
-);
+));
 
 
 
-const ImpactStat: React.FC<{ value: string; label: string }> = ({ value, label }) => (
+// ⚡ Bolt Optimization: Memoize presentation component to prevent unnecessary re-renders
+const ImpactStat: React.FC<{ value: string; label: string }> = React.memo(({ value, label }) => (
     <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
         <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">{value}</div>
         <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{label}</div>
     </Link>
-);
+));
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
+  // ⚡ Bolt Optimization: Memoize the features array to avoid breaking React.memo shallow equality
+  // on FeatureCard due to inline ReactNode icons.
+  const features = useMemo(() => [
+    {
+      title: t('home_feat_1_title'),
+      description: t('home_feat_1_desc'),
+      icon: <TrendingUp className="w-8 h-8" strokeWidth={1.5} />
+    },
+    {
+      title: t('home_feat_2_title'),
+      description: t('home_feat_2_desc'),
+      icon: <Sparkles className="w-8 h-8" strokeWidth={1.5} />
+    },
+    {
+      title: t('home_feat_3_title'),
+      description: t('home_feat_3_desc'),
+      icon: <Coins className="w-8 h-8" strokeWidth={1.5} />
+    },
+    {
+      title: t('home_feat_4_title'),
+      description: t('home_feat_4_desc'),
+      icon: <CheckCircle className="w-8 h-8" strokeWidth={1.5} />
+    }
+  ], [t]);
   return (
     <div className="text-gray-800 dark:text-gray-200 -mt-24 relative">
       {/* 3D Background Layer */}
@@ -155,27 +181,14 @@ const HomePage: React.FC = () => {
                 <div className="w-24 h-1.5 bg-gradient-to-r from-mustard-yellow to-burnt-orange mx-auto rounded-full shadow-lg"></div>
            </AnimatedSection>
              <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 perspective-1000">
-                 <FeatureCard 
-                    title={t('home_feat_1_title')}
-                    description={t('home_feat_1_desc')}
-                    icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
-                 />
-                 <FeatureCard 
-                    title={t('home_feat_2_title')}
-                    description={t('home_feat_2_desc')}
-                    icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
-                 />
-                 <FeatureCard 
-                    title={t('home_feat_3_title')}
-                    description={t('home_feat_3_desc')}
-                    icon={<Coins className="w-8 h-8" strokeWidth={1.5} />}
-                 />
-                 <FeatureCard 
-                    title={t('home_feat_4_title')}
-                    description={t('home_feat_4_desc')}
-                    icon={<CheckCircle className="w-8 h-8" strokeWidth={1.5} />}
-                 />
-            </AnimatedSection>
+                {features.map((feature, index) => (
+                    <FeatureCard
+                        key={index}
+                        title={feature.title}
+                        description={feature.description}
+                        icon={feature.icon}
+                    />
+                ))}</AnimatedSection>
         </div>
       </section>
 
