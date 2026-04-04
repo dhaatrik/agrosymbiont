@@ -81,7 +81,7 @@ describe('WaitlistForm Component', () => {
     fireEvent.click(submitButton);
     expect(screen.getByText('prod_email_invalid')).toBeInTheDocument();
 
-    // Fix error
+    // Provide valid email to clear error
     fireEvent.change(input, { target: { value: 'test@example.com' } });
     expect(screen.queryByText('prod_email_invalid')).not.toBeInTheDocument();
   });
