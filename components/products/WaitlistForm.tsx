@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../../utils/validation';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import WaitlistButtonContent from './WaitlistButtonContent';
 import WaitlistParticles from './WaitlistParticles';
 
 
@@ -27,46 +28,6 @@ const WaitlistForm: React.FC = () => {
         } else {
             setEmailError('');
         }
-    };
-
-    const renderButtonContent = () => {
-        if (showParticles) {
-            return (
-                <motion.div
-                    key="success"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                    <Check className="h-6 w-6 text-white" />
-                </motion.div>
-            );
-        }
-        if (isSubmitting) {
-            return (
-                <motion.div
-                    key="submitting"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center"
-                >
-                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                    {t('prod_wait')}
-                </motion.div>
-            );
-        }
-        return (
-            <motion.div
-                key="idle"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-            >
-                {t('prod_notify')}
-            </motion.div>
-        );
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -147,9 +108,7 @@ const WaitlistForm: React.FC = () => {
                                         : 'bg-cerulean-blue dark:bg-blue-600 sm:w-40 hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 px-8'
                                 } ${isSubmitting ? 'opacity-75 cursor-not-allowed sm:w-44 px-8' : ''}`}
                             >
-                                <AnimatePresence mode="wait">
-                                    {renderButtonContent()}
-                                </AnimatePresence>
+                                <WaitlistButtonContent showParticles={showParticles} isSubmitting={isSubmitting} t={t} />
 
                                 {/* Micro-interaction Particles */}
                                 {showParticles && <WaitlistParticles />}
