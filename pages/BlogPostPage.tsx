@@ -4,6 +4,8 @@ import { ArrowLeft, Calendar, User } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import { blogs, BlogPost } from '../data/blogs';
 import Markdown from 'react-markdown';
+
+// We import the refactored sanitizeUrl from the centralized utility
 import { sanitizeUrl } from '../utils/validation';
 
 import TiltCard from '../components/TiltCard';
@@ -110,6 +112,7 @@ const BlogPostPage: React.FC = () => {
                     skipHtml
                     disallowedElements={['script', 'iframe', 'object', 'embed', 'form', 'link', 'meta', 'style']}
                     components={{
+                      // URL Sanitization specifically designed to fix the markdown parsing issue
                       a: ({ node, ...props }) => (
                         <a {...props} href={sanitizeUrl(props.href as string)} />
                       ),

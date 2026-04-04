@@ -58,8 +58,8 @@ describe('sanitizeUrl', () => {
   });
 
   it('should allow valid protocols', () => {
-    expect(sanitizeUrl('http://example.com')).toBe('http://example.com');
-    expect(sanitizeUrl('https://example.com')).toBe('https://example.com');
+    expect(sanitizeUrl('http://example.com')).toBe('http://example.com/');
+    expect(sanitizeUrl('https://example.com')).toBe('https://example.com/');
     expect(sanitizeUrl('mailto:test@example.com')).toBe('mailto:test@example.com');
     expect(sanitizeUrl('tel:+1234567890')).toBe('tel:+1234567890');
   });
@@ -77,8 +77,8 @@ describe('sanitizeUrl', () => {
   });
 
   it('should remove whitespace and control characters', () => {
-    expect(sanitizeUrl(' http://example.com ')).toBe('http://example.com');
-    expect(sanitizeUrl('https://example.com\n')).toBe('https://example.com');
+    expect(sanitizeUrl(' http://example.com ')).toBe('http://example.com/');
+    expect(sanitizeUrl('https://example.com\n')).toBe('https://example.com/');
     expect(sanitizeUrl('javascript\u0000:alert(1)')).toBe('about:blank');
   });
 

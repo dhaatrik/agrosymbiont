@@ -223,7 +223,7 @@ describe('BlogPostPage', () => {
     const safeLink = screen.getByText('safe link').closest('a');
     const maliciousLink = screen.getByText('malicious link').closest('a');
 
-    expect(safeLink?.getAttribute('href')).toBe('https://safe.com');
+    expect(safeLink?.getAttribute('href')).toBe('https://safe.com/');
     const maliciousHref = maliciousLink?.getAttribute('href');
     // Current implementation returns '' for javascript:
     // New one will return 'about:blank'
