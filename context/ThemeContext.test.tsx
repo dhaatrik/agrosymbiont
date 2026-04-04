@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { ThemeProvider, useTheme } from './ThemeContext';
@@ -13,12 +13,6 @@ const TestComponent = () => {
       <button onClick={toggleTheme}>Toggle</button>
     </div>
   );
-};
-
-// Component that throws to test useTheme error
-const ThrowingComponent = () => {
-  useTheme();
-  return <div>Should throw</div>;
 };
 
 describe('ThemeProvider', () => {
@@ -188,7 +182,7 @@ describe('ThemeProvider', () => {
     // Suppress console.error for this test as it expects an error
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(() => render(<ThrowingComponent />)).toThrow('useTheme must be used within a ThemeProvider');
+    expect(() => renderHook(() => useTheme())).toThrow('useTheme must be used within a ThemeProvider');
 
     consoleError.mockRestore();
   });
