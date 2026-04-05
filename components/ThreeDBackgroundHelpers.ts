@@ -103,6 +103,8 @@ export const renderDustParticles = (
   const mouseX2000 = mouseX * 2000;
   const mouseY2000 = mouseY * 2000;
   const scrollY03 = scrollY * 0.3;
+  // ⚡ Bolt Optimization: Pre-calculated Math.PI * 2 to avoid recalculating it inside the render loop for hundreds of particles.
+  const PI2 = Math.PI * 2;
 
   for (let i = 0; i < dustParticles.length; i++) {
     const p = dustParticles[i];
@@ -131,7 +133,7 @@ export const renderDustParticles = (
     if (scale > 0) {
       ctx.beginPath();
       ctx.fillStyle = `rgba(200, 200, 200, ${p.opacity})`;
-      ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
+      ctx.arc(x2d, y2d, p.size * scale, 0, PI2);
       ctx.fill();
     }
   }
@@ -247,6 +249,8 @@ export const renderConnections = (
   isMobile: boolean
 ) => {
   ctx.lineWidth = 0.5;
+  // ⚡ Bolt Optimization: Replaced costly string allocation in hot loop with fast globalAlpha assignment, and hoisted strokeStyle
+  ctx.strokeStyle = "#2a52be";
   const connectionStep = isMobile ? 8 : 5;
   const connectionWindow = isMobile ? 10 : 20;
   const limit = projectedParticles.length;
@@ -281,13 +285,14 @@ export const renderConnections = (
          ctx.beginPath();
          // Dynamic opacity based on squared distance
          // Precalculated value for 0.12 / 6400 = 0.00001875
-         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.00001875 * distSq)})`;
+         ctx.globalAlpha = 0.12 - (0.00001875 * distSq);
          ctx.moveTo(p1x, p1y);
          ctx.lineTo(p2.x, p2.y);
          ctx.stroke();
        }
     }
   }
+  ctx.globalAlpha = 1.0;
 };
 
 export const renderSphereParticles = (
@@ -295,6 +300,8 @@ export const renderSphereParticles = (
   projectedParticles: ProjectedParticle[],
   baseRadius: number
 ) => {
+  // ⚡ Bolt Optimization: Pre-calculated Math.PI * 2 to avoid recalculating it inside the render loop for hundreds of particles.
+  const PI2 = Math.PI * 2;
   // Performance optimization: Standard for loops outperform Array.prototype.forEach
   // in high-frequency 60fps render loops by avoiding closure/function call overhead.
   for (let i = 0; i < projectedParticles.length; i++) {
@@ -307,7 +314,7 @@ export const renderSphereParticles = (
     ctx.beginPath();
     ctx.fillStyle = p.color;
     ctx.globalAlpha = finalAlpha;
-    ctx.arc(p.x, p.y, 1.5 * p.scale, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, 1.5 * p.scale, 0, PI2);
     ctx.fill();
 
     // Outer glow for larger/closer particles
@@ -315,7 +322,7 @@ export const renderSphereParticles = (
         ctx.beginPath();
         ctx.fillStyle = p.color;
         ctx.globalAlpha = finalAlpha * 0.15;
-        ctx.arc(p.x, p.y, 6 * p.scale, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 6 * p.scale, 0, PI2);
         ctx.fill();
     }
   }
