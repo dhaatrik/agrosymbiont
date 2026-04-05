@@ -82,7 +82,7 @@ const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
                 <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
                     <label htmlFor={id} className="relative cursor-pointer rounded-md font-bold text-cerulean-blue dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 focus-within:outline-none">
                         <span>{uploadText}</span>
-                        <input id={id} name="resume" type="file" className="sr-only" onChange={onChange} required aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} />
+                        <input id={id} name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" className="sr-only" onChange={onChange} required aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} />
                     </label>
                     <p className="pl-1">{dragDropText}</p>
                 </div>
