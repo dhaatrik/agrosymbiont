@@ -70,10 +70,12 @@ const BlogNewsletterForm: React.FC = () => {
                   onChange={handleEmailChange}
                   className={`w-full px-8 py-4 bg-white/10 border ${emailError ? 'border-red-500 bg-red-900/20' : 'border-white/20'} rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-mustard-yellow transition-all text-white placeholder-gray-400 backdrop-blur-sm text-center sm:text-left`}
                   aria-label="Email for blog notifications"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? 'newsletter-email-error' : undefined}
                 />
                 <div aria-live="polite">
                     {emailError && (
-                        <p className="absolute -bottom-6 left-0 sm:left-4 text-xs text-red-400 font-medium w-full text-center sm:text-left flex items-center justify-center sm:justify-start">
+                        <p id="newsletter-email-error" className="absolute -bottom-6 left-0 sm:left-4 text-xs text-red-400 font-medium w-full text-center sm:text-left flex items-center justify-center sm:justify-start">
                             <AlertCircle className="w-3 h-3 mr-1" strokeWidth={2} />
                             {emailError}
                         </p>
