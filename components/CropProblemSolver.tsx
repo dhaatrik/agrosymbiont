@@ -22,11 +22,17 @@ interface Solution {
   desc: string;
 }
 
-const CropSelector: React.FC<{
+// ⚡ Bolt Optimization: Memoized presentation components to prevent unnecessary re-renders
+// when unrelated parent state (like isAnalyzing or showResult) changes.
+const CropSelector = memo(({
+  cropOptions,
+  selectedCrop,
+  onSelect
+}: {
   cropOptions: CropOption[];
   selectedCrop: CropType;
   onSelect: (cropId: CropType) => void;
-}> = ({ cropOptions, selectedCrop, onSelect }) => (
+}) => (
   <div className="grid grid-cols-2 gap-3">
       {cropOptions.map((crop) => (
           <button
@@ -39,7 +45,7 @@ const CropSelector: React.FC<{
           </button>
       ))}
   </div>
-);
+));
 
 const SymptomButton = memo(({ symptom, isSelected, onSelect }: { symptom: SymptomOption, isSelected: boolean, onSelect: (id: SymptomType) => void }) => (
   <button
@@ -51,11 +57,15 @@ const SymptomButton = memo(({ symptom, isSelected, onSelect }: { symptom: Sympto
   </button>
 ));
 
-const SymptomSelector: React.FC<{
+const SymptomSelector = memo(({
+  currentSymptoms,
+  selectedSymptom,
+  onSelect
+}: {
   currentSymptoms: SymptomOption[];
   selectedSymptom: SymptomType;
   onSelect: (symptomId: SymptomType) => void;
-}> = ({ currentSymptoms, selectedSymptom, onSelect }) => (
+}) => (
   <div className="flex flex-col gap-2">
       {currentSymptoms.map((symptom) => (
           <SymptomButton
@@ -66,14 +76,19 @@ const SymptomSelector: React.FC<{
           />
       ))}
   </div>
-);
+));
 
-const DiagnosisResult: React.FC<{
+const DiagnosisResult = memo(({
+  isAnalyzing,
+  showResult,
+  recommendedSolution,
+  t
+}: {
   isAnalyzing: boolean;
   showResult: boolean;
   recommendedSolution: Solution | null;
   t: (key: string) => string;
-}> = ({ isAnalyzing, showResult, recommendedSolution, t }) => (
+}) => (
   <div aria-live="polite" className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
       {isAnalyzing ? (
           <div className="flex flex-col items-center gap-4">
@@ -103,7 +118,7 @@ const DiagnosisResult: React.FC<{
           </div>
       )}
   </div>
-);
+));
 
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
