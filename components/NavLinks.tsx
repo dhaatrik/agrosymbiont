@@ -15,7 +15,10 @@ export const getNavLinks = (t: TFunction) => [
 ];
 
 const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: TFunction }) => {
-  const links = getNavLinks(t);
+  // ⚡ Bolt Optimization: Memoize the navigation links array to prevent re-allocating
+  // a new array on every render, which avoids breaking React.memo shallow equality
+  // on child components and reduces garbage collection overhead.
+  const links = React.useMemo(() => getNavLinks(t), [t]);
   return (
   <>
     {links.map((link) => (
