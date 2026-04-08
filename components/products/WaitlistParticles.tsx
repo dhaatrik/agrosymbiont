@@ -13,7 +13,10 @@ for (let i = 0; i < 12; i++) {
     PARTICLES[i] = i;
 }
 
-const WaitlistParticles: React.FC = () => {
+// ⚡ Bolt Optimization: Wrapped WaitlistParticles in React.memo
+// This ensures that the particle animation component doesn't re-render
+// when the user types in the parent WaitlistForm email input.
+const WaitlistParticles: React.FC = React.memo(() => {
     return (
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             {PARTICLES.map((_, i) => {
@@ -39,6 +42,6 @@ const WaitlistParticles: React.FC = () => {
             })}
         </div>
     );
-};
+});
 
 export default WaitlistParticles;

@@ -8,7 +8,10 @@ interface WaitlistButtonContentProps {
     t: (key: string) => string;
 }
 
-const WaitlistButtonContent: React.FC<WaitlistButtonContentProps> = ({ showParticles, isSubmitting, t }) => {
+// ⚡ Bolt Optimization: Wrapped WaitlistButtonContent in React.memo
+// This prevents the component from re-rendering on every keystroke when the user
+// types in the WaitlistForm email input, reducing unnecessary React diffing.
+const WaitlistButtonContent: React.FC<WaitlistButtonContentProps> = React.memo(({ showParticles, isSubmitting, t }) => {
     return (
         <AnimatePresence mode="wait">
             {showParticles && (
@@ -46,6 +49,6 @@ const WaitlistButtonContent: React.FC<WaitlistButtonContentProps> = ({ showParti
             )}
         </AnimatePresence>
     );
-};
+});
 
 export default WaitlistButtonContent;
