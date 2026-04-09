@@ -106,6 +106,9 @@ export const renderDustParticles = (
   // ⚡ Bolt Optimization: Pre-calculated Math.PI * 2 to avoid recalculating it inside the render loop for hundreds of particles.
   const PI2 = Math.PI * 2;
 
+  // ⚡ Bolt Optimization: Replaced costly string allocation in hot loop with fast globalAlpha assignment, and hoisted fillStyle
+  ctx.fillStyle = "#c8c8c8"; // Equivalent to rgb(200, 200, 200)
+
   for (let i = 0; i < dustParticles.length; i++) {
     const p = dustParticles[i];
     // Move dust
@@ -132,11 +135,14 @@ export const renderDustParticles = (
 
     if (scale > 0) {
       ctx.beginPath();
-      ctx.fillStyle = `rgba(200, 200, 200, ${p.opacity})`;
+      ctx.globalAlpha = p.opacity;
       ctx.arc(x2d, y2d, p.size * scale, 0, PI2);
       ctx.fill();
     }
   }
+
+  // Reset globalAlpha after rendering dust particles
+  ctx.globalAlpha = 1.0;
 };
 
 export const updateAndProjectSphereParticles = (
