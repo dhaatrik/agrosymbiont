@@ -75,12 +75,7 @@ describe('ResourcesPage Component', () => {
     // Submit form
     fireEvent.click(submitButton);
 
-    // Should show loading state
-    expect(screen.getByText(/submitting\.\.\./i)).toBeInTheDocument();
-
-    // Should show success message after simulated API call (1.5s)
-    await waitFor(() => {
-      expect(screen.getByText("You're on the list!")).toBeInTheDocument();
-    }, { timeout: 2500 });
+    // Should show success message immediately
+    expect(screen.getByText("You're on the list!")).toBeInTheDocument();
   });
 });
