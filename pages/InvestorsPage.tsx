@@ -15,7 +15,6 @@ const InvestorsPage: React.FC = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -38,13 +37,10 @@ const InvestorsPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      setIsSubmitting(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setIsSubmitting(false);
+      // ⚡ Bolt Optimization: Removed artificial 1500ms delay to provide instant user feedback and improve form efficiency.
       setIsSubmitted(true);
       setFormData({ name: '', email: '', company: '', message: '' });
     }
