@@ -14,6 +14,8 @@ describe('isValidEmail', () => {
       'email@example.museum',
       'email@example.co.jp',
       'firstname.lastname@example.com',
+      // 254 characters (max valid length)
+      "a".repeat(64) + "@" + ("b".repeat(63) + ".") + ("c".repeat(63) + ".") + "d".repeat(57) + ".com",
     ];
     validEmails.forEach(email => {
       expect(isValidEmail(email)).toBe(true);
@@ -32,6 +34,8 @@ describe('isValidEmail', () => {
       'email@example.com (Joe Smith)',
       'email@-example.com',
       'email@example..com',
+      // 256 characters (exceeds max length)
+      "a".repeat(64) + "@" + ("b".repeat(63) + ".") + ("c".repeat(63) + ".") + "d".repeat(59) + ".com",
     ];
     invalidEmails.forEach(email => {
       expect(isValidEmail(email)).toBe(false);
