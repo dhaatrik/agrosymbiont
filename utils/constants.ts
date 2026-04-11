@@ -1,0 +1,1 @@
+export const API_SIMULATION_DELAY = 1500;

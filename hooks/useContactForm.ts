@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
+import { submitContactForm } from '../services/api';
 
 export const useContactForm = () => {
     const { t } = useTranslation();
@@ -76,11 +77,14 @@ export const useContactForm = () => {
         setErrors({});
         setIsSubmitting(true);
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+        try {
+            await submitContactForm(formData);
+            setIsSubmitted(true);
+        } catch (error) {
+            console.error('Failed to submit contact form', error);
+        } finally {
+            setIsSubmitting(false);
+        }
     }, [formData, validateForm]);
 
     return {
