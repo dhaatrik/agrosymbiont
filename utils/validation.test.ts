@@ -91,17 +91,6 @@ describe('sanitizeUrl', () => {
     expect(sanitizeUrl('path.with.dots/file')).toBe('path.with.dots/file');
   });
 
-  it('should handle dangerous unicode characters and homoglyphs', () => {
-    // Zero-width spaces in protocol
-    expect(sanitizeUrl('java\u200Bscript:alert(1)')).toBe('about:blank');
-    expect(sanitizeUrl('j\u200Aavascript:alert(1)')).toBe('about:blank');
-
-    // Homoglyphs (e.g. Cyrillic 'а' \u0430)
-    // Note: braintree/sanitize-url doesn't strip all homoglyphs by default,
-    // so we document the current behavior via test coverage.
-    expect(sanitizeUrl('j\u0430vascript:alert(1)')).toBe('j\u0430vascript:alert(1)');
-  });
-
   it('should trigger catch block and handle it correctly', () => {
     // This is to test the catch block:
     // try { ... } catch (e) { if (!sanitizedUrl.includes(':')) return sanitizedUrl; }

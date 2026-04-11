@@ -13,7 +13,7 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
 interface MapGeography {
   rsmKey: string;
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 interface ProjectLocation {

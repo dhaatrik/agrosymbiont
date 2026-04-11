@@ -15,6 +15,7 @@ const WaitlistForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showParticles, setShowParticles] = useState(false);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ const WaitlistForm: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const trimmedEmail = email.trim();
       if (!trimmedEmail) {
@@ -47,10 +48,9 @@ const WaitlistForm: React.FC = () => {
 
       setIsSubmitting(false);
       setShowParticles(true);
-      setTimeout(() => {
-          setShowParticles(false);
-          setIsSubmitted(true);
-      }, 1000);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setShowParticles(false);
+      setIsSubmitted(true);
     };
 
     return (
@@ -103,14 +103,14 @@ const WaitlistForm: React.FC = () => {
                         <div className="flex-shrink-0 relative flex justify-center w-full sm:w-auto">
                             <button
                                 type="submit"
-                                disabled={showParticles}
+                                disabled={isSubmitting || showParticles}
                                 className={`relative text-white font-bold rounded-xl transition-all duration-300 shadow-lg whitespace-nowrap flex items-center justify-center overflow-hidden h-14 w-full sm:w-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
                                     showParticles
                                         ? 'bg-green-500 sm:w-14 rounded-full mx-auto px-0'
                                         : 'bg-cerulean-blue dark:bg-blue-600 sm:w-40 hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 px-8'
-                                }`}
+                                } ${isSubmitting ? 'opacity-75 cursor-not-allowed sm:w-44 px-8' : ''}`}
                             >
-                                <WaitlistButtonContent showParticles={showParticles} t={t} />
+                                <WaitlistButtonContent showParticles={showParticles} isSubmitting={isSubmitting} t={t} />
 
                                 {/* Micro-interaction Particles */}
                                 {showParticles && <WaitlistParticles />}
