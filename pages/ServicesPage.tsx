@@ -18,7 +18,8 @@ const ServiceSkeletonCard: React.FC = () => (
     </div>
 );
 
-const ServiceIconCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
+// ⚡ Bolt Optimization: Memoized presentation component to prevent unnecessary re-renders.
+const ServiceIconCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = React.memo(({ title, description, icon }) => (
     <TiltCard className="h-full">
         <div className="bg-white dark:bg-stone-800 p-10 rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-500 h-full border border-stone-100 dark:border-stone-700 group hover:-translate-y-2 relative overflow-hidden preserve-3d">
             <div className="absolute top-0 right-0 w-32 h-32 bg-cerulean-blue/5 dark:bg-blue-900/10 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-[2.5] duration-700 ease-in-out z-0 translate-z-0"></div>
@@ -34,16 +35,17 @@ const ServiceIconCard: React.FC<{ title: string; description: string; icon: Reac
             </div>
         </div>
     </TiltCard>
-);
+));
 
-const WhyChooseItem: React.FC<{children: React.ReactNode}> = ({children}) => (
+// ⚡ Bolt Optimization: Memoized presentation component to prevent unnecessary re-renders.
+const WhyChooseItem: React.FC<{children: React.ReactNode}> = React.memo(({children}) => (
     <li className="flex items-center p-4 rounded-2xl bg-white/50 dark:bg-stone-800/50 hover:bg-white dark:hover:bg-stone-800 transition-colors shadow-sm hover:shadow-md">
         <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-1.5 mr-4 flex-shrink-0">
             <Check className="h-4 w-4 text-green-700 dark:text-green-400" strokeWidth={3} />
         </div>
         <span className="text-gray-800 dark:text-gray-200 font-semibold text-lg">{children}</span>
     </li>
-);
+));
 
 // Performance optimization: Pre-allocate static array outside the render loop
 // to avoid unnecessary object creation/GC pressure on every render.
