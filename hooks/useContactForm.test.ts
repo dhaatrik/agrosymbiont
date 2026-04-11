@@ -1,3 +1,4 @@
+import React from 'react';
 import { renderHook, act } from '@testing-library/react';
 import { useContactForm } from './useContactForm';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
@@ -39,8 +40,8 @@ describe('useContactForm', () => {
 
         act(() => {
             result.current.handleChange({
-                target: { name: 'name', value: 'John Doe' }
-            } as any);
+                target: { name: 'name', value: 'John Doe' } as EventTarget & HTMLInputElement
+            } as React.ChangeEvent<HTMLInputElement>);
         });
 
         expect(result.current.formData.name).toBe('John Doe');
@@ -48,8 +49,8 @@ describe('useContactForm', () => {
 
         act(() => {
             result.current.handleChange({
-                target: { name: 'email', value: 'invalid-email' }
-            } as any);
+                target: { name: 'email', value: 'invalid-email' } as EventTarget & HTMLInputElement
+            } as React.ChangeEvent<HTMLInputElement>);
         });
 
         expect(result.current.formData.email).toBe('invalid-email');
@@ -61,8 +62,8 @@ describe('useContactForm', () => {
 
         act(() => {
             result.current.handleChange({
-                target: { name: 'phone', value: '123-456-7890 abc' }
-            } as any);
+                target: { name: 'phone', value: '123-456-7890 abc' } as EventTarget & HTMLInputElement
+            } as React.ChangeEvent<HTMLInputElement>);
         });
 
         expect(result.current.formData.phone).toBe('1234567890');
@@ -71,7 +72,7 @@ describe('useContactForm', () => {
     it('should validate all fields on submit and prevent submission if invalid', async () => {
         const { result } = renderHook(() => useContactForm());
 
-        const e = { preventDefault: vi.fn() } as any;
+        const e = { preventDefault: vi.fn() } as unknown as React.FormEvent<HTMLFormElement>;
 
         await act(async () => {
             await result.current.handleSubmit(e);
@@ -94,14 +95,14 @@ describe('useContactForm', () => {
 
         // Fill form
         act(() => {
-            result.current.handleChange({ target: { name: 'name', value: 'John' } } as any);
-            result.current.handleChange({ target: { name: 'email', value: 'john@example.com' } } as any);
-            result.current.handleChange({ target: { name: 'phone', value: '1234567890' } } as any);
-            result.current.handleChange({ target: { name: 'inquiryType', value: 'General' } } as any);
-            result.current.handleChange({ target: { name: 'message', value: 'Hello' } } as any);
+            result.current.handleChange({ target: { name: 'name', value: 'John' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
+            result.current.handleChange({ target: { name: 'email', value: 'john@example.com' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
+            result.current.handleChange({ target: { name: 'phone', value: '1234567890' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
+            result.current.handleChange({ target: { name: 'inquiryType', value: 'General' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
+            result.current.handleChange({ target: { name: 'message', value: 'Hello' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
         });
 
-        const e = { preventDefault: vi.fn() } as any;
+        const e = { preventDefault: vi.fn() } as unknown as React.FormEvent<HTMLFormElement>;
 
         let submitPromise: Promise<void>;
         act(() => {
