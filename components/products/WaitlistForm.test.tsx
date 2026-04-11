@@ -98,17 +98,7 @@ describe('WaitlistForm Component', () => {
       fireEvent.click(submitButton);
     });
 
-    // Should show submitting state
-    expect(screen.getByText('prod_wait')).toBeInTheDocument();
-    expect(screen.getByTestId('icon-loader')).toBeInTheDocument();
-    expect(submitButton).toBeDisabled();
-
-    // Advance timers for "API call" (1500ms)
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
-
-    // Should show particles/success check (showParticles state)
+    // Should show particles/success check (showParticles state) immediately since handler is synchronous
     expect(screen.getByTestId('icon-check')).toBeInTheDocument();
 
     // Advance timers for particle animation (1000ms)
