@@ -42,3 +42,7 @@
 ## 2026-04-10 - Added ARIA association to email validation error
 **Learning:** In React components that render forms with validation messages outside of the input tag, the validation state is often only communicated visually (e.g. text color or displaying an error paragraph). Screen readers are left without context for the validation failure when interacting with the input unless explicit ARIA attributes are used.
 **Action:** Use `aria-invalid={!!error}` on the invalid input, and `aria-describedby="error-id"` referencing the specific ID of the error message container, ensuring assistive technologies narrate the validation state and the corresponding error immediately upon focus.
+
+## 2026-04-12 - Missing keyboard focus states on navigational links
+**Learning:** Found an accessibility issue where NavLink elements and custom icon links in the mobile header navigation lacked focus-visible states. This makes keyboard navigation impossible as the focus is completely invisible.
+**Action:** Always append `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on interactive anchor tags (`<a>` and `<NavLink>`) in navigation headers to ensure keyboard visibility is preserved.
