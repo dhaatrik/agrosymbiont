@@ -72,7 +72,7 @@ describe('useContactForm', () => {
     it('should validate all fields on submit and prevent submission if invalid', async () => {
         const { result } = renderHook(() => useContactForm());
 
-        const e = { preventDefault: vi.fn() } as React.FormEvent<HTMLFormElement>;
+        const e = { preventDefault: vi.fn() } as unknown as React.FormEvent<HTMLFormElement>;
 
         await act(async () => {
             await result.current.handleSubmit(e);
@@ -102,7 +102,7 @@ describe('useContactForm', () => {
             result.current.handleChange({ target: { name: 'message', value: 'Hello' } as EventTarget & HTMLInputElement } as React.ChangeEvent<HTMLInputElement>);
         });
 
-        const e = { preventDefault: vi.fn() } as React.FormEvent<HTMLFormElement>;
+        const e = { preventDefault: vi.fn() } as unknown as React.FormEvent<HTMLFormElement>;
 
         let submitPromise: Promise<void>;
         act(() => {
