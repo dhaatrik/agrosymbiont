@@ -3,7 +3,7 @@ import { isValidEmail } from '../utils/validation';
 
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
-import { FileText, ShieldCheck, Check, Loader2 } from 'lucide-react';
+import { FileText, ShieldCheck, Check } from 'lucide-react';
 
 
 const InvestorContactForm: React.FC = () => {
@@ -14,7 +14,6 @@ const InvestorContactForm: React.FC = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -37,13 +36,10 @@ const InvestorContactForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      setIsSubmitting(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setIsSubmitting(false);
+      // ⚡ Bolt Optimization: Removed artificial 1500ms delay to provide instant user feedback and improve form efficiency.
       setIsSubmitted(true);
       setFormData({ name: '', email: '', company: '', message: '' });
     }
@@ -108,17 +104,8 @@ const InvestorContactForm: React.FC = () => {
                             <ShieldCheck className="w-4 h-4 mr-2 text-green-500" />
                             Your information is secure
                         </div>
-                        <button type="submit" disabled={isSubmitting} className={`bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}>
-                             {isSubmitting ? (
-                                <>
-                                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                    Sending...
-                                </>
-                            ) : (
-                                <>
-                                    Request Access <FileText className="ml-2 w-5 h-5" />
-                                </>
-                            )}
+                        <button type="submit" className="bg-cerulean-blue hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg hover:-translate-y-1 active:translate-y-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900">
+                            Request Access <FileText className="ml-2 w-5 h-5" />
                         </button>
                     </div>
                 </form>
