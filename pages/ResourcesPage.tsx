@@ -11,7 +11,6 @@ const ResourcesPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -26,7 +25,7 @@ const ResourcesPage: React.FC = () => {
       }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedEmail = email.trim();
     if (!trimmedEmail) {
@@ -37,12 +36,6 @@ const ResourcesPage: React.FC = () => {
         return;
     }
     
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
     setIsSubmitted(true);
   };
 
@@ -99,17 +92,9 @@ const ResourcesPage: React.FC = () => {
                         </div>
                         <button
                             type="submit"
-                            disabled={isSubmitting}
-                            className={`bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl transition duration-300 shadow-solid-sm shadow-blue-900 dark:shadow-solid-sm dark:shadow-blue-800 hover:shadow-solid-md hover:shadow-blue-900 dark:hover:shadow-solid-md dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 whitespace-nowrap flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700 transform hover:-translate-y-1 active:translate-y-1'}`}
+                            className="bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl transition duration-300 shadow-solid-sm shadow-blue-900 dark:shadow-solid-sm dark:shadow-blue-800 hover:shadow-solid-md hover:shadow-blue-900 dark:hover:shadow-solid-md dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 whitespace-nowrap flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 hover:bg-blue-700 dark:hover:bg-blue-700 transform hover:-translate-y-1 active:translate-y-1"
                         >
-                            {isSubmitting ? (
-                                <>
-                                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                    Submitting...
-                                </>
-                            ) : (
-                                'Notify Me'
-                            )}
+                            Notify Me
                         </button>
                     </form>
                 </div>

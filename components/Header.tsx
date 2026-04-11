@@ -141,10 +141,10 @@ const Header: React.FC = () => {
             </div>
             <div className="mt-auto pt-8 border-t border-stone-200 dark:border-stone-700">
               <div className="flex items-center justify-center space-x-8">
-                <a href="mailto:contact@agrosymbiont.com" className="text-stone-500 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors" aria-label="Email Us">
+                <a href="mailto:contact@agrosymbiont.com" className="text-stone-500 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 rounded-lg p-2" aria-label="Email Us">
                   <Mail className="w-8 h-8" strokeWidth={1.5} />
                 </a>
-                <a href="tel:+911112233344" className="text-stone-500 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors" aria-label="Call Us">
+                <a href="tel:+911112233344" className="text-stone-500 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 rounded-lg p-2" aria-label="Call Us">
                   <Phone className="w-8 h-8" strokeWidth={1.5} />
                 </a>
               </div>

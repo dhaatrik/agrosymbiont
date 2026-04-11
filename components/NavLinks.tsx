@@ -26,7 +26,7 @@ const NavLinks = React.memo(({ mobile, t }: { mobile?: boolean, t: TFunction }) 
         key={link.path}
         to={link.path}
         className={({ isActive }) => `
-          relative group transition-all duration-300 font-medium
+          relative group transition-all duration-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 rounded-lg
           ${mobile
             ? 'block py-4 px-4 text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-2xl text-2xl font-bold text-center'
             : 'py-2 px-4 text-sm tracking-wide text-stone-700 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400'}
