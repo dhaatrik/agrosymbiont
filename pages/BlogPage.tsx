@@ -16,6 +16,29 @@ import BlogNewsletterForm from '../components/BlogNewsletterForm';
 // which reduces garbage collection overhead and improves performance.
 const categories = ['All', 'Technology', 'Sustainability', 'AI in Agri'];
 
+// ⚡ Bolt Optimization: Memoized the category button to prevent all buttons from re-rendering
+// when the user selects a new category. Only the buttons whose selection state changes will re-render.
+interface CategoryButtonProps {
+    category: string;
+    isSelected: boolean;
+    onClick: (category: string) => void;
+    label: string;
+}
+
+const MemoizedCategoryButton = React.memo(({ category, isSelected, onClick, label }: CategoryButtonProps) => (
+    <button
+        onClick={() => onClick(category)}
+        className={`text-sm font-bold py-2.5 px-6 rounded-full whitespace-nowrap transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
+            isSelected
+                ? 'bg-cerulean-blue dark:bg-blue-600 text-white shadow-md transform scale-105'
+                : 'bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-cerulean-blue dark:hover:border-blue-500 hover:text-cerulean-blue dark:hover:text-blue-400'
+        }`}
+    >
+        {label}
+    </button>
+));
+MemoizedCategoryButton.displayName = 'MemoizedCategoryButton';
+
 const BlogPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -44,7 +67,9 @@ const BlogPage: React.FC = () => {
       };
   }, []);
 
-
+  const handleCategorySelect = useCallback((category: string) => {
+      setSelectedCategory(category);
+  }, []);
 
   const filteredPosts = useMemo(() => {
     return selectedCategory === 'All'
@@ -75,17 +100,13 @@ const BlogPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('blog_latest')}</h2>
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide p-1">
                     {categories.map((category) => (
-                        <button
+                        <MemoizedCategoryButton
                             key={category}
-                            onClick={() => setSelectedCategory(category)}
-                            className={`text-sm font-bold py-2.5 px-6 rounded-full whitespace-nowrap transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${
-                                selectedCategory === category
-                                    ? 'bg-cerulean-blue dark:bg-blue-600 text-white shadow-md transform scale-105'
-                                    : 'bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-cerulean-blue dark:hover:border-blue-500 hover:text-cerulean-blue dark:hover:text-blue-400'
-                            }`}
-                        >
-                            {category === 'All' ? t('blog_cat_all') : t(`blog_cat_${category}`)}
-                        </button>
+                            category={category}
+                            isSelected={selectedCategory === category}
+                            onClick={handleCategorySelect}
+                            label={category === 'All' ? t('blog_cat_all') : t(`blog_cat_${category}`)}
+                        />
                     ))}
                 </div>
             </div>
