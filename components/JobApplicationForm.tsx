@@ -105,7 +105,6 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
     const {
         formData,
         errors,
-        isSubmitting,
         isSubmitted,
         handleChange,
         handleSubmit
@@ -183,17 +182,9 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
             <div className="pt-4">
                 <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full bg-gradient-to-r from-cerulean-blue to-blue-600 dark:from-blue-600 dark:to-blue-800 text-white font-bold py-5 px-6 rounded-xl transition duration-300 transform shadow-solid-md shadow-blue-900 dark:shadow-solid-md dark:shadow-blue-800 hover:shadow-solid-lg hover:shadow-blue-900 dark:hover:shadow-solid-lg dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:from-blue-700 hover:to-blue-800 dark:hover:from-blue-700 dark:hover:to-blue-900 hover:-translate-y-1 active:translate-y-1'}`}
+                    className="w-full bg-gradient-to-r from-cerulean-blue to-blue-600 dark:from-blue-600 dark:to-blue-800 text-white font-bold py-5 px-6 rounded-xl transition duration-300 transform shadow-solid-md shadow-blue-900 dark:shadow-solid-md dark:shadow-blue-800 hover:shadow-solid-lg hover:shadow-blue-900 dark:hover:shadow-solid-lg dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 hover:from-blue-700 hover:to-blue-800 dark:hover:from-blue-700 dark:hover:to-blue-900 hover:-translate-y-1 active:translate-y-1"
                 >
-                    {isSubmitting ? (
-                        <>
-                            <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                            {t('car_form_submitting')}
-                        </>
-                    ) : (
-                        t('car_form_submit')
-                    )}
+                    {t('car_form_submit')}
                 </button>
             </div>
         </form>

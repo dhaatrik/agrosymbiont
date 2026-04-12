@@ -109,8 +109,6 @@ describe('JobApplicationForm Component', () => {
     const submitButton = screen.getByText('Submit Application');
     fireEvent.click(submitButton);
 
-    expect(screen.getByText('Submitting...')).toBeInTheDocument();
-
     await waitFor(() => {
       expect(screen.getByText('Application Received!')).toBeInTheDocument();
       expect(onSuccess).toHaveBeenCalled();

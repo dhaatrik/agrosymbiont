@@ -5,3 +5,6 @@
 
 **Learning:** When removing a simulated API delay (`setTimeout`) from a form submission handler to make the logic synchronous, React state updates (like removing `isSubmitting=true` then `isSubmitting=false`) become instantaneous. Associated unit tests must be explicitly updated to remove `waitFor` assertions for "Submitting..." and instead assert the final success state synchronously to prevent false negative test failures.
 **Action:** When converting asynchronous form submissions to synchronous logic (e.g., removing simulated delays), always eliminate redundant loading states (like `isSubmitting`), remove the `async` keyword, and update associated unit tests to assert success states immediately rather than using `waitFor`.
+## 2024-04-12 - Synchronous Job Application Form Submission
+**Learning:** React form submission handlers that simulate server delay with `setTimeout` cause unnecessary blocking. Removing these delays is straightforward, but test assertions (e.g., waiting for intermediate "Submitting..." text) must be adjusted accordingly because state transitions instantly.
+**Action:** Always verify test implications when removing artificial `setTimeout`s. State updates become synchronous, eliminating the need for `await`s on promises and the rendering of transient loading UI states.
