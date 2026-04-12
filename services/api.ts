@@ -27,8 +27,8 @@ export const submitJobApplication = async (data: JobApplicationData): Promise<{ 
 /**
  * Simulates a contact form submission.
  */
+// ⚡ Bolt Optimization: Removed artificial async delay from submitContactForm for immediate feedback while preserving asynchronous architecture.
 export const submitContactForm = async (data: ContactFormData): Promise<{ success: boolean }> => {
     console.log('Submitting contact form:', data.email);
-    await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
     return { success: true };
 };

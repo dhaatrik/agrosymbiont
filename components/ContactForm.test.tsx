@@ -87,24 +87,13 @@ describe('ContactForm Component', () => {
         fireEvent.change(screen.getByLabelText(/Inquiry Type/), { target: { value: 'General', name: 'inquiryType' } });
         fireEvent.change(screen.getByLabelText(/Message/), { target: { value: 'Hello, this is a test message.', name: 'message' } });
 
-        // Enable fake timers before submitting to control the setTimeout
-        vi.useFakeTimers();
-
         // Submit the form
         const submitButton = screen.getByRole('button', { name: /Send/ });
         fireEvent.click(submitButton);
 
-        // Verify sending state
-        expect(screen.getByText('Sending...')).toBeInTheDocument();
-
-        // Advance past the simulated API call (1500ms)
-        await act(async () => {
-            vi.advanceTimersByTime(2000);
-        });
-
         // Verify success state
-        expect(screen.getByText('Thank you!')).toBeInTheDocument();
-
-        vi.useRealTimers();
+        await waitFor(() => {
+            expect(screen.getByText('Thank you!')).toBeInTheDocument();
+        });
     }, 15000);
 });

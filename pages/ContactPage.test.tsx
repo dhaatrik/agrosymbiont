@@ -99,13 +99,10 @@ describe('ContactPage Component', () => {
     const form = screen.getByRole('button', { name: /contact_send/i }).closest('form');
     fireEvent.submit(form!);
 
-    // Wait for the button to show sending state (if applicable) or success message
-    expect(screen.getByText('contact_sending')).toBeInTheDocument();
-
-    // After simulated API call, it should show success
+    // After synchronous form submission, it should show success
     await waitFor(() => {
       expect(screen.getByText('contact_thank_you')).toBeInTheDocument();
-    }, { timeout: 2000 });
+    });
   });
 
   it('only accepts numbers in phone field', () => {

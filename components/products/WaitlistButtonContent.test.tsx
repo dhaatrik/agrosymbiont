@@ -34,11 +34,12 @@ describe('WaitlistButtonContent Component', () => {
         return translations[key] || key;
     };
 
-    it('renders idle state correctly when no particles', () => {
+    it('renders idle state correctly when not submitting and no particles', () => {
         render(<WaitlistButtonContent showParticles={false} t={mockT} />);
 
         expect(screen.getByText('Notify Me')).toBeInTheDocument();
         expect(screen.queryByTestId('check-icon')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('loader-icon')).not.toBeInTheDocument();
     });
 
     it('renders success state correctly when showParticles is true', () => {
@@ -46,5 +47,7 @@ describe('WaitlistButtonContent Component', () => {
 
         expect(screen.getByTestId('check-icon')).toBeInTheDocument();
         expect(screen.queryByText('Notify Me')).not.toBeInTheDocument();
+        expect(screen.queryByText('Please wait...')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('loader-icon')).not.toBeInTheDocument();
     });
 });

@@ -165,7 +165,6 @@ describe('useContactForm', () => {
 
         // Fast forward time
         await act(async () => {
-            vi.advanceTimersByTime(1500);
             await submitPromise;
         });
 

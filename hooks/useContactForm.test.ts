@@ -116,7 +116,6 @@ describe('useContactForm', () => {
         expect(result.current.isSubmitted).toBe(false);
 
         await act(async () => {
-            vi.advanceTimersByTime(1500);
             await submitPromise;
         });
 
