@@ -50,3 +50,7 @@
 ## 2025-04-12 - Missing keyboard focus states on success links in Waitlist form
 **Learning:** Found an accessibility issue pattern where links conditionally rendered after a successful form submission (like the "Share on X" and "Read about Nano-yield" links in the Waitlist Form) lacked focus indicators. This makes post-submission actions inaccessible for keyboard users.
 **Action:** Always explicitly define `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on conditionally rendered interactive elements in success/error states to ensure keyboard accessibility is maintained throughout the entire user journey.
+
+## 2024-04-13 - Missing focus indicator on custom file upload fields
+**Learning:** Found an accessibility issue where a custom file upload interface was built by wrapping a visually hidden `<input type="file" className="sr-only">` inside a styled `<label>`. Because the input was hidden, tabbing to it provided no visible focus indication, making keyboard navigation through the form confusing.
+**Action:** When building custom file upload UI components that hide the native input, always apply `focus-within:ring-2 focus-within:ring-offset-2` (and appropriate color variants) to the surrounding `<label>` or container. This ensures the focus ring is visually projected onto the custom UI when the hidden input receives focus.
