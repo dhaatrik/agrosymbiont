@@ -19,7 +19,10 @@ interface FormFieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ label, name, type, id, placeholder, error, onChange }) => {
+// ⚡ Bolt Optimization: Wrapped FormField in React.memo to prevent all form fields from re-rendering
+// on every single keystroke. Since the parent JobApplicationForm manages the entire form state,
+// updating one field would previously re-render all fields unnecessarily.
+const FormField: React.FC<FormFieldProps> = React.memo(({ label, name, type, id, placeholder, error, onChange }) => {
     const inputClass = "mt-1 block w-full px-5 py-4 bg-white dark:bg-stone-900 border-0 ring-1 ring-stone-200 dark:ring-stone-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 focus:bg-blue-50/30 dark:focus:bg-blue-900/20 transition-all duration-300 placeholder-stone-400 dark:placeholder-stone-500 text-gray-800 dark:text-gray-200";
 
     return (
@@ -46,7 +49,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, name, type, id, placeholde
             </div>
         </div>
     );
-};
+});
 
 interface ResumeUploadFieldProps {
     id: string;
@@ -60,7 +63,9 @@ interface ResumeUploadFieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
+// ⚡ Bolt Optimization: Wrapped ResumeUploadField in React.memo to prevent it from re-rendering
+// unnecessarily when the user types in other text fields in the JobApplicationForm.
+const ResumeUploadField: React.FC<ResumeUploadFieldProps> = React.memo(({
     id,
     label,
     uploadText,
@@ -98,7 +103,7 @@ const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
             )}
         </div>
     </div>
-);
+));
 
 const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle, onSuccess }) => {
     const { t } = useTranslation();
