@@ -33,7 +33,7 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
 
 // ⚡ Bolt Optimization: Memoize presentation component to prevent unnecessary re-renders
 const ImpactStat: React.FC<{ value: string; label: string }> = React.memo(({ value, label }) => (
-    <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
+    <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 rounded-lg">
         <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">{value}</div>
         <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{label}</div>
     </Link>
@@ -106,7 +106,7 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-16 md:mb-0">
               <Link
                 to="/onboarding"
-                className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-solid-md shadow-[#994000] hover:shadow-solid-lg hover:shadow-[#ccb046] active:shadow-solid-none active:shadow-[#994000] flex items-center gap-2 relative overflow-hidden group"
+                className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-solid-md shadow-[#994000] hover:shadow-solid-lg hover:shadow-[#ccb046] active:shadow-solid-none active:shadow-[#994000] flex items-center gap-2 relative overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-burnt-orange focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   {t('start_growing')}
@@ -116,7 +116,7 @@ const HomePage: React.FC = () => {
               </Link>
               <Link
                 to="/about"
-                className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-solid-md shadow-cerulean-blue/20 dark:shadow-solid-md dark:shadow-blue-400/20 hover:shadow-solid-lg hover:shadow-cerulean-blue/30 dark:hover:shadow-solid-lg dark:hover:shadow-blue-400/30 active:translate-y-1 active:shadow-solid-none active:shadow-cerulean-blue/20 transform hover:-translate-y-1"
+                className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-solid-md shadow-cerulean-blue/20 dark:shadow-solid-md dark:shadow-blue-400/20 hover:shadow-solid-lg hover:shadow-cerulean-blue/30 dark:hover:shadow-solid-lg dark:hover:shadow-blue-400/30 active:translate-y-1 active:shadow-solid-none active:shadow-cerulean-blue/20 transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
               >
                 {t('learn_more')}
               </Link>
@@ -201,7 +201,7 @@ const HomePage: React.FC = () => {
           <AnimatedSection className="text-center max-w-4xl mx-auto px-4 relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200 mb-10 leading-tight drop-shadow-sm">{t('home_cta_title_1')}<br/><span className="text-cerulean-blue dark:text-blue-400">{t('home_cta_title_2')}</span></h2>
               <div>
-                  <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-solid-lg shadow-blue-900 hover:shadow-solid-xl shadow-blue-900 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-solid-none active:shadow-blue-900">
+                  <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-solid-lg shadow-blue-900 hover:shadow-solid-xl shadow-blue-900 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-solid-none active:shadow-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
                       {t('home_cta_btn')}
                   </Link>
               </div>
