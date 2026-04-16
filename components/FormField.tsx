@@ -10,7 +10,10 @@ interface FormFieldProps {
     children: React.ReactNode;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ label, name, id, required, error, children }) => {
+// ⚡ Bolt Optimization: Wrapped FormField in React.memo() to prevent unnecessary re-renders.
+// In forms with multiple fields (like ContactForm), typing in one field updates parent state
+// and previously caused all unmemoized FormField components to re-render.
+const FormField: React.FC<FormFieldProps> = React.memo(({ label, name, id, required, error, children }) => {
     const errorId = `${id}-error`;
     const childWithA11y = React.isValidElement(children)
         ? React.cloneElement(children as React.ReactElement<any>, {
@@ -35,6 +38,8 @@ const FormField: React.FC<FormFieldProps> = ({ label, name, id, required, error,
             </div>
         </div>
     );
-};
+});
+
+FormField.displayName = 'FormField';
 
 export default FormField;
