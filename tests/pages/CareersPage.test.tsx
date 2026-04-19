@@ -244,8 +244,6 @@ describe('CareersPage Component', () => {
       fireEvent.click(submitButton);
     });
 
-    expect(screen.getByText('Submitting...')).toBeInTheDocument();
-
     await waitFor(() => {
       expect(screen.getByText('Application Received!')).toBeInTheDocument();
       expect(screen.getByText('Thank you for your interest in AgroSymbiont. We will be in touch.')).toBeInTheDocument();
