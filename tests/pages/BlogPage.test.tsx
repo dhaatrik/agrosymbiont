@@ -113,36 +113,21 @@ describe('BlogPage Component', () => {
     return render(<MemoryRouter>{ui}</MemoryRouter>);
   };
 
-  it('renders skeleton loaders initially and then blog posts', async () => {
-    const { container } = renderWithRouter(<BlogPage />);
+  it('renders blog posts immediately', async () => {
+    renderWithRouter(<BlogPage />);
 
     expect(screen.getByText('Blog Title')).toBeInTheDocument();
     expect(screen.getByText('Latest Articles')).toBeInTheDocument();
 
-    const skeletons = container.querySelectorAll('.animate-pulse');
-    expect(skeletons.length).toBeGreaterThan(0);
-
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Technology Post')).toBeInTheDocument();
-      expect(screen.getByText('Sustainability Post')).toBeInTheDocument();
-      expect(screen.getByText('Coming Soon Post')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Technology Post')).toBeInTheDocument();
+    expect(screen.getByText('Sustainability Post')).toBeInTheDocument();
+    expect(screen.getByText('Coming Soon Post')).toBeInTheDocument();
   });
 
   it('filters posts by category', async () => {
     renderWithRouter(<BlogPage />);
 
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Technology Post')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Technology Post')).toBeInTheDocument();
 
     // There are multiple buttons with the name 'Technology' (the category filter and the category tag on the post card).
     // We want the category filter button. Let's find it by looking for the one inside the filter container.
@@ -164,13 +149,7 @@ describe('BlogPage Component', () => {
   it('navigates to article on Read More click', async () => {
     renderWithRouter(<BlogPage />);
 
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Technology Post')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Technology Post')).toBeInTheDocument();
 
     const readMoreBtns = screen.getAllByRole('button', { name: /Read Article/i });
     fireEvent.click(readMoreBtns[0]);
@@ -181,13 +160,7 @@ describe('BlogPage Component', () => {
   it('shows toast message when clicking Coming Soon post', async () => {
     renderWithRouter(<BlogPage />);
 
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Coming Soon Post')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Coming Soon Post')).toBeInTheDocument();
 
     const readPreviewBtn = screen.getByRole('button', { name: /Read Preview/i });
     fireEvent.click(readPreviewBtn);

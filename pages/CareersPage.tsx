@@ -26,7 +26,7 @@ interface CategoryButtonProps {
 const MemoizedCategoryButton = React.memo(({ categoryId, isActive, onClick, label }: CategoryButtonProps) => (
     <button
         onClick={() => onClick(categoryId)}
-        className={`px-6 py-2 rounded-full font-bold transition-all duration-300 ${isActive ? 'bg-cerulean-blue text-white shadow-lg' : 'bg-stone-100 dark:bg-stone-800 text-stone-500 hover:bg-stone-200 dark:hover:bg-stone-700'}`}
+        className={`px-6 py-2 rounded-full font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isActive ? 'bg-cerulean-blue text-white shadow-lg' : 'bg-stone-100 dark:bg-stone-800 text-stone-500 hover:bg-stone-200 dark:hover:bg-stone-700'}`}
     >
         {label}
     </button>
@@ -64,7 +64,7 @@ const JobModal: React.FC<JobModalProps> = React.memo(({ job, onClose }) => {
                             </div>
                             <button
                                 onClick={onClose}
-                                className="text-stone-400 hover:text-gray-900 dark:text-stone-500 dark:hover:text-white transition-colors p-2 bg-stone-100 dark:bg-stone-700/50 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700"
+                                className="text-stone-400 hover:text-gray-900 dark:text-stone-500 dark:hover:text-white transition-colors p-2 bg-stone-100 dark:bg-stone-700/50 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-800"
                                 aria-label={t('car_close')}
                             >
                                 <X className="w-5 h-5" />

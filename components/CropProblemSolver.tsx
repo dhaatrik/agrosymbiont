@@ -174,12 +174,8 @@ const CropProblemSolver: React.FC = () => {
 
   const handleDiagnose = useCallback(() => {
     if (!selectedCrop || !selectedSymptom) return;
-    setIsAnalyzing(true);
-    setShowResult(false);
-    setTimeout(() => {
-        setIsAnalyzing(false);
-        setShowResult(true);
-    }, 1200);
+    setIsAnalyzing(false);
+    setShowResult(true);
   }, [selectedCrop, selectedSymptom]);
 
   const handleSelectCrop = useCallback((cropId: CropType) => {

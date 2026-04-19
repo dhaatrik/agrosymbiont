@@ -16,7 +16,7 @@ interface FormFieldProps {
 const FormField: React.FC<FormFieldProps> = React.memo(({ label, name, id, required, error, children }) => {
     const errorId = `${id}-error`;
     const childWithA11y = React.isValidElement(children)
-        ? React.cloneElement(children as React.ReactElement<any>, {
+        ? React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
             'aria-invalid': !!error,
             'aria-describedby': error ? errorId : undefined,
           })
