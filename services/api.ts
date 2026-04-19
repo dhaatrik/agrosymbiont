@@ -18,6 +18,7 @@ export interface ContactFormData {
 /**
  * Simulates a job application submission.
  */
+// ⚡ Bolt Optimization: Removed artificial async delay from submitJobApplication for immediate feedback while preserving asynchronous architecture.
 export const submitJobApplication = async (data: JobApplicationData): Promise<{ success: boolean }> => {
     console.log('Submitting job application:', data.name);
     return { success: true };
