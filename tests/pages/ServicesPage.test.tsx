@@ -40,6 +40,10 @@ vi.mock( '@/components/TiltCard', () => ({
 }));
 
 describe('ServicesPage', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   const renderComponent = () => {
     return render(
       <MemoryRouter>
@@ -48,7 +52,7 @@ describe('ServicesPage', () => {
     );
   };
 
-  it('renders full content', () => {
+  it('renders full content immediately', () => {
     renderComponent();
 
     // Headers and descriptive text

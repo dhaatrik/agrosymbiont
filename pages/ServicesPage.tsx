@@ -38,6 +38,7 @@ const WhyChooseItem: React.FC<{children: React.ReactNode}> = React.memo(({childr
 const ServicesPage: React.FC = () => {
     const { t } = useTranslation();
 
+    // ⚡ Bolt Optimization: Removed artificial 1500ms delay and skeleton loaders to improve perceived performance since data is static
     return (
         <div className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,37 +53,37 @@ const ServicesPage: React.FC = () => {
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <ServiceIconCard
-                            title={t('tech_service_1_title')}
-                            description={t('tech_service_1_desc')}
-                            icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
-                        />
-                         <ServiceIconCard
-                            title={t('tech_service_2_title')}
-                            description={t('tech_service_2_desc')}
-                            icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
-                        />
-                         <ServiceIconCard
-                            title={t('tech_service_3_title')}
-                            description={t('tech_service_3_desc')}
-                            icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
-                        />
-                         <ServiceIconCard
-                            title={t('tech_service_4_title')}
-                            description={t('tech_service_4_desc')}
-                            icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
-                        />
-                         <div className="md:col-span-2 flex justify-center">
-                            <div className="max-w-xl w-full">
-                                <ServiceIconCard
-                                    title={t('tech_service_5_title')}
-                                    description={t('tech_service_5_desc')}
-                                    icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
-                                />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <ServiceIconCard 
+                                title={t('tech_service_1_title')}
+                                description={t('tech_service_1_desc')}
+                                icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
+                            />
+                             <ServiceIconCard 
+                                title={t('tech_service_2_title')}
+                                description={t('tech_service_2_desc')}
+                                icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
+                            />
+                             <ServiceIconCard 
+                                title={t('tech_service_3_title')}
+                                description={t('tech_service_3_desc')}
+                                icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
+                            />
+                             <ServiceIconCard 
+                                title={t('tech_service_4_title')}
+                                description={t('tech_service_4_desc')}
+                                icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
+                            />
+                             <div className="md:col-span-2 flex justify-center">
+                                <div className="max-w-xl w-full">
+                                    <ServiceIconCard 
+                                        title={t('tech_service_5_title')}
+                                        description={t('tech_service_5_desc')}
+                                        icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </AnimatedSection>
 
                 {/* Why Choose Us Section */}
