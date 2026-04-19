@@ -42,10 +42,7 @@ const WaitlistForm: React.FC = () => {
 
       // ⚡ Bolt Optimization: Removed simulated API delay and redundant isSubmitting state to improve form submission performance and make the handler synchronous.
       setShowParticles(true);
-      setTimeout(() => {
-          setShowParticles(false);
-          setIsSubmitted(true);
-      }, 1000);
+      setIsSubmitted(true);
     };
 
     return (

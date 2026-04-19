@@ -28,14 +28,6 @@ vi.mock('lucide-react', () => ({
 }));
 
 describe('WaitlistForm Component', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
   const renderForm = () => {
     return render(
       <MemoryRouter>
@@ -96,14 +88,6 @@ describe('WaitlistForm Component', () => {
     // Use act for asynchronous state updates triggered by click
     await act(async () => {
       fireEvent.click(submitButton);
-    });
-
-    // Should show particles/success check (showParticles state) immediately since handler is synchronous
-    expect(screen.getByTestId('icon-check')).toBeInTheDocument();
-
-    // Advance timers for particle animation (1000ms)
-    await act(async () => {
-      vi.advanceTimersByTime(1000);
     });
 
     // Should show final success message
