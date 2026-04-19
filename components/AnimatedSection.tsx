@@ -8,7 +8,10 @@ interface AnimatedSectionProps {
   delay?: number;
 }
 
-const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className = '', delay = 0 }) => {
+// ⚡ Bolt Optimization: Wrapped AnimatedSection in React.memo() to prevent unnecessary re-renders.
+// As a frequently used wrapper component, memoizing it ensures that unchanged children and props
+// do not trigger unnecessary React reconciliations and framer-motion re-evaluations.
+const AnimatedSection: React.FC<AnimatedSectionProps> = React.memo(({ children, className = '', delay = 0 }) => {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
@@ -30,6 +33,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className =
       {children}
     </motion.div>
   );
-};
+});
+
+AnimatedSection.displayName = 'AnimatedSection';
 
 export default AnimatedSection;
