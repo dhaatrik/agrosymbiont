@@ -29,13 +29,7 @@ vi.mock('framer-motion', async () => {
 });
 
 describe('CropProblemSolver Component', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
   afterEach(() => {
-    vi.runOnlyPendingTimers();
-    vi.useRealTimers();
     vi.clearAllMocks();
   });
 
@@ -89,7 +83,7 @@ describe('CropProblemSolver Component', () => {
     expect(screen.getByText('solver_analyze')).toBeInTheDocument();
   });
 
-  it('clicks analyze to show loading and then results', () => {
+  it('clicks analyze to show results immediately', () => {
     render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Click on wheat
@@ -102,22 +96,14 @@ describe('CropProblemSolver Component', () => {
     const analyzeBtn = screen.getByText('solver_analyze');
     fireEvent.click(analyzeBtn);
 
-    // Loading state should appear
-    expect(screen.getByText('solver_analyzing')).toBeInTheDocument();
+    // Loading state should not appear
+    expect(screen.queryByText('solver_analyzing')).not.toBeInTheDocument();
 
     // Analyze button and placeholder should be gone
     expect(screen.queryByText('solver_analyze')).not.toBeInTheDocument();
     expect(screen.queryByText('solver_placeholder')).not.toBeInTheDocument();
 
-    // Fast-forward timer by 1200ms
-    act(() => {
-      vi.advanceTimersByTime(1200);
-    });
-
-    // Loading state should be gone
-    expect(screen.queryByText('solver_analyzing')).not.toBeInTheDocument();
-
-    // Result should appear
+    // Result should appear immediately
     expect(screen.getByText('solver_recommended')).toBeInTheDocument();
     expect(screen.getByText('solver_sol_yellow_name')).toBeInTheDocument();
     expect(screen.getByText('solver_sol_yellow_desc')).toBeInTheDocument();
@@ -132,11 +118,7 @@ describe('CropProblemSolver Component', () => {
     fireEvent.click(screen.getByText('solver_sym_yellow_wheat'));
     fireEvent.click(screen.getByText('solver_analyze'));
 
-    act(() => {
-      vi.advanceTimersByTime(1200);
-    });
-
-    // Verify result is shown
+    // Verify result is shown immediately
     expect(screen.getByText('solver_sol_yellow_name')).toBeInTheDocument();
 
     // Click a different crop
