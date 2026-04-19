@@ -44,7 +44,9 @@ const BlogPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // ⚡ Bolt Optimization: Removed artificial 1.5s delay by initializing isLoading to false.
+  // This eliminates the forced wait for the skeleton state and improves perceived performance.
+  const [isLoading, setIsLoading] = useState(false);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const showToast = useCallback((message: string) => {
@@ -58,11 +60,7 @@ const BlogPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-      const timer = setTimeout(() => {
-          setIsLoading(false);
-      }, 1500);
       return () => {
-          clearTimeout(timer);
           if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
       };
   }, []);
