@@ -37,7 +37,6 @@ const BlogNewsletterForm: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setIsSubmitted(true);
   };

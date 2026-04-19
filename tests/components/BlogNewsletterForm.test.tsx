@@ -25,14 +25,8 @@ vi.mock('react-i18next', () => ({
 }));
 
 describe('BlogNewsletterForm', () => {
-  beforeEach(() => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-  });
-
   afterEach(() => {
     vi.clearAllMocks();
-    vi.runOnlyPendingTimers();
-    vi.useRealTimers();
   });
 
   it('shows validation errors for empty and invalid emails', async () => {
@@ -60,12 +54,6 @@ describe('BlogNewsletterForm', () => {
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     fireEvent.click(submitBtn);
-
-    expect(screen.getByRole('button', { name: /Submitting\.\.\./i })).toBeInTheDocument();
-
-    await act(async () => {
-      vi.advanceTimersByTime(1500);
-    });
 
     await waitFor(() => {
       expect(screen.getByText('Welcome')).toBeInTheDocument();
