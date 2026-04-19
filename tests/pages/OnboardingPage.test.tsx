@@ -100,14 +100,9 @@ describe('OnboardingPage Component', () => {
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
 
     const submitButton = screen.getByRole('button', { name: /onb_submit/i });
-    fireEvent.click(submitButton);
 
-    // Should show loading state
-    expect(screen.getByText('onb_submitting')).toBeInTheDocument();
-
-    // Fast-forward form submission delay
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      fireEvent.click(submitButton);
     });
 
     // Step 6 (Success)

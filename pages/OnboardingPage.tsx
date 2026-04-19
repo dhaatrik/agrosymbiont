@@ -31,7 +31,6 @@ const OnboardingPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setStep(TOTAL_STEPS);
   };
