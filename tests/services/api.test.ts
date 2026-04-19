@@ -3,16 +3,6 @@ import { submitJobApplication, submitContactForm, JobApplicationData, ContactFor
 import { API_SIMULATION_DELAY } from '../../utils/constants';
 
 describe('API Services', () => {
-    let consoleSpy: any;
-
-    beforeEach(() => {
-        consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    });
-
-    afterEach(() => {
-        consoleSpy.mockRestore();
-    });
-
     describe('submitJobApplication', () => {
         beforeEach(() => {
             vi.useFakeTimers();
@@ -23,6 +13,7 @@ describe('API Services', () => {
         });
 
         it('should successfully submit a job application and log the output', async () => {
+            const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const data: JobApplicationData = {
                 name: 'John Doe',
                 email: 'john.doe@example.com',
@@ -39,11 +30,13 @@ describe('API Services', () => {
             expect(consoleSpy).toHaveBeenCalledWith('Submitting job application:', data.name);
 
             expect(result).toEqual({ success: true });
+            consoleSpy.mockRestore();
         });
     });
 
     describe('submitContactForm', () => {
         it('should successfully submit a contact form and log the output immediately', async () => {
+            const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const data: ContactFormData = {
                 name: 'Jane Doe',
                 email: 'jane.doe@example.com',
@@ -57,6 +50,7 @@ describe('API Services', () => {
             expect(consoleSpy).toHaveBeenCalledWith('Submitting contact form:', data.email);
 
             expect(result).toEqual({ success: true });
+            consoleSpy.mockRestore();
         });
     });
 });
