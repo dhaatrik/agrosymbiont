@@ -7,15 +7,21 @@ describe('API Services', () => {
 
     beforeEach(() => {
         consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-        vi.useFakeTimers();
     });
 
     afterEach(() => {
         consoleSpy.mockRestore();
-        vi.useRealTimers();
     });
 
     describe('submitJobApplication', () => {
+        beforeEach(() => {
+            vi.useFakeTimers();
+        });
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
         it('should successfully submit a job application and log the output', async () => {
             const data: JobApplicationData = {
                 name: 'John Doe',
