@@ -76,15 +76,20 @@ const WaitlistForm: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('prod_early_access')}</h3>
                     <p className="text-stone-500 dark:text-stone-400 mb-8">{t('prod_early_desc')}</p>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto relative">
+                    <form noValidate onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto relative items-end">
                         <div className="flex-grow relative w-full text-left">
+                            <label htmlFor="waitlist-email" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">
+                                {t('prod_email_label', 'Email')} <span className="text-red-500">*</span>
+                            </label>
                             <input
+                                id="waitlist-email"
                                 type="email"
+                                required
+                                aria-required="true"
                                 placeholder={t('prod_email_placeholder')}
                                 value={email}
                                 onChange={handleEmailChange}
                                 className={`w-full px-6 py-4 bg-stone-50 dark:bg-stone-900 border ${emailError ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} rounded-xl focus:outline-none focus:ring-2 focus:ring-cerulean-blue dark:focus:ring-blue-500 transition-all text-gray-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-stone-500`}
-                                aria-label="Email for product notifications"
                                 aria-invalid={!!emailError}
                                 aria-describedby={emailError ? 'waitlist-email-error' : undefined}
                             />

@@ -1,3 +1,6 @@
 ## 2026-04-19 - Accessibility Issue with Custom Form Validation
 **Learning:** When using custom JavaScript validation for forms, if visually mandatory fields (marked with an asterisk) lack the explicit `required` and `aria-required="true"` attributes, screen readers will fail to announce them as required, degrading the accessibility experience. Additionally, relying solely on custom JS validation without adding `noValidate` to the `<form>` can cause conflicting native browser popups.
 **Action:** Always pair custom form validation with the `noValidate` attribute on the `<form>` tag, and explicitly add `required` and `aria-required="true"` to any input field that is visually indicated as mandatory.
+## 2026-04-19 - JSDOM Native Form Validation
+**Learning:** JSDOM correctly simulates native HTML5 form validation. When an input has the `required` attribute, testing frameworks using JSDOM will block the `submit` event from firing on the `<form>` if `noValidate` is omitted. If the test expects custom inline error messages from the `onSubmit` handler for empty fields, the test will fail without `noValidate`.
+**Action:** When adding `required` attributes for accessibility to forms that also rely on JS-driven inline validation testing, ensure `noValidate` is applied to the `<form>` element to prevent JSDOM from silently blocking the submit event during testing.
