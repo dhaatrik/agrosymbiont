@@ -41,6 +41,10 @@ export const useContactForm = () => {
 
         const fieldError = validateField(name, newValue);
         setErrors(prev => {
+            if (fieldError === (prev[name] || '')) {
+                if (!fieldError && !(name in prev)) return prev;
+                if (fieldError && prev[name] === fieldError) return prev;
+            }
             const newErrors = { ...prev };
             if (fieldError) {
                 newErrors[name] = fieldError;
