@@ -41,6 +41,11 @@ export const useJobApplicationForm = (onSuccess?: () => void) => {
 
         const fieldError = validateField(name, newValue);
         setErrors(prev => {
+            // ⚡ Bolt Optimization: Check if the error state actually changed before returning a new object
+            if (fieldError === (prev[name] || '')) {
+                if (!fieldError && !(name in prev)) return prev;
+                if (fieldError && prev[name] === fieldError) return prev;
+            }
             const newErrors = { ...prev };
             if (fieldError) {
                 newErrors[name] = fieldError;

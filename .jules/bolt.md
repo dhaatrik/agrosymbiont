@@ -1,10 +1,3 @@
-## 2026-04-16 - Memoizing Dynamic Form Children
-**Learning:** In highly dynamic, monolithic React forms (like ContactForm using a single `useState` object for all form fields bound via `useContactForm`), failing to memoize presentation wrappers like `FormField` results in an O(n) re-render cost for the entire form on every keystroke, where n is the number of inputs.
-**Action:** Always verify that repetitive presentation wrappers used within monolithic form state handlers are wrapped in `React.memo` to restrict re-rendering solely to the input actively being typed in.
-
-## 2026-04-19 - Removing Artificial Loading Delays
-**Learning:** Artificial delays using `setTimeout` in `useEffect` to show skeleton loaders negatively impact perceived performance by forcing a wait even when data is available.
-**Action:** Initialize loading states to `false` if data is static or immediately available, and remove simulated delay logic to improve responsiveness.
-## 2026-04-19 - Removing Artificial Loading Delays
-**Learning:** Artificial delays using `setTimeout` in `useEffect` to show skeleton loaders negatively impact perceived performance by forcing a wait even when data is available.
-**Action:** Initialize loading states to `false` if data is static or immediately available, and remove simulated delay logic to improve responsiveness. Clean up associated Vitest timer mocks.
+## 2026-04-22 - Optimize validation state updates
+**Learning:** When updating form validation state (e.g., `setErrors` in custom hooks), explicitly check if the new error value matches the existing state value before returning a new object clone. Returning the previous state object directly when values haven't changed prevents unnecessary state thrashing and re-renders during high-frequency events like keystrokes.
+**Action:** Always implement an early return in `setState` callbacks if the state conceptually hasn't changed.

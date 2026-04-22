@@ -63,6 +63,7 @@ const InvestorContactForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     setErrors(prev => {
+        // ⚡ Bolt Optimization: Check if the error state actually changed before returning a new object
         if (prev[name]) {
             return { ...prev, [name]: '' };
         }
