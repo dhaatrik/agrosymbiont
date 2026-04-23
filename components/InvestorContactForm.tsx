@@ -112,21 +112,27 @@ const InvestorContactForm: React.FC = () => {
              ) : (
                 <form onSubmit={handleSubmit} noValidate className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-1 border-stone-200 dark:border-stone-700">
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="name">Full Name *</label>
-                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required aria-required="true" aria-invalid={!!errors.name} aria-describedby={errors.name ? 'name-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.name ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Jane Doe" />
-                        <div aria-live="polite">{errors.name && <p id="name-error" className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}</div>
+                        <MemoizedInput
+                            id="name" name="name" type="text"
+                            value={formData.name} onChange={handleChange} error={errors.name}
+                            placeholder="Jane Doe" label="Full Name *"
+                        />
                     </div>
 
                     <div className="md:col-span-1">
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="email">Work Email *</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required aria-required="true" aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.email ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="jane@investmentfirm.com" />
-                        <div aria-live="polite">{errors.email && <p id="email-error" className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}</div>
+                        <MemoizedInput
+                            id="email" name="email" type="email"
+                            value={formData.email} onChange={handleChange} error={errors.email}
+                            placeholder="jane@investmentfirm.com" label="Work Email *"
+                        />
                     </div>
 
                     <div className="md:col-span-2">
-                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="company">Firm / Company *</label>
-                         <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} required aria-required="true" aria-invalid={!!errors.company} aria-describedby={errors.company ? 'company-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.company ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Investment Firm LLC" />
-                         <div aria-live="polite">{errors.company && <p id="company-error" className="text-red-500 text-xs mt-1 font-medium">{errors.company}</p>}</div>
+                        <MemoizedInput
+                            id="company" name="company" type="text"
+                            value={formData.company} onChange={handleChange} error={errors.company}
+                            placeholder="Investment Firm LLC" label="Firm / Company *"
+                        />
                     </div>
 
                     <div className="md:col-span-2">
