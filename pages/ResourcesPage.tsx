@@ -76,7 +76,11 @@ const ResourcesPage: React.FC = () => {
                     
                     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto relative">
                         <div className="flex-grow relative w-full text-left">
+                            <label htmlFor="resources-email" className="sr-only">
+                                Enter your email address
+                            </label>
                             <input
+                                id="resources-email"
                                 type="email"
                                 placeholder="Enter your email address"
                                 value={email}

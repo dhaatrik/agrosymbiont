@@ -62,7 +62,11 @@ const BlogNewsletterForm: React.FC = () => {
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto relative">
             <div className="flex-grow relative w-full">
+                <label htmlFor="blog-newsletter-email" className="sr-only">
+                    {t('blog_email_placeholder')}
+                </label>
                 <input
+                  id="blog-newsletter-email"
                   type="email"
                   placeholder={t('blog_email_placeholder')}
                   value={email}

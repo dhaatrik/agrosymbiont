@@ -4,3 +4,6 @@
 ## 2026-04-19 - JSDOM Native Form Validation
 **Learning:** JSDOM correctly simulates native HTML5 form validation. When an input has the `required` attribute, testing frameworks using JSDOM will block the `submit` event from firing on the `<form>` if `noValidate` is omitted. If the test expects custom inline error messages from the `onSubmit` handler for empty fields, the test will fail without `noValidate`.
 **Action:** When adding `required` attributes for accessibility to forms that also rely on JS-driven inline validation testing, ensure `noValidate` is applied to the `<form>` element to prevent JSDOM from silently blocking the submit event during testing.
+## 2026-04-23 - Explicit Labels for Newsletter Inputs
+**Learning:** When improving accessibility for form inputs that lack visual labels (e.g., inline newsletter subscriptions), relying solely on placeholders and `aria-label` provides a suboptimal experience for some screen readers and automated tools.
+**Action:** Always add an explicit visually hidden `<label className="sr-only">` element linked to the input via matching `htmlFor` and `id` attributes to ensure robust accessibility compliance.
