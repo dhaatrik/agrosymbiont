@@ -16,3 +16,6 @@
 - [x] Task: Audit and verify offline capabilities in the browser.
     - [x] Implement Phase 3: Final Testing.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Final Testing & Optimization' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions 0752bb4
