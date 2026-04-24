@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import ConnectivityWrapper from '../../components/ConnectivityWrapper';
+import { ConnectivityWrapper } from '../../components/ConnectivityWrapper';
 import { MemoryRouter } from 'react-router-dom';
 import * as onlineHook from '../../hooks/useOnlineStatus';
 import * as pwaPatterns from '../../utils/pwaPatterns';

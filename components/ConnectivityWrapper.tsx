@@ -2,13 +2,13 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
 import { isEssentialPage } from '../utils/pwaPatterns';
-import OfflineFallback from './OfflineFallback';
+import { OfflineFallback } from './OfflineFallback';
 
 interface ConnectivityWrapperProps {
   children: React.ReactNode;
 }
 
-const ConnectivityWrapper: React.FC<ConnectivityWrapperProps> = ({ children }) => {
+export const ConnectivityWrapper: React.FC<ConnectivityWrapperProps> = ({ children }) => {
   const isOnline = useOnlineStatus();
   const { pathname } = useLocation();
 
@@ -19,5 +19,3 @@ const ConnectivityWrapper: React.FC<ConnectivityWrapperProps> = ({ children }) =
 
   return <>{children}</>;
 };
-
-export default ConnectivityWrapper;

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import OfflineFallback from '../../components/OfflineFallback';
+import { OfflineFallback } from '../../components/OfflineFallback';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('OfflineFallback Component', () => {

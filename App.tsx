@@ -1,11 +1,9 @@
-
 import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
-import ConnectivityWrapper from './components/ConnectivityWrapper';
+import { ConnectivityWrapper } from './components/ConnectivityWrapper';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
-// ... (rest of imports)
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ProductsPage = lazy(() => import('./pages/ProductsPage'));
 const ServicesPage = lazy(() => import('./pages/ServicesPage'));
@@ -36,7 +34,7 @@ import SeedLoader from './components/SeedLoader';
 
 const LoadingFallback = () => <SeedLoader />;
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <HashRouter>
       <ScrollToTop />
@@ -66,5 +64,3 @@ const App: React.FC = () => {
     </HashRouter>
   );
 };
-
-export default App;

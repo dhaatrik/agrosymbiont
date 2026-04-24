@@ -1,7 +1,7 @@
 import React from 'react';
 import { WifiOff, RefreshCw } from 'lucide-react';
 
-const OfflineFallback: React.FC = () => {
+export const OfflineFallback: React.FC = () => {
   const handleRetry = () => {
     window.location.reload();
   };
@@ -28,5 +28,3 @@ const OfflineFallback: React.FC = () => {
     </div>
   );
 };
-
-export default OfflineFallback;
