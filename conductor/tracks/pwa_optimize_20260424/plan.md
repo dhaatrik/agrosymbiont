@@ -13,6 +13,6 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Offline Fallbacks' (Protocol in workflow.md)
 
 ## Phase 3: Final Testing & Optimization
-- [ ] Task: Audit and verify offline capabilities in the browser.
-    - [ ] Implement Phase 3: Final Testing.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Final Testing & Optimization' (Protocol in workflow.md)
+- [x] Task: Audit and verify offline capabilities in the browser.
+    - [x] Implement Phase 3: Final Testing.
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Final Testing & Optimization' (Protocol in workflow.md)
